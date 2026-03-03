@@ -1,0 +1,17 @@
+<svg width="80" height="100" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Suitcase body -->
+  <rect x="10" y="30" width="60" height="50" rx="5" stroke="#c4a574" stroke-width="2" fill="none"/>
+  <!-- Handle on top -->
+  <path d="M30 30 L30 20 Q30 15 35 15 L45 15 Q50 15 50 20 L50 30" stroke="#c4a574" stroke-width="2" fill="none"/>
+  <!-- Middle strap -->
+  <line x1="10" y1="55" x2="70" y2="55" stroke="#c4a574" stroke-width="2"/>
+  <!-- Buckle -->
+  <rect x="35" y="50" width="10" height="10" rx="1" stroke="#c4a574" stroke-width="2" fill="none"/>
+  <!-- Side handle -->
+  <path d="M70 45 Q80 45 80 55 Q80 65 70 65" stroke="#c4a574" stroke-width="2" fill="none"/>
+  <!-- Wheels -->
+  <circle cx="25" cy="85" r="5" stroke="#c4a574" stroke-width="2" fill="none"/>
+  <circle cx="55" cy="85" r="5" stroke="#c4a574" stroke-width="2" fill="none"/>
+  <!-- Decorative dotted line -->
+  <path d="M5 95 Q-10 70 5 50" stroke="#e8a54b" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+</svg>
