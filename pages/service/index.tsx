@@ -1,8 +1,8 @@
 import React from 'react';
 import { NextPage } from 'next';
-import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import Link from 'next/link';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import withLayoutFull from '../../libs/components/layout/LayoutFull';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: { ...(await serverSideTranslations(locale, ['common'])) },
@@ -80,8 +80,6 @@ const testimonials = [
 ];
 
 const ServicePage: NextPage = () => {
-	const device = useDeviceDetect();
-
 	return (
 		<div className={'service-page'}>
 			{/* 1. Banner */}
@@ -300,4 +298,4 @@ const ServicePage: NextPage = () => {
 	);
 };
 
-export default ServicePage;
+export default withLayoutFull(ServicePage);
