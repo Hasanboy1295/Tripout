@@ -8,7 +8,7 @@
      align-items: center;
      .main {
        width: 1200px;
-       height: 900px;
+       height: auto;
        display: flex;
        flex-direction: row;
        border-radius: 12px 0px 0px 12px;
@@ -20,7 +20,8 @@
          display: flex;
          flex-direction: column;
          align-items: center;
-         justify-content: center;
+         justify-content: flex-start;
+         padding: 40px 0;
          .logo {
            display: flex;
            flex-direction: row;
@@ -62,11 +63,50 @@
              font-weight: 400;
              line-height: 26px;
              color: #181A20;
-
            }
          }
+
+         .telegram-auth-box {
+           margin-top: 40px;
+           width: 470px;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+
+           .telegram-title {
+             font-family: $font;
+             font-size: 16px;
+             font-weight: 600;
+             color: #181A20;
+             margin-bottom: 15px;
+             text-align: center;
+           }
+
+           .telegram-button-wrapper {
+             width: 100%;
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             margin-bottom: 15px;
+
+             iframe {
+               border-radius: 8px;
+             }
+           }
+
+           .MuiDivider-root {
+             .divider-text {
+               font-family: $font;
+               font-size: 13px;
+               font-weight: 600;
+               color: #999;
+               padding: 0 10px;
+             }
+           }
+         }
+
          .input-wrap {
-           margin-top: 45px;
+           margin-top: 30px;
            width: 470px;
            display: flex;
            flex-direction: column;
@@ -100,19 +140,28 @@
               font-weight: 400;
               line-height: 26px;
               color: #717171;
+              
+              &:focus {
+                outline: none;
+                border-color: #EB6753;
+              }
             }
           }
          }
+         
          .register {
-           margin-top: 45px;
+           margin-top: 30px;
            width: 470px;
            display: flex;
            flex-direction: column;
            align-items: center;
+           
            .type-option {
              display: flex;
              flex-direction: row;
              align-items: center;
+             width: 100%;
+             margin-bottom: 25px;
              span.text {
                font-family: $font;
                font-size: 14px;
@@ -130,12 +179,14 @@
                }
              }
            }
+           
            .remember-info {
              width: 100%;
              display: flex;
              flex-direction: row;
              justify-content: space-between;
              align-items: center;
+             margin-bottom: 25px;
              a {
                font-family: $font;
                font-size: 14px;
@@ -146,8 +197,8 @@
                color:  #181A20;
              }
            }
+           
            button {
-             margin-top: 25px;
              width: 100%;
              height: 55px;
              border-radius: 12px;
@@ -158,16 +209,30 @@
              font-weight: 600;
              line-height: normal;
              color:  #FFF;
+             cursor: pointer;
+             border: none;
+             transition: background 0.3s ease;
+             
+             &:hover:not(:disabled) {
+               background: #d95540;
+             }
+             
+             &:disabled {
+               opacity: 0.6;
+               cursor: not-allowed;
+             }
+             
              img {
                filter: brightness(0) invert(1);
              }
            }
          }
+         
          .ask-info {
-           margin-top: 90px;
+           margin-top: 40px;
            p {
              font-family: $font;
-             font-size: 20px;
+             font-size: 16px;
              font-style: normal;
              line-height: normal;
              font-weight: 400;
@@ -175,18 +240,25 @@
              b {
                margin-left: 10px;
                font-weight: 600;
-               font-size: 32px;
+               font-size: 16px;
                cursor: pointer;
-               text-decoration: underline;
+               color: #EB6753;
+               text-decoration: none;
+               
+               &:hover {
+                 text-decoration: underline;
+               }
              }
            }
          }
        }
+       
        .right {
          width: 50%;
          height: 100%;
          background-image: url("/img/banner/joinBg.svg");
          background-size: cover;
+         min-height: 600px;
        }
      }
    }

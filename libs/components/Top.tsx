@@ -179,9 +179,16 @@ const Top = () => {
 							<Link href={'/about'}>
 								<div className={router.pathname === '/about' ? 'active' : ''}>{t('About Us')}</div>
 							</Link>
-							<Link href={'/property'}>
-								<div className={router.pathname === '/property' ? 'active' : ''}>{t('Services')}</div>
-							</Link>
+							<div className={`nav-dropdown ${router.pathname.startsWith('/service') ? 'active' : ''}`}>
+								<div className={'nav-dropdown-trigger'}>
+									{t('Services')}
+									<svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+								</div>
+								<div className={'nav-dropdown-menu'}>
+									<Link href={'/service'}><div>Services</div></Link>
+									<Link href={'/service/detail'}><div>Service Detail</div></Link>
+								</div>
+							</div>
 							<Link href={'/community?articleCategory=FREE'}>
 								<div className={router.pathname === '/community' ? 'active' : ''}>{t('Pages')}</div>
 							</Link>
