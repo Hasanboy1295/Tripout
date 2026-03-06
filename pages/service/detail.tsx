@@ -2,6 +2,7 @@ import React from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import withLayoutFull from '../../libs/components/layout/LayoutFull';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: { ...(await serverSideTranslations(locale, ['common'])) },
@@ -122,4 +123,4 @@ const ServiceDetail: NextPage = () => {
 	);
 };
 
-export default ServiceDetail;
+export default withLayoutFull(ServiceDetail);

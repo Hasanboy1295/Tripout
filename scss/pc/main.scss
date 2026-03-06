@@ -1966,6 +1966,7 @@ body::-webkit-scrollbar {
 				display: flex;
 				flex-direction: column;
 				gap: 16px;
+				height: 400px;
 
 				.dest-card {
 					flex: 1;
