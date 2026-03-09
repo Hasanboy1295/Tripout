@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Typography, Box } from '@mui/material';
+import { Stack, Typography, Box, Divider } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -10,7 +10,6 @@ import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import IconButton from '@mui/material/IconButton';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 interface PropertyCardType {
 	property: Property;
@@ -41,79 +40,58 @@ const PropertyCard = (props: PropertyCardType) => {
 					>
 						<img src={imagePath} alt="" />
 					</Link>
-					{property && property?.propertyRank > topPropertyRank && (
-						<Box component={'div'} className={'top-badge'}>
-							<img src="/img/icons/electricity.svg" alt="" />
-							<Typography>TOP</Typography>
-						</Box>
-					)}
-					<Box component={'div'} className={'price-box'}>
-						<Typography>${formatterStr(property?.propertyPrice)}</Typography>
-					</Box>
+					{/* Rating badge */}
+					<div className={'rating-badge'}>
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="#e8a54b">
+							<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+						</svg>
+						<span>4.9</span>
+					</div>
 				</Stack>
 				<Stack className="bottom">
-					<Stack className="name-address">
-						<Stack className="name">
-							<Link
-								href={{
-									pathname: '/property/detail',
-									query: { id: property?._id },
-								}}
-							>
-								<Typography>{property.propertyTitle}</Typography>
-							</Link>
-						</Stack>
-						<Stack className="address">
-							<Typography>
-								{property.propertyAddress}, {property.propertyLocation}
-							</Typography>
-						</Stack>
+					<Stack className="name">
+						<Link
+							href={{
+								pathname: '/property/detail',
+								query: { id: property?._id },
+							}}
+						>
+							<Typography className="title">{property.propertyTitle}</Typography>
+						</Link>
 					</Stack>
-					<Stack className="options">
-						<Stack className="option">
-							<img src="/img/icons/bed.svg" alt="" /> <Typography>{property.propertyBeds} bed</Typography>
-						</Stack>
-						<Stack className="option">
-							<img src="/img/icons/room.svg" alt="" /> <Typography>{property.propertyRooms} room</Typography>
-						</Stack>
-						<Stack className="option">
-							<img src="/img/icons/expand.svg" alt="" /> <Typography>{property.propertySquare} m2</Typography>
-						</Stack>
+					<Stack className="address-row">
+						<div className="location">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+								<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#e8a54b"/>
+							</svg>
+							<span>{property.propertyAddress}, {property.propertyLocation}</span>
+						</div>
+						<IconButton
+							className="heart-btn"
+							size="small"
+							onClick={() => likePropertyHandler(user, property?._id)}
+						>
+							{myFavorites ? (
+								<FavoriteIcon sx={{ fontSize: 18, color: '#e8a54b' }} />
+							) : property?.meLiked && property?.meLiked[0]?.myFavorite ? (
+								<FavoriteIcon sx={{ fontSize: 18, color: '#e8a54b' }} />
+							) : (
+								<FavoriteBorderIcon sx={{ fontSize: 18, color: '#e8a54b' }} />
+							)}
+						</IconButton>
 					</Stack>
-					<Stack className="divider"></Stack>
-					<Stack className="type-buttons">
-						<Stack className="type">
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								className={property.propertyRent ? '' : 'disabled-type'}
-							>
-								Rent
-							</Typography>
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								className={property.propertyBarter ? '' : 'disabled-type'}
-							>
-								Barter
-							</Typography>
-						</Stack>
-						{!recentlyVisited && (
-							<Stack className="buttons">
-								<IconButton color={'default'}>
-									<RemoveRedEyeIcon />
-								</IconButton>
-								<Typography className="view-cnt">{property?.propertyViews}</Typography>
-								<IconButton color={'default'} onClick={() => likePropertyHandler(user, property?._id)}>
-									{myFavorites ? (
-										<FavoriteIcon color="primary" />
-									) : property?.meLiked && property?.meLiked[0]?.myFavorite ? (
-										<FavoriteIcon color="primary" />
-									) : (
-										<FavoriteBorderIcon />
-									)}
-								</IconButton>
-								<Typography className="view-cnt">{property?.propertyLikes}</Typography>
-							</Stack>
-						)}
+					<Divider sx={{ my: '10px' }} />
+					<Stack className="bottom-row">
+						<div className="days">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+								<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5z" fill="#e8a54b"/>
+							</svg>
+							<span>{property?.propertyRooms} Days</span>
+						</div>
+						<div className="price">
+							<span className="label">Start From </span>
+							<span className="amount">${formatterStr(property?.propertyPrice)}</span>
+						</div>
 					</Stack>
 				</Stack>
 			</Stack>

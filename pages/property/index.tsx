@@ -16,6 +16,8 @@ import { GET_PROPERTIES } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
+import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -35,6 +37,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [sortingOpen, setSortingOpen] = useState(false);
 	const [filterSortName, setFilterSortName] = useState('New');
+	const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
@@ -50,7 +53,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			setProperties(data?.getProperties?.list);
-			setTotal(data?.getProperties?.metaCounter?.total);
+			setTotal(data?.getProperties?.metaCounter[0]?.total ?? 0);
 		},
 	});
 
@@ -132,48 +135,72 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	} else {
 		return (
 			<div id="property-list-page" style={{ position: 'relative' }}>
-				<div className="container">
-					<Box component={'div'} className={'right'}>
-						<span>Sort by</span>
-						<div>
-							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
-								{filterSortName}
-							</Button>
-							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'new'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									New
-								</MenuItem>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'lowest'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									Lowest Price
-								</MenuItem>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'highest'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									Highest Price
-								</MenuItem>
-							</Menu>
-						</div>
-					</Box>
+				<div className={`container ${viewMode === 'list' ? 'with-sidebar' : 'no-sidebar'}`}>
 					<Stack className={'property-page'}>
-						<Stack className={'filter-config'}>
-							{/* @ts-ignore */}
-							<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
-						</Stack>
+						{/* Sidebar filter - only in list mode */}
+						{viewMode === 'list' && (
+							<Stack className={'filter-config'}>
+								{/* @ts-ignore */}
+								<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
+							</Stack>
+						)}
+
 						<Stack className="main-config" mb={'76px'}>
-							<Stack className={'list-config'}>
+							{/* Top toolbar */}
+							<div className="toolbar">
+								<div className="view-toggles">
+									<button
+										className={`toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
+										onClick={() => setViewMode('grid')}
+										title="Grid View"
+									>
+										<GridViewRoundedIcon fontSize="small" />
+									</button>
+									<button
+										className={`toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
+										onClick={() => setViewMode('list')}
+										title="List View"
+									>
+										<ViewListRoundedIcon fontSize="small" />
+									</button>
+								</div>
+								<Box component={'div'} className={'sorting-box'}>
+									<span>Sort by</span>
+									<div>
+										<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
+											{filterSortName}
+										</Button>
+										<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
+											<MenuItem
+												onClick={sortingHandler}
+												id={'new'}
+												disableRipple
+												sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+											>
+												New
+											</MenuItem>
+											<MenuItem
+												onClick={sortingHandler}
+												id={'lowest'}
+												disableRipple
+												sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+											>
+												Lowest Price
+											</MenuItem>
+											<MenuItem
+												onClick={sortingHandler}
+												id={'highest'}
+												disableRipple
+												sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+											>
+												Highest Price
+											</MenuItem>
+										</Menu>
+									</div>
+								</Box>
+							</div>
+
+							<Stack className={`list-config ${viewMode === 'grid' ? 'grid-3' : 'grid-2'}`}>
 								{properties?.length === 0 ? (
 									<div className={'no-data'}>
 										<img src="/img/icons/icoAlert.svg" alt="" />
@@ -192,7 +219,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 									<Stack className="pagination-box">
 										<Pagination
 											page={currentPage}
-											count={Math.ceil(total / searchFilter.limit)}
+											count={Math.ceil(total / searchFilter.limit) || 1}
 											onChange={handlePaginationChange}
 											shape="circular"
 											color="primary"
@@ -203,7 +230,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 								{properties.length !== 0 && (
 									<Stack className="total-result">
 										<Typography>
-											Total {total} propert{total > 1 ? 'ies' : 'y'} available
+											Total {total ?? 0} propert{total > 1 ? 'ies' : 'y'} available
 										</Typography>
 									</Stack>
 								)}

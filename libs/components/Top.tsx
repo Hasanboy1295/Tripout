@@ -189,8 +189,8 @@ const Top = () => {
 									<Link href={'/service/detail'}><div>Service Detail</div></Link>
 								</div>
 							</div>
-							<Link href={'/community?articleCategory=FREE'}>
-								<div className={router.pathname === '/community' ? 'active' : ''}>{t('Pages')}</div>
+							<Link href={'/property'}>
+								<div className={router.pathname === '/property' ? 'active' : ''}>{t('Pages')}</div>
 							</Link>
 							<Link href={'/agent'}>
 								<div className={router.pathname === '/agent' ? 'active' : ''}>{t('Agents')}</div>

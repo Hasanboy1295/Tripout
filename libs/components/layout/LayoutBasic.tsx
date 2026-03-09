@@ -29,9 +29,9 @@ const withLayoutBasic = (Component: any) => {
 
 			switch (router.pathname) {
 				case '/property':
-					title = 'Property Search';
-					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/properties.png';
+					title = 'Destination List';
+					desc = '';
+					bgImage = '/img/banner/hero-travel-1.jpg';
 					break;
 				case '/agent':
 					title = 'Agents';
@@ -124,16 +124,27 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						<Stack
-							className={`header-basic ${authHeader && 'auth'}`}
+							className={`header-basic ${authHeader && 'auth'} ${router.pathname === '/property' ? 'destination-header' : ''}`}
 							style={{
 								backgroundImage: `url(${memoizedValues.bgImage})`,
 								backgroundSize: 'cover',
-								boxShadow: 'inset 10px 40px 150px 40px rgb(24 22 36)',
+								backgroundPosition: 'center',
+								boxShadow: router.pathname === '/property'
+									? 'inset 10px 40px 150px 40px rgba(0, 0, 0, 0.35)'
+									: 'inset 10px 40px 150px 40px rgb(24 22 36)',
 							}}
 						>
 							<Stack className={'container'}>
 								<strong>{t(memoizedValues.title)}</strong>
-								<span>{t(memoizedValues.desc)}</span>
+								{router.pathname === '/property' ? (
+									<span className="breadcrumb">
+										<span className="breadcrumb-home">HOME</span>
+										<span className="breadcrumb-sep"> {'>'} </span>
+										<span className="breadcrumb-current">DESTINATION</span>
+									</span>
+								) : (
+									<span>{t(memoizedValues.desc)}</span>
+								)}
 							</Stack>
 						</Stack>
 
