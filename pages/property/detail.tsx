@@ -399,7 +399,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										</Stack>
 										<Stack className={'review-list'}>
 											{propertyComments?.map((comment: Comment) => {
-												return <Review comment={comment} propertyViews={property?.propertyViews} key={comment?._id} />;
+												return <Review comment={comment} key={comment?._id} />;
 											})}
 											<Box component={'div'} className={'pagination-box'}>
 												<MuiPagination
@@ -523,49 +523,6 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 							</Stack>
 						</Stack>
 
-						{/* Similar Destinations */}
-						{destinationProperties.length !== 0 && (
-							<Stack className={'similar-properties-config'}>
-								<Stack className={'title-pagination-box'}>
-									<Stack className={'title-box'}>
-										<Typography className={'main-title'}>Destination Property</Typography>
-										<Typography className={'sub-title'}>Aliquam lacinia diam quis lacus euismod</Typography>
-									</Stack>
-									<Stack className={'pagination-box'}>
-										<WestIcon className={'swiper-similar-prev'} />
-										<div className={'swiper-similar-pagination'}></div>
-										<EastIcon className={'swiper-similar-next'} />
-									</Stack>
-								</Stack>
-								<Stack className={'cards-box'}>
-									<Swiper
-										className={'similar-homes-swiper'}
-										slidesPerView={'auto'}
-										spaceBetween={35}
-										modules={[Autoplay, Navigation, Pagination]}
-										navigation={{
-											nextEl: '.swiper-similar-next',
-											prevEl: '.swiper-similar-prev',
-										}}
-										pagination={{
-											el: '.swiper-similar-pagination',
-										}}
-									>
-										{destinationProperties.map((property: Property) => {
-											return (
-												<SwiperSlide className={'similar-homes-slide'} key={property.propertyTitle}>
-													<PropertyBigCard
-														property={property}
-														likePropertyHandler={likePropertyHandler}
-														key={property?._id}
-													/>
-												</SwiperSlide>
-											);
-										})}
-									</Swiper>
-								</Stack>
-							</Stack>
-						)}
 					</Stack>
 				</div>
 			</div>

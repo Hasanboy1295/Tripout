@@ -12,11 +12,10 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 interface ReviewProps {
 	comment: Comment;
-	propertyViews?: number;
 }
 
 const Review = (props: ReviewProps) => {
-	const { comment, propertyViews } = props;
+	const { comment } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -50,7 +49,7 @@ const Review = (props: ReviewProps) => {
 						</Stack>
 						<Stack className={'views-row'}>
 							<RemoveRedEyeIcon />
-							<Typography className={'view-count'}>{propertyViews ?? 0} views</Typography>
+							<Typography className={'view-count'}>{comment?.memberData?.memberViews ?? 0} views</Typography>
 						</Stack>
 						<Stack className={'desc-box'}>
 							<Typography className={'description'}>{comment.commentContent}</Typography>

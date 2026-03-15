@@ -214,7 +214,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 
 	const getCommentMemberImage = (imageUrl: string | undefined) => {
 		if (imageUrl) return `${process.env.REACT_APP_API_URL}/${imageUrl}`;
-		else return '/img/community/articleImg.png';
+		else return '/img/profile/defaultUser.svg';
 	};
 
 	const goMemberPage = (id: any) => {
