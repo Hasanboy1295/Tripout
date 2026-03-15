@@ -7,17 +7,19 @@ import Moment from 'react-moment';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 interface ReviewProps {
 	comment: Comment;
+	propertyViews?: number;
 }
 
 const Review = (props: ReviewProps) => {
-	const { comment } = props;
+	const { comment, propertyViews } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
-	const [value, setValue] = React.useState<number | null>(2);
 	const imagePath: string = comment?.memberData?.memberImage
 		? `${REACT_APP_API_URL}/${comment?.memberData?.memberImage}`
 		: '/img/profile/defaultUser.svg';
@@ -33,20 +35,27 @@ const Review = (props: ReviewProps) => {
 		return (
 			<Stack className={'review-config'}>
 				<Stack className={'review-mb-info'}>
-					<Stack className={'img-name-box'}>
-						<img src={imagePath} alt="" className={'img-box'} />
-						<Stack>
+					<img src={imagePath} alt="" className={'img-box'} />
+					<Stack className={'review-right'}>
+						<Stack className={'name-date-row'}>
 							<Typography className={'name'} onClick={() => goMemberPage(comment?.memberData?._id as string)}>
 								{comment.memberData?.memberNick}
 							</Typography>
-							<Typography className={'date'}>
-								<Moment format={'DD MMMM, YYYY'}>{comment.createdAt}</Moment>
-							</Typography>
+							<Stack className={'date-box'}>
+								<CalendarTodayOutlinedIcon />
+								<Typography className={'date'}>
+									<Moment format={'MMM DD, YYYY'}>{comment.createdAt}</Moment>
+								</Typography>
+							</Stack>
+						</Stack>
+						<Stack className={'views-row'}>
+							<RemoveRedEyeIcon />
+							<Typography className={'view-count'}>{propertyViews ?? 0} views</Typography>
+						</Stack>
+						<Stack className={'desc-box'}>
+							<Typography className={'description'}>{comment.commentContent}</Typography>
 						</Stack>
 					</Stack>
-				</Stack>
-				<Stack className={'desc-box'}>
-					<Typography className={'description'}>{comment.commentContent}</Typography>
 				</Stack>
 			</Stack>
 		);
