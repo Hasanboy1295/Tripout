@@ -1,8 +1,9 @@
 import React from 'react';
-import { Stack, Box, Divider } from '@mui/material';
+import { Stack, Box, Divider, IconButton, Typography } from '@mui/material';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Property } from '../../types/property/property';
-import { REACT_APP_API_URL } from '../../config';
+import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';

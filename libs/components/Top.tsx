@@ -176,9 +176,11 @@ const Top = () => {
 							<Link href={'/'}>
 								<div className={router.pathname === '/' ? 'active' : ''}>{t('Home')}</div>
 							</Link>
-							<Link href={'/about'}>
-								<div className={router.pathname === '/about' ? 'active' : ''}>{t('About Us')}</div>
+						
+                            <Link href={'/property'}>
+								<div className={router.pathname === '/property' ? 'active' : ''}>{t('Destinations')}</div>
 							</Link>
+							
 							<div className={`nav-dropdown ${router.pathname.startsWith('/service') ? 'active' : ''}`}>
 								<div className={'nav-dropdown-trigger'}>
 									{t('Services')}
@@ -189,15 +191,19 @@ const Top = () => {
 									<Link href={'/service/detail'}><div>Service Detail</div></Link>
 								</div>
 							</div>
-							<Link href={'/property'}>
-								<div className={router.pathname === '/property' ? 'active' : ''}>{t('Pages')}</div>
-							</Link>
+						
 							<Link href={'/agent'}>
 								<div className={router.pathname === '/agent' ? 'active' : ''}>{t('Agents')}</div>
 							</Link>
-							<Link href={'/cs'}>
-								<div>{t('Contact Us')}</div>
+							<Link href={'/mypage'}>
+								<div className={router.pathname === '/mypage' ? 'active' : ''}>{t('My Page')}</div>
 							</Link>
+
+								<Link href={'/about'}>
+								<div className={router.pathname === '/about' ? 'active' : ''}>{t('About Us')}</div>
+							</Link>
+
+
 						</Box>
 						<Box component={'div'} className={'user-box'}>
 							<div className={'search-btn'}>
