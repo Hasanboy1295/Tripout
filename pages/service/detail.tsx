@@ -17,52 +17,63 @@ const servicesList = [
 	'Local Guides',
 ];
 
-const features = ['Personalized Experiences', '24/7 Support', 'Seamless Booking', 'Expert Advice', 'Exclusive Deals', 'Local Insights'];
+
+const features = [
+	{ title: 'Personalized Plans', desc: 'Tailored itineraries that fit your pace and budget.' },
+	{ title: '24/7 Support', desc: 'Real humans on call whenever plans change.' },
+	{ title: 'Seamless Booking', desc: 'Flights, stays, rides—all handled for you.' },
+	{ title: 'Expert Advice', desc: 'Local tips so you skip the tourist traps.' },
+	{ title: 'Exclusive Deals', desc: 'Partner perks and member-only savings.' },
+	{ title: 'Local Insights', desc: 'Guides who know the shortcuts and stories.' },
+];
 
 const ServiceDetail: NextPage = () => {
 	return (
 		<div className={'service-detail-page'}>
 			{/* Banner */}
-			<div className={'service-banner'}>
-				<img src="/img/banner/hero-travel-1.jpg" alt="Service Detail" />
-				<div className={'banner-overlay'}>
-					<h1>Service Detail</h1>
-					<div className={'breadcrumb'}>
-						<Link href={'/'}>HOME</Link>
-						<span>{'>'}</span>
-						<Link href={'/service'}>SERVICES</Link>
-						<span>{'>'}</span>
-						<span>SERVICE DETAIL</span>
+				<div className={'service-banner'}>
+					<img src="/img/banner/hero-travel-1.jpg" alt="Service Detail" />
+					<div className={'banner-overlay'}>
+						<h1>Travel Assistance</h1>
+						<p>We plan, protect, and adapt your trip in real time—so you just enjoy the journey.</p>
+						<div className="banner-actions">
+							<Link href="/property" className="btn-primary">Explore Now</Link>
+							<Link href="/service" className="btn-ghost">View All Services</Link>
+						</div>
 					</div>
 				</div>
-			</div>
 
 			{/* Content */}
 			<div className={'detail-content'}>
 				{/* Left: main content */}
 				<div className={'detail-left'}>
 					<h2>Travel Assistance</h2>
-					<p>Duis diam arcu, bibendum vel neque vitae, consectetur feugiat tellus. Nam ac mi nec ipsum bibendum accumsan non ac neque. Cras non pretium orci. Pellentesque a posuere mi, in finibus dolor. Phasellus venenatis et odio convallis, et convallis nibh consectetur. Mauris quis purus rhoncus, faucibus ante ac, lacinia nibh.</p>
-					<p>Duis diam arcu, bibendum vel neque vitae, consectetur feugiat tellus. Nam ac mi nec ipsum bibendum accumsan non ac neque. Cras non pretium orci. Pellentesque a posuere mi, in finibus dolor.</p>
+					<p>We arrange every part of your journey—flights, hotels, rides, visas, and insurance—so you can focus on exploring. Our team monitors your trip in real time and steps in fast when plans change.</p>
+					<p>If you miss a connection, need a new hotel, or want restaurant tips, we handle it for you. Support is available 24/7 with local know‑how wherever you land.</p>
 
 					<div className={'detail-image'}>
 						<img src="/img/destinations/greece.jpg" alt="Travel" />
 					</div>
 
-					<h3>Discover Your Nextcover Unforgettable Journeys Around the World</h3>
-					<p>Phasellus finibus mauris eu turpis dignissim placerat. Donec dignissim libero lacus. Duis cursus tortor risus, in viverra eros luctus mattis. Nunc sed nunc et eros dapibus ullamcorper. Phasellus maximus aliquam sem ac dictum. Aenean feugiat vehicula ipsum, at sodales nisl faucibus vel.</p>
-					<p>Etiam vel mauris vestibulum, finibus risus et, sagittis urna. Praesent id vestibulum turpis, a molestie tellus. Donec malesuada venenatis ipsum, vel consectetur nisl ultrices quis.</p>
+					<h3>Discover Unforgettable Journeys Around the World</h3>
+					<p>From airport pickups to hidden‑gem day trips, we craft smooth, memorable experiences. Every itinerary is tailored to your pace, interests, and budget.</p>
+					<p>Need to reroute mid‑trip? We rebook and adjust on the fly—no stress, no long hold times, just fast solutions.</p>
 
 					{/* Features row */}
-					<h3>Embark on Extraordinary Adventures Across the Globe</h3>
-					<div className={'features-grid'}>
-						{features.map((f, i) => (
-							<div key={i} className={'feature-item'}>
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="#e8a54b"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-								{f}
-							</div>
-						))}
-					</div>
+						<h3>Embark on Extraordinary Adventures Across the Globe</h3>
+						<div className={'features-grid'}>
+							{features.map((f, i) => (
+								<div key={i} className={'feature-card'}>
+									<div className="feature-icon">
+										<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 16.17 4.83 12 3.4 13.41 9 19l12-12-1.41-1.41z" fill="#e8a54b"/></svg>
+									</div>
+									<div className="feature-text">
+										<strong>{f.title}</strong>
+										<span>{f.desc}</span>
+									</div>
+								</div>
+							))}
+						</div>
 
 					{/* Two images */}
 					<div className={'detail-images-row'}>
@@ -115,7 +126,7 @@ const ServiceDetail: NextPage = () => {
 						</div>
 						<h4>Explore the World Your Adventure Awaits</h4>
 						<p>Start Your Adventure Now!</p>
-						<a href="tel:5551234567" className={'cta-btn'}>CALL NOW: (555) 123-4567</a>
+						<a href="tel:821057191295" className={'cta-btn'}>CALL NOW: (82) 1057191295 </a>
 					</div>
 				</div>
 			</div>
