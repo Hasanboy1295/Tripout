@@ -50,21 +50,23 @@ body::-webkit-scrollbar {
 				position: fixed;
 				padding: 0;
 				width: 100%;
-				height: 80px;
+				height: 96px;
 				display: flex;
 				flex-direction: row;
 				box-sizing: border-box;
 				z-index: 99;
 				align-items: center;
-				background: #ffffff;
-				border-bottom: 1px solid #eee;
-				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+				background: rgba(255, 255, 255, 0.98);
+				border-bottom: 1px solid #edf0f2;
+				box-shadow: 0 6px 24px rgba(15, 23, 42, 0.05);
 				transition: all 0.3s ease;
 				&.scrolled {
-					background-color: #ffffff;
-					box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+					background: rgba(255, 255, 255, 0.98);
+					box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
 				}
 				.container {
+					padding: 0 10px;
+					min-height: 96px;
 					flex-direction: row;
 					align-items: center;
 					justify-content: space-between;
@@ -96,23 +98,40 @@ body::-webkit-scrollbar {
 						display: flex;
 						flex-direction: row;
 						align-items: center;
-						gap: 40px;
+						gap: 26px;
 						div {
 							position: relative;
-							color: #333;
+							color: #334155;
 							font-family: $font;
-							font-size: 15px;
+							font-size: 17px;
 							font-style: normal;
 							font-weight: 500;
 							line-height: normal;
 							cursor: pointer;
+							padding: 8px 0;
+							border-radius: 0;
 							transition: color 0.3s ease;
+							&::after {
+								content: '';
+								position: absolute;
+								left: 0;
+								bottom: -8px;
+								width: 100%;
+								height: 2px;
+								background: #e8a54b;
+								transform: scaleX(0);
+								transform-origin: center;
+								transition: transform 0.25s ease;
+							}
 							&:hover {
 								color: #e8a54b;
 							}
 							&.active {
 								color: #e8a54b;
 								font-weight: 600;
+								&::after {
+									transform: scaleX(1);
+								}
 							}
 						}
 
@@ -128,12 +147,26 @@ body::-webkit-scrollbar {
 								display: flex;
 								align-items: center;
 								gap: 4px;
-								color: #333;
+								color: #334155;
 								font-family: $font;
-								font-size: 15px;
+								font-size: 17px;
 								font-weight: 500;
 								cursor: pointer;
+								padding: 8px 0;
+								border-radius: 0;
 								transition: color 0.3s;
+								&::after {
+									content: '';
+									position: absolute;
+									left: 0;
+									bottom: -8px;
+									width: 100%;
+									height: 2px;
+									background: #e8a54b;
+									transform: scaleX(0);
+									transform-origin: center;
+									transition: transform 0.25s ease;
+								}
 
 								svg {
 									transition: transform 0.3s;
@@ -149,12 +182,13 @@ body::-webkit-scrollbar {
 								top: 100%;
 								left: 50%;
 								transform: translateX(-50%);
-								margin-top: 12px;
+								margin-top: 18px;
 								background: #fff;
-								border-radius: 12px;
-								box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-								padding: 8px 0;
-								min-width: 180px;
+								border: 1px solid #edf0f2;
+								border-radius: 14px;
+								box-shadow: 0 14px 34px rgba(15, 23, 42, 0.1);
+								padding: 8px;
+								min-width: 190px;
 								opacity: 0;
 								visibility: hidden;
 								transition: all 0.25s ease;
@@ -172,29 +206,33 @@ body::-webkit-scrollbar {
 								}
 
 								div {
-									padding: 10px 20px;
+									padding: 11px 14px;
 									font-family: $font;
 									font-size: 14px;
 									font-weight: 500;
-									color: #333;
+									color: #334155;
 									transition: all 0.2s;
 									white-space: nowrap;
+									border-radius: 10px;
 
 									&:hover {
 										color: #e8a54b;
-										background: #fdf8f3;
+										background: #f8fafc;
 									}
 								}
 							}
 
 							&:hover {
+								.nav-dropdown-trigger::after {
+									transform: scaleX(1);
+								}
 								.nav-dropdown-trigger svg {
 									transform: rotate(180deg);
 								}
 								.nav-dropdown-menu {
 									opacity: 1;
 									visibility: visible;
-									margin-top: 8px;
+									margin-top: 12px;
 								}
 							}
 						}
@@ -203,12 +241,13 @@ body::-webkit-scrollbar {
 						display: flex;
 						flex-direction: row;
 						align-items: center;
-						gap: 16px;
+						gap: 12px;
 						.search-btn {
-							width: 42px;
-							height: 42px;
+							width: 50px;
+							height: 50px;
 							border-radius: 50%;
-							border: 1.5px solid #ddd;
+							border: 1px solid #e4e7eb;
+							background: #fff;
 							display: flex;
 							align-items: center;
 							justify-content: center;
@@ -220,21 +259,23 @@ body::-webkit-scrollbar {
 							}
 							&:hover {
 								border-color: #e8a54b;
+								background: #fff;
 								svg {
 									color: #e8a54b;
 								}
 							}
 						}
 						.join-box {
-							height: 46px;
+							height: 54px;
 							display: flex;
 							align-items: center;
 							justify-content: center;
 							border-radius: 50px;
 							background: #e8a54b;
 							cursor: pointer;
-							padding: 0 28px;
+							padding: 0 32px;
 							gap: 8px;
+							box-shadow: none;
 							transition: background 0.3s ease;
 							svg {
 								color: #ffffff;
@@ -242,7 +283,7 @@ body::-webkit-scrollbar {
 							}
 							span {
 								font-family: $font;
-								font-size: 14px;
+								font-size: 16px;
 								font-style: normal;
 								font-weight: 600;
 								line-height: normal;
@@ -260,6 +301,7 @@ body::-webkit-scrollbar {
 								height: 42px;
 								border-radius: 50%;
 								object-fit: cover;
+								border: 2px solid rgba(232, 165, 75, 0.28);
 							}
 						}
 					}
@@ -267,11 +309,15 @@ body::-webkit-scrollbar {
 						margin-left: 12px;
 						display: flex;
 						align-items: center;
+						padding-left: 12px;
+						border-left: 1px solid #edf0f2;
 						.notification-icon {
 							color: #555;
 						}
 						.btn-lang {
-							border-radius: 4px;
+							min-width: auto;
+							border-radius: 8px;
+							padding: 8px 10px;
 							img {
 								width: 24px;
 								height: 17px;
@@ -719,71 +765,90 @@ body::-webkit-scrollbar {
 	.header-basic {
 		position: relative;
 		width: 100%;
-		height: 350px;
+		height: 410px;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
 		background: black;
-		border-radius: 20px;
-		margin: 20px auto;
-		width: calc(100% - 80px);
-		max-width: 1500px;
 		overflow: hidden;
+		margin-bottom: 28px;
 		&.auth {
 			height: 300px;
 		}
-		&.destination-header {
-			height: 350px;
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(90deg, rgba(14, 19, 34, 0.76) 0%, rgba(14, 19, 34, 0.38) 55%, rgba(14, 19, 34, 0.2) 100%);
+		}
+		&::after {
+			display: none;
 		}
 		.container {
-			margin-top: 120px;
+			position: relative;
+			z-index: 1;
+			margin-top: 164px;
+			padding: 0;
+			max-width: 1200px;
+			align-items: flex-start;
+			gap: 10px;
+			.eyebrow {
+				display: inline-flex;
+				align-items: center;
+				padding: 0;
+				border-radius: 0;
+				background: transparent;
+				color: #e8a54b;
+				font-family: $font;
+				font-size: 12px;
+				font-weight: 700;
+				letter-spacing: 1.6px;
+				text-transform: uppercase;
+			}
 			strong {
 				color: #fff;
 				font-family: $font;
-				font-size: 42px;
-				font-style: italic;
-				font-weight: 800;
-				line-height: normal;
-				letter-spacing: 1px;
+				font-size: 56px;
+				font-style: normal;
+				font-weight: 700;
+				line-height: 1.12;
+				letter-spacing: -0.6px;
 				text-transform: capitalize;
 			}
-			span {
+			.header-desc {
 				color: #fff;
 				font-family: $font;
-				font-size: 13px;
-				font-style: normal;
-				font-weight: 500;
-				line-height: 26px;
-				letter-spacing: 1.5px;
-				text-transform: uppercase;
+				font-size: 17px;
+				font-weight: 400;
+				line-height: 1.6;
+				max-width: 520px;
+				color: rgba(255, 255, 255, 0.82);
 			}
 			.breadcrumb {
-				margin-top: 10px;
-				font-size: 13px;
-				font-weight: 500;
-				letter-spacing: 1.5px;
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				padding: 0;
+				border-radius: 0;
+				background: transparent;
+				color: rgba(255, 255, 255, 0.72);
+				font-family: $font;
+				font-size: 12px;
+				font-weight: 600;
+				letter-spacing: 1px;
 				text-transform: uppercase;
 
 				.breadcrumb-home {
 					color: #e8a54b;
-					cursor: pointer;
 				}
+
 				.breadcrumb-sep {
-					color: rgba(255, 255, 255, 0.6);
-					margin: 0 4px;
+					color: rgba(255, 255, 255, 0.5);
 				}
+
 				.breadcrumb-current {
-					color: rgba(255, 255, 255, 0.8);
+					color: #ffffff;
 				}
-			}
-		}
-		&.destination-header .container {
-			margin-top: 120px;
-			strong {
-				font-size: 42px;
-				font-weight: 800;
-				font-style: italic;
-				letter-spacing: 1px;
 			}
 		}
 	}
@@ -1555,11 +1620,11 @@ body::-webkit-scrollbar {
 	.service-banner {
 		position: relative;
 		width: 100%;
-		height: 280px;
-		border-radius: 20px;
+		height: 410px;
+		border-radius: 0;
 		overflow: hidden;
-		margin: 20px auto 0;
-		max-width: calc(100% - 80px);
+		margin: 0 auto 28px;
+		max-width: 100%;
 
 		img {
 			width: 100%;
@@ -1570,18 +1635,19 @@ body::-webkit-scrollbar {
 		.banner-overlay {
 			position: absolute;
 			inset: 0;
-			background: linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 100%);
+			background: linear-gradient(90deg, rgba(14, 19, 34, 0.78) 0%, rgba(14, 19, 34, 0.38) 55%, rgba(14, 19, 34, 0.2) 100%);
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			padding-left: 60px;
+			padding: 146px 80px 60px;
 
 			h1 {
 				font-family: $font;
-				font-size: 42px;
+				font-size: 56px;
 				font-weight: 800;
 				color: #fff;
 				margin: 0 0 10px;
+				letter-spacing: -0.6px;
 			}
 
 			.breadcrumb {
@@ -1589,8 +1655,15 @@ body::-webkit-scrollbar {
 				align-items: center;
 				gap: 8px;
 				font-family: $font;
-				font-size: 13px;
-				color: rgba(255,255,255,0.7);
+				font-size: 12px;
+				font-weight: 600;
+				color: rgba(255,255,255,0.72);
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				width: fit-content;
+				padding: 0;
+				border-radius: 0;
+				background: transparent;
 
 				a {
 					color: #e8a54b;
@@ -1926,12 +1999,14 @@ body::-webkit-scrollbar {
 
 	/* Destination Highlights */
 	.dest-highlights {
-		background: #faf3ec;
-		padding: 60px 120px 36px;
+		background: #fdf8f3;
+		padding: 60px 70px 28px;
+		max-width: 1180px;
+		margin: 0 auto;
 
 		.dest-header {
 			text-align: center;
-			margin-bottom: 48px;
+			margin-bottom: 40px;
 
 			h2 {
 				font-family: $font;
@@ -1944,11 +2019,11 @@ body::-webkit-scrollbar {
 
 		.dest-grid {
 			display: grid;
-			grid-template-columns: 0.85fr 1fr 1.55fr;
-			grid-template-rows: 1fr auto;
-			gap: 14px;
-			margin-bottom: 20px;
-			max-height: 580px;
+			grid-template-columns: 1fr 1fr 1.5fr;
+			grid-template-rows: 1fr 1fr;
+			gap: 16px;
+			margin-bottom: 18px;
+			height: 500px;
 
 			.dest-card {
 				border-radius: 16px;
@@ -1968,8 +2043,7 @@ body::-webkit-scrollbar {
 				}
 
 				&.tall {
-					grid-row: 1 / 2;
-					height: 100%;
+					grid-row: span 2;
 				}
 
 				&.featured {
@@ -2002,71 +2076,49 @@ body::-webkit-scrollbar {
 					}
 				}
 			}
+		}
 
-			.dest-right-col {
-				display: flex;
-				flex-direction: column;
-				gap: 14px;
-				grid-row: 1 / 3;
+	.dest-bottom-bar {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		background: #1a1a2e;
+		border-radius: 16px;
+		padding: 18px 26px;
+		margin-top: 12px;
 
-				.dest-card {
-					flex: 1;
-					border-radius: 16px;
-					overflow: hidden;
-					min-height: 0;
+		.dest-count {
+			font-family: $font;
+			font-size: 28px;
+			font-weight: 800;
+			color: #fff;
+		}
 
-					img {
-						width: 100%;
-						height: 100%;
-						object-fit: cover;
-						display: block;
-					}
-				}
-			}
+		.dest-text {
+			flex: 1;
+			font-family: $font;
+			font-size: 13px;
+			color: rgba(255,255,255,0.7);
+		}
 
-			.dest-bottom-bar {
-				grid-column: 1 / 3;
-				grid-row: 2 / 3;
-				display: flex;
-				align-items: center;
-				gap: 16px;
-				background: #1a1a2e;
-				border-radius: 16px;
-				padding: 16px 28px;
+		.explore-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 12px 22px;
+			background: #e8a54b;
+			color: #fff;
+			font-family: $font;
+			font-size: 12px;
+			font-weight: 700;
+			border-radius: 50px;
+			text-decoration: none;
+			letter-spacing: 0.5px;
+			text-transform: uppercase;
+				transition: background 0.3s;
 
-				.dest-count {
-					font-family: $font;
-					font-size: 32px;
-					font-weight: 800;
-					color: #fff;
-				}
-
-				.dest-text {
-					flex: 1;
-					font-family: $font;
-					font-size: 14px;
-					color: rgba(255,255,255,0.7);
-				}
-
-				.explore-btn {
-					display: inline-flex;
-					align-items: center;
-					gap: 8px;
-					padding: 14px 28px;
-					background: #e8a54b;
-					color: #fff;
-					font-family: $font;
-					font-size: 13px;
-					font-weight: 700;
-					border-radius: 50px;
-					text-decoration: none;
-					letter-spacing: 0.5px;
-					text-transform: uppercase;
-					transition: background 0.3s;
-
-					&:hover {
-						background: #d4943e;
-					}
+				&:hover {
+					background: #d4943e;
 				}
 			}
 		}
@@ -2223,7 +2275,7 @@ body::-webkit-scrollbar {
 				border-radius: 16px;
 				overflow: hidden;
 				margin: 24px 0;
-				height: 350px;
+				height: 280px;
 
 				img {
 					width: 100%;

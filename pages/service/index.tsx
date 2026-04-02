@@ -236,22 +236,20 @@ const ServicePage: NextPage = () => {
 							<span>Discover the Magic of Bali</span>
 						</div>
 					</div>
-					<div className={'dest-right-col'}>
-						<div className={'dest-card'}>
-							<img src="/img/destinations/greece.jpg" alt="Greece" />
-						</div>
-						<div className={'dest-card'}>
-							<img src="/img/destinations/paris.jpg" alt="Paris" />
-						</div>
+					<div className={'dest-card'}>
+						<img src="/img/destinations/greece.jpg" alt="Greece" />
 					</div>
-					<div className={'dest-bottom-bar'}>
-						<span className={'dest-count'}>+100</span>
-						<span className={'dest-text'}>Discover Stunning Destinations for Your Next Adventure</span>
-						<Link href={'/property'} className={'explore-btn'}>
-							EXPLORE MORE
-							<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-						</Link>
+					<div className={'dest-card'}>
+						<img src="/img/destinations/paris.jpg" alt="Paris" />
 					</div>
+				</div>
+				<div className={'dest-bottom-bar'}>
+					<span className={'dest-count'}>+100</span>
+					<span className={'dest-text'}>Discover Stunning Destinations for Your Next Adventure</span>
+					<Link href={'/property'} className={'explore-btn'}>
+						EXPLORE MORE
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+					</Link>
 				</div>
 			</div>
 

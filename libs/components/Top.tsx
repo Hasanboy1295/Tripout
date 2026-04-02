@@ -25,6 +25,10 @@ const Top = () => {
 	const user = useReactiveVar(userVar);
 	const { t, i18n } = useTranslation('common');
 	const router = useRouter();
+	const isDestinationRoute = router.pathname.startsWith('/property');
+	const isAgentRoute = router.pathname.startsWith('/agent');
+	const isMyPageRoute = router.pathname.startsWith('/mypage');
+	const isAboutRoute = router.pathname.startsWith('/about');
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
 	const [lang, setLang] = useState<string | null>('en');
 	const drop = Boolean(anchorEl2);
@@ -178,7 +182,7 @@ const Top = () => {
 							</Link>
 						
                             <Link href={'/property'}>
-								<div className={router.pathname === '/property' ? 'active' : ''}>{t('Destinations')}</div>
+								<div className={isDestinationRoute ? 'active' : ''}>{t('Destinations')}</div>
 							</Link>
 							
 							<div className={`nav-dropdown ${router.pathname.startsWith('/service') ? 'active' : ''}`}>
@@ -193,14 +197,14 @@ const Top = () => {
 							</div>
 						
 							<Link href={'/agent'}>
-								<div className={router.pathname === '/agent' ? 'active' : ''}>{t('Agents')}</div>
+								<div className={isAgentRoute ? 'active' : ''}>{t('Agents')}</div>
 							</Link>
 							<Link href={'/mypage'}>
-								<div className={router.pathname === '/mypage' ? 'active' : ''}>{t('My Page')}</div>
+								<div className={isMyPageRoute ? 'active' : ''}>{t('My Page')}</div>
 							</Link>
 
 								<Link href={'/about'}>
-								<div className={router.pathname === '/about' ? 'active' : ''}>{t('About Us')}</div>
+								<div className={isAboutRoute ? 'active' : ''}>{t('About Us')}</div>
 							</Link>
 
 
