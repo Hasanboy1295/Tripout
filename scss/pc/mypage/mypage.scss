@@ -130,8 +130,8 @@
 							height: auto;
 							border-radius: 18px;
 							background: #f8fafc;
-							border: 1px solid rgba(210, 220, 240, 0.8);
-							box-shadow: 0px 14px 32px rgba(14, 28, 74, 0.08);
+							border: 1px solid rgba(245, 166, 35, 0.4);
+							box-shadow: 0px 14px 32px rgba(245, 166, 35, 0.08);
 							margin: 0;
 
 						.my-menu-container {
@@ -175,10 +175,14 @@
 
 									.view-list {
 										font-weight: 600;
-										color: #717171;
+										color: #f5a623;
 										font-size: 11px;
 										text-transform: uppercase;
 										letter-spacing: 0.5px;
+										background: rgba(245, 166, 35, 0.12);
+										padding: 3px 10px;
+										border-radius: 5px;
+										margin-top: 4px;
 									}
 								}
 							}
@@ -220,13 +224,13 @@
 											}
 
 										&:hover {
-											background: rgba(63, 181, 99, 0.08);
-											border-color: rgba(63, 181, 99, 0.16);
+											background: rgba(245, 166, 35, 0.1);
+											border-color: rgba(245, 166, 35, 0.25);
 										}
 
 										&.focus {
-											background: linear-gradient(135deg, #0e2d63 0%, #1a4a9e 100%);
-											box-shadow: 0 6px 14px rgba(14, 45, 99, 0.25);
+											background: linear-gradient(135deg, #f5a623 0%, #f7b731 100%);
+											box-shadow: 0 6px 14px rgba(245, 166, 35, 0.3);
 											border-color: transparent;
 
 											.flex-box {
@@ -295,8 +299,8 @@
 						gap: 20px;
 						background: #ffffff;
 						border-radius: 18px;
-						border: 1px solid rgba(220, 224, 236, 0.6);
-						box-shadow: 0px 14px 36px rgba(14, 28, 74, 0.08);
+						border: 1px solid rgba(245, 166, 35, 0.4);
+						box-shadow: 0px 14px 36px rgba(245, 166, 35, 0.08);
 						padding: 26px;
 						.list-config {
 							display: flex;

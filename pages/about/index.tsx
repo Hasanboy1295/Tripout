@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { Stack, Box } from '@mui/material';
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 
 const About: NextPage = () => {
 	const device = useDeviceDetect();
@@ -12,6 +13,59 @@ const About: NextPage = () => {
 	} else {
 		return (
 			<Stack className={'about-page'}>
+				{/* Hero Section */}
+				<Stack className={'hero-section'}>
+					<Stack className={'container'}>
+						<Stack className={'hero-content'}>
+							<Stack className={'left-content'}>
+								<div className={'tag-line'}>
+									<FlightTakeoffIcon />
+									<span>Travel With Us</span>
+								</div>
+								<h1 className={'main-title'}>
+									Discover New Destinations and  <br />
+									Adventures Around the World
+								</h1>
+								<p className={'description'}>
+									Explore breathtaking destinations around the world with our expert travel guides. 
+									We create unforgettable journeys tailored to your dreams and preferences. 
+									Start your adventure today and discover the beauty of new horizons.
+								</p>
+							</Stack>
+							<Stack className={'right-content'}>
+								<div className={'experience-badge'}>
+									<span className={'number'}>25+</span>
+									<div className={'text'}>
+										<span>Years of Travel</span>
+										<span>Experiences</span>
+									</div>
+								</div>
+							</Stack>
+						</Stack>
+						<Stack className={'hero-image'}>
+							<img src="/img/banner/hero-travel-1.jpg" alt="Travelers exploring" />
+						</Stack>
+					</Stack>
+				</Stack>
+
+				<Stack className={'statistics'}>
+					<Stack className={'container'}>
+						<Stack className={'info'}>
+							<Box component={'div'}>
+								<strong>500+</strong>
+								<p>Destinations</p>
+							</Box>
+							<Box component={'div'}>
+								<strong>12K</strong>
+								<p>Happy Travelers</p>
+							</Box>
+							<Box component={'div'}>
+								<strong>98%</strong>
+								<p>Satisfaction Rate</p>
+							</Box>
+						</Stack>
+					</Stack>
+				</Stack>
 				<Stack className={'intro'}>
 					<Stack className={'container'}>
 						<Stack className={'left'}>
