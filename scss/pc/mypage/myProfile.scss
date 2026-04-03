@@ -6,6 +6,92 @@
 			display: flex;
 			flex-direction: column;
 			gap: 20px;
+			.welcome-card {
+				display: grid;
+				grid-template-columns: 2fr 1.05fr;
+				gap: 30px;
+				padding: 32px 34px;
+				margin-bottom: 30px;
+				border-radius: 26px;
+				background: linear-gradient(135deg, #d6ffb8 0%, #e9ffd7 45%, #f9fff5 100%);
+				box-shadow: 0px 32px 60px rgba(35, 115, 63, 0.18), 0 10px 22px rgba(35, 115, 63, 0.1);
+				border: 1px solid #d4f3d5;
+				.welcome-left {
+					display: flex;
+					flex-direction: column;
+					gap: 14px;
+					.eyebrow {
+						font-size: 12px;
+						font-weight: 800;
+						letter-spacing: 1.4px;
+						color: #1a3d2c;
+						text-transform: uppercase;
+					}
+					.welcome-title {
+						font-size: 34px;
+						font-weight: 800;
+						color: #12305a;
+						line-height: 1.18;
+						text-transform: none;
+					}
+					.welcome-copy {
+						color: #1d3a2b;
+						font-size: 15.5px;
+						line-height: 24px;
+						max-width: 560px;
+					}
+					.cta {
+						margin-top: 10px;
+						align-self: flex-start;
+						padding: 12px 24px;
+						border-radius: 16px;
+						background: linear-gradient(135deg, #0e2d63 0%, #103b7d 100%);
+						color: #fff;
+						font-weight: 700;
+						font-size: 15.5px;
+						text-transform: none;
+						box-shadow: 0 16px 32px rgba(16, 46, 98, 0.28);
+					}
+					.cta:hover {
+						opacity: 0.92;
+					}
+				}
+				.welcome-right {
+					display: grid;
+					grid-template-rows: 1fr 1fr;
+					gap: 16px;
+					.info-card {
+						border-radius: 20px;
+						background: #ffffff;
+						border: 1px solid #e6f0e8;
+						padding: 18px 20px;
+						box-shadow: 0px 22px 42px rgba(34, 83, 52, 0.12);
+						.label {
+							font-size: 11px;
+							font-weight: 800;
+							letter-spacing: 1.2px;
+							color: #244732;
+							text-transform: uppercase;
+						}
+						.value {
+							margin-top: 8px;
+							font-size: 22px;
+							font-weight: 800;
+							color: #12305a;
+						}
+						.hint,
+						.shortcut-list {
+							margin-top: 8px;
+							font-size: 14px;
+							color: #2f4636;
+							line-height: 22px;
+						}
+						.shortcut-list {
+							gap: 6px;
+						}
+					}
+				}
+			}
 			.main-title-box {
 				width: auto;
 				height: auto;

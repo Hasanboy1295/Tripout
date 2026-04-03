@@ -1620,7 +1620,7 @@ body::-webkit-scrollbar {
 	.service-banner {
 		position: relative;
 		width: 100%;
-		height: 410px;
+		height: 430px;
 		border-radius: 0;
 		overflow: hidden;
 		margin: 0 auto 28px;
@@ -1635,43 +1635,67 @@ body::-webkit-scrollbar {
 		.banner-overlay {
 			position: absolute;
 			inset: 0;
-			background: linear-gradient(90deg, rgba(14, 19, 34, 0.78) 0%, rgba(14, 19, 34, 0.38) 55%, rgba(14, 19, 34, 0.2) 100%);
+			background:
+				linear-gradient(90deg, rgba(9, 11, 26, 0.82) 0%, rgba(9, 11, 26, 0.58) 55%, rgba(9, 11, 26, 0.28) 100%);
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
+			gap: 18px;
 			padding: 146px 80px 60px;
 
 			h1 {
 				font-family: $font;
-				font-size: 56px;
+				font-size: 58px;
 				font-weight: 800;
 				color: #fff;
-				margin: 0 0 10px;
+				margin: 0;
 				letter-spacing: -0.6px;
 			}
 
-			.breadcrumb {
+			p {
+				max-width: 560px;
+				color: rgba(255,255,255,0.95);
+				font-size: 17px;
+				line-height: 1.7;
+				margin: 0;
+				font-weight: 400;
+			}
+
+			.banner-actions {
 				display: flex;
-				align-items: center;
-				gap: 8px;
-				font-family: $font;
-				font-size: 12px;
-				font-weight: 600;
-				color: rgba(255,255,255,0.72);
-				text-transform: uppercase;
-				letter-spacing: 1px;
-				width: fit-content;
-				padding: 0;
-				border-radius: 0;
-				background: transparent;
+				gap: 14px;
 
-				a {
-					color: #e8a54b;
+				.btn-primary,
+				.btn-ghost {
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					height: 46px;
+					padding: 0 22px;
+					border-radius: 12px;
+					font-family: $font;
+					font-size: 14px;
+					font-weight: 700;
 					text-decoration: none;
-					font-weight: 600;
+					transition: all 0.2s ease;
+				}
 
+				.btn-primary {
+					background: linear-gradient(135deg, #e8a54b, #f6c47a);
+					color: #0f172a;
+					box-shadow: 0 10px 24px rgba(232, 165, 75, 0.35);
 					&:hover {
-						text-decoration: underline;
+						transform: translateY(-1px);
+						box-shadow: 0 14px 30px rgba(232, 165, 75, 0.45);
+					}
+				}
+
+				.btn-ghost {
+					background: rgba(255,255,255,0.12);
+					color: #ffffff;
+					border: 1px solid rgba(255,255,255,0.3);
+					&:hover {
+						background: rgba(255,255,255,0.18);
 					}
 				}
 			}

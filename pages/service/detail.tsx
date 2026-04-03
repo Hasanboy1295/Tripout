@@ -17,7 +17,6 @@ const servicesList = [
 	'Local Guides',
 ];
 
-
 const features = [
 	{ title: 'Personalized Plans', desc: 'Tailored itineraries that fit your pace and budget.' },
 	{ title: '24/7 Support', desc: 'Real humans on call whenever plans change.' },

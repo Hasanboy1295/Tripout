@@ -11,6 +11,40 @@ import { MemberUpdate } from '../../types/member/member.update';
 import { UPDATE_MEMBER } from '../../../apollo/user/mutation';
 import { sweetErrorHandling, sweetMixinSuccessAlert } from '../../sweetAlert';
 
+export const MyProfileHero = () => {
+	const user = useReactiveVar(userVar);
+
+	return (
+		<Stack className="welcome-card">
+			<Stack className="welcome-left">
+				<Typography className="eyebrow">PERSONAL WORKSPACE</Typography>
+				<Typography className="welcome-title">Welcome back, {user?.memberNick || 'User'}</Typography>
+				<Typography className="welcome-copy">
+					Manage listings, favorites, followers, orders, and articles from a single control center.
+				</Typography>
+				<Button className="cta" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+					Edit profile
+				</Button>
+			</Stack>
+			<Stack className="welcome-right">
+				<Stack className="info-card">
+					<Typography className="label">ACCOUNT TYPE</Typography>
+					<Typography className="value">{(user?.memberType || 'USER').toUpperCase()}</Typography>
+					<Typography className="hint">Stay up to date with your workspace.</Typography>
+				</Stack>
+				<Stack className="info-card">
+					<Typography className="label">SHORTCUTS</Typography>
+					<Stack spacing={0.5} className="shortcut-list">
+						<Typography>Favorites &amp; Recent views</Typography>
+						<Typography>Followers &amp; Following</Typography>
+						<Typography>Orders &amp; Articles</Typography>
+					</Stack>
+				</Stack>
+			</Stack>
+		</Stack>
+	);
+};
+
 const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	const device = useDeviceDetect();
 	const token = getJwtToken();

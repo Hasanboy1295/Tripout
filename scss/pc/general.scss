@@ -159,34 +159,45 @@
 }
 .agent-general-card {
 	position: relative;
-	margin-right: 27px;
-	margin-bottom: 34px;
 	display: flex;
 	flex-direction: column;
+	background: linear-gradient(145deg, #ffffff 0%, #f8fbff 60%, #ffffff 100%);
+	border-radius: 20px;
+	box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1);
+	border: 1px solid #e0e7f1;
+	overflow: hidden;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+	&:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 20px 44px rgba(15, 23, 42, 0.16);
+	}
+
 	.agent-img {
-		border-radius: 12px;
-		width: 233px;
-		height: 273px;
-		background-size: 100% 100%;
+		width: 100%;
+		height: 260px;
+		background-size: cover;
 		background-repeat: no-repeat;
 		cursor: pointer;
+		position: relative;
 		div {
 			position: absolute;
 			padding: 12px;
 			top: 12px;
 			left: 12px;
 			border-radius: 6px;
-			background: #eb6753;
-			color: #fff;
+			background: linear-gradient(135deg, #e8a54b, #f6c47a);
+			color: #1a1203;
 			font-family: $font;
 			font-size: 12px;
 			font-style: normal;
 			font-weight: 600;
 			line-height: normal;
+			text-transform: capitalize;
 		}
 	}
 	.agent-desc {
-		margin-top: 23px;
+		padding: 18px 18px 16px;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
@@ -195,18 +206,18 @@
 			display: flex;
 			flex-direction: column;
 			strong {
-				color: #181a20;
+				color: #0f172a;
 				font-family: $font;
-				font-size: 15px;
+				font-size: 16px;
 				font-style: normal;
 				font-weight: 600;
 				line-height: normal;
 				cursor: pointer;
 			}
 			span {
-				color: #181a20;
+				color: #6b7280;
 				font-family: $font;
-				font-size: 15px;
+				font-size: 14px;
 				font-style: normal;
 				font-weight: 400;
 				line-height: 28px;
@@ -218,6 +229,7 @@
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
+			gap: 6px;
 			svg {
 				width: 24px;
 				height: 24px;

@@ -1,9 +1,12 @@
 #pc-wrap {
 	.agent-list-page {
 		position: relative;
-		padding: 147px 0 75px;
+		padding: 160px 0 90px;
 		width: 100%;
-		height: auto;
+		min-height: 100vh;
+		background: radial-gradient(circle at 20% 20%, rgba(232, 165, 75, 0.08), transparent 32%),
+			radial-gradient(circle at 78% 15%, rgba(59, 130, 246, 0.06), transparent 28%),
+			linear-gradient(180deg, #f9fbff 0%, #f7f8fc 45%, #f9fbff 100%);
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -15,23 +18,24 @@
 				flex-direction: row;
 				justify-content: space-between;
 				align-items: center;
+				gap: 20px;
 				.left {
 					display: flex;
 					flex-direction: row;
 					input {
-						padding: 22px 10px;
-						width: 333px;
-						height: 50px;
-						border-radius: 40px;
-						border: 1px solid #ddd;
+						padding: 18px 18px;
+						width: 360px;
+						height: 54px;
+						border-radius: 16px;
+						border: 1px solid #e5e7eb;
 						background: #fff;
-						color: #181a20;
+						color: #0f172a;
 						font-family: $font;
 						font-size: 14px;
-						font-style: normal;
-						font-weight: 400;
-						line-height: 26px;
+						font-weight: 500;
+						line-height: 22px;
 						box-sizing: border-box;
+						box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
 					}
 				}
 				.right {
@@ -54,13 +58,12 @@
 			}
 			.card-wrap {
 				position: relative;
-				margin-top: 35px;
+				margin-top: 32px;
 				width: 100%;
-				min-height: 500px;
-				height: auto;
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
+				min-height: 600px;
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+				gap: 24px;
 			}
 			.pagination {
 				display: flex;

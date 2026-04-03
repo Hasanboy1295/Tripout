@@ -1,24 +1,24 @@
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { NextPage } from 'next';
-import { Stack } from '@mui/material';
-import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
+import { Stack, Typography } from '@mui/material';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useMutation, useReactiveVar } from '@apollo/client';
+import { useRouter } from 'next/router';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import MyProperties from '../../libs/components/mypage/MyProperties';
+import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
+import MyMenu from '../../libs/components/mypage/MyMenu';
+import MyProfile from '../../libs/components/mypage/MyProfile';
 import MyFavorites from '../../libs/components/mypage/MyFavorites';
 import RecentlyVisited from '../../libs/components/mypage/RecentlyVisited';
+import MyProperties from '../../libs/components/mypage/MyProperties';
 import AddProperty from '../../libs/components/mypage/AddNewProperty';
-import MyProfile from '../../libs/components/mypage/MyProfile';
 import MyArticles from '../../libs/components/mypage/MyArticles';
-import { useMutation, useReactiveVar } from '@apollo/client';
-import { userVar } from '../../apollo/store';
-import MyMenu from '../../libs/components/mypage/MyMenu';
 import WriteArticle from '../../libs/components/mypage/WriteArticle';
 import MemberFollowers from '../../libs/components/member/MemberFollowers';
-import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import MemberFollowings from '../../libs/components/member/MemberFollowings';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { userVar } from '../../apollo/store';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
+import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { Messages } from '../../libs/config';
 
 export const getStaticProps = async ({ locale }: any) => ({
@@ -29,9 +29,9 @@ export const getStaticProps = async ({ locale }: any) => ({
 
 const MyPage: NextPage = () => {
 	const device = useDeviceDetect();
-	const user = useReactiveVar(userVar);
 	const router = useRouter();
-	const category: any = router.query?.category ?? 'myProfile';
+	const category: any = router.query?.category;
+	const user = useReactiveVar(userVar);
 
 	/** APOLLO REQUESTS **/
 	const [subscribe] = useMutation(SUBSCRIBE);
@@ -40,13 +40,22 @@ const MyPage: NextPage = () => {
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		if (!user._id) router.push('/').then();
-	}, [user]);
+		if (!router.isReady) return;
+		if (!category) {
+			router.replace(
+				{
+					pathname: router.pathname,
+					query: { ...router.query, category: 'myProfile' },
+				},
+				undefined,
+				{ shallow: true },
+			);
+		}
+	}, [category, router]);
 
 	/** HANDLERS **/
 	const subscribeHandler = async (id: string, refetch: any, query: any) => {
 		try {
-			console.log('id: ', id);
 			if (!id) throw new Error(Messages.error1);
 			if (!user._id) throw new Error(Messages.error2);
 
@@ -55,7 +64,8 @@ const MyPage: NextPage = () => {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert('Subscribed!', 800);
+
+			await sweetTopSmallSuccessAlert('Followed!', 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
@@ -72,7 +82,8 @@ const MyPage: NextPage = () => {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert('Unsubscribed!', 800);
+
+			await sweetTopSmallSuccessAlert('Unfollowed!', 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
@@ -106,44 +117,72 @@ const MyPage: NextPage = () => {
 		}
 	};
 
+	/** RENDER CONTENT BASED ON CATEGORY **/
+	const renderContent = () => {
+		switch (category) {
+			case 'myProfile':
+				return <MyProfile />;
+			case 'myFavorites':
+				return <MyFavorites />;
+			case 'recentlyVisited':
+				return <RecentlyVisited />;
+			case 'myProperties':
+				return <MyProperties />;
+			case 'addProperty':
+				return <AddProperty />;
+			case 'followers':
+				return (
+					<MemberFollowers
+						initialInput={{ page: 1, limit: 5, search: { followingId: user?._id } }}
+						subscribeHandler={subscribeHandler}
+						unsubscribeHandler={unsubscribeHandler}
+						likeMemberHandler={likeMemberHandler}
+						redirectToMemberPageHandler={redirectToMemberPageHandler}
+					/>
+				);
+			case 'followings':
+				return (
+					<MemberFollowings
+						initialInput={{ page: 1, limit: 5, search: { followerId: user?._id } }}
+						subscribeHandler={subscribeHandler}
+						unsubscribeHandler={unsubscribeHandler}
+						likeMemberHandler={likeMemberHandler}
+						redirectToMemberPageHandler={redirectToMemberPageHandler}
+					/>
+				);
+			case 'myOrders':
+				return (
+					<Stack className="coming-soon-box" alignItems="center" justifyContent="center" sx={{ minHeight: 300 }}>
+						<Typography variant="h5" color="textSecondary">
+							My Orders - Coming Soon
+						</Typography>
+					</Stack>
+				);
+			case 'myArticles':
+				return <MyArticles />;
+			case 'writeArticle':
+				return <WriteArticle />;
+			default:
+				return <MyProfile />;
+		}
+	};
+
 	if (device === 'mobile') {
-		return <div>MY PAGE</div>;
+		return <>MY PAGE MOBILE</>;
 	} else {
 		return (
-			<div id="my-page" style={{ position: 'relative' }}>
+			<div id="my-page">
 				<div className="container">
-					<Stack className={'my-page'}>
-						<Stack className={'back-frame'}>
-							<Stack className={'left-config'}>
+					{/* MAIN */}
+					<Stack className="my-page">
+						<Stack className="back-frame">
+							{/* LEFT MENU */}
+							<Stack className="left-config">
 								<MyMenu />
 							</Stack>
-							<Stack className="main-config" mb={'76px'}>
-								<Stack className={'list-config'}>
-									{category === 'addProperty' && <AddProperty />}
-									{category === 'myProperties' && <MyProperties />}
-									{category === 'myFavorites' && <MyFavorites />}
-									{category === 'recentlyVisited' && <RecentlyVisited />}
-									{category === 'myArticles' && <MyArticles />}
-									{category === 'writeArticle' && <WriteArticle />}
-									{category === 'myProfile' && <MyProfile />}
-									{category === 'followers' && (
-										<MemberFollowers
-											subscribeHandler={subscribeHandler}
-											unsubscribeHandler={unsubscribeHandler}
-											likeMemberHandler={likeMemberHandler}
-											redirectToMemberPageHandler={redirectToMemberPageHandler}
-										/>
-									)}
-									{category === 'followings' && (
-										<MemberFollowings
-											subscribeHandler={subscribeHandler}
-											unsubscribeHandler={unsubscribeHandler}
-											likeMemberHandler={likeMemberHandler}
-											redirectToMemberPageHandler={redirectToMemberPageHandler}
-										/>
-									)}
-								</Stack>
-							</Stack>
+
+							{/* RIGHT CONTENT */}
+							<Stack className="main-config">{renderContent()}</Stack>
 						</Stack>
 					</Stack>
 				</div>
