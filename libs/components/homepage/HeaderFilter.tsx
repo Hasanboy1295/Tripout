@@ -11,6 +11,7 @@ import { PropertyLocation, PropertyType } from '../../enums/property.enum';
 import { PropertiesInquiry } from '../../types/property/property.input';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { format } from 'date-fns';
 
 const style = {
 	position: 'absolute' as 'absolute',
@@ -46,15 +47,18 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 	const locationRef: any = useRef();
 	const typeRef: any = useRef();
 	const roomsRef: any = useRef();
+	const dateRef: any = useRef();
 	const router = useRouter();
 	const [openAdvancedFilter, setOpenAdvancedFilter] = useState(false);
 	const [openLocation, setOpenLocation] = useState(false);
 	const [openType, setOpenType] = useState(false);
 	const [openRooms, setOpenRooms] = useState(false);
+	const [openDate, setOpenDate] = useState(false);
 	const [propertyLocation, setPropertyLocation] = useState<PropertyLocation[]>(Object.values(PropertyLocation));
 	const [propertyType, setPropertyType] = useState<PropertyType[]>(Object.values(PropertyType));
 	const [yearCheck, setYearCheck] = useState({ start: 1970, end: thisYear });
 	const [optionCheck, setOptionCheck] = useState('all');
+	const [dateRange, setDateRange] = useState<{ start: string; end: string }>({ start: '', end: '' });
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -70,6 +74,10 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 			if (!roomsRef?.current?.contains(event.target)) {
 				setOpenRooms(false);
 			}
+
+			if (!dateRef?.current?.contains(event.target)) {
+				setOpenDate(false);
+			}
 		};
 
 		document.addEventListener('mousedown', clickHandler);
@@ -79,11 +87,23 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		};
 	}, []);
 
+	useEffect(() => {
+		if (searchFilter?.search?.checkIn || searchFilter?.search?.checkOut) {
+			setDateRange({
+				start: searchFilter.search.checkIn ? format(new Date(searchFilter.search.checkIn), 'yyyy-MM-dd') : '',
+				end: searchFilter.search.checkOut ? format(new Date(searchFilter.search.checkOut), 'yyyy-MM-dd') : '',
+			});
+		} else {
+			setDateRange({ start: '', end: '' });
+		}
+	}, [searchFilter?.search?.checkIn, searchFilter?.search?.checkOut]);
+
 	/** HANDLERS **/
 	const advancedFilterHandler = (status: boolean) => {
 		setOpenLocation(false);
 		setOpenRooms(false);
 		setOpenType(false);
+		setOpenDate(false);
 		setOpenAdvancedFilter(status);
 	};
 
@@ -91,16 +111,26 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		setOpenLocation((prev) => !prev);
 		setOpenRooms(false);
 		setOpenType(false);
+		setOpenDate(false);
 	};
 
 	const typeStateChangeHandler = () => {
 		setOpenType((prev) => !prev);
 		setOpenLocation(false);
 		setOpenRooms(false);
+		setOpenDate(false);
 	};
 
 	const roomStateChangeHandler = () => {
 		setOpenRooms((prev) => !prev);
+		setOpenType(false);
+		setOpenLocation(false);
+		setOpenDate(false);
+	};
+
+	const dateStateChangeHandler = () => {
+		setOpenDate((prev) => !prev);
+		setOpenRooms(false);
 		setOpenType(false);
 		setOpenLocation(false);
 	};
@@ -109,6 +139,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		setOpenRooms(false);
 		setOpenType(false);
 		setOpenLocation(false);
+		setOpenDate(false);
 	};
 
 	const propertyLocationSelectHandler = useCallback(
@@ -226,6 +257,39 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		[searchFilter],
 	);
 
+	const handleDateChange = (value: string, type: 'start' | 'end') => {
+		const nextRange = { ...dateRange, [type]: value } as { start: string; end: string };
+
+		if (type === 'end' && nextRange.start && value && new Date(value) < new Date(nextRange.start)) {
+			nextRange.start = value;
+		}
+
+		if (type === 'start' && nextRange.end && value && new Date(value) > new Date(nextRange.end)) {
+			nextRange.end = value;
+		}
+
+		setDateRange(nextRange);
+
+		const newSearch = {
+			...searchFilter.search,
+			checkIn: nextRange.start || undefined,
+			checkOut: nextRange.end || undefined,
+		};
+
+		if (!nextRange.start) delete newSearch.checkIn;
+		if (!nextRange.end) delete newSearch.checkOut;
+
+		setSearchFilter({ ...searchFilter, search: newSearch });
+	};
+
+	const clearDateHandler = () => {
+		setDateRange({ start: '', end: '' });
+		const newSearch = { ...searchFilter.search };
+		delete newSearch.checkIn;
+		delete newSearch.checkOut;
+		setSearchFilter({ ...searchFilter, search: newSearch });
+	};
+
 	const propertySquareHandler = useCallback(
 		async (e: any, type: string) => {
 			const value = e.target.value;
@@ -277,11 +341,12 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		});
 	};
 
-	const resetFilterHandler = () => {
-		setSearchFilter(initialInput);
-		setOptionCheck('all');
-		setYearCheck({ start: 1970, end: thisYear });
-	};
+const resetFilterHandler = () => {
+	setSearchFilter(initialInput);
+	setOptionCheck('all');
+	setYearCheck({ start: 1970, end: thisYear });
+	setDateRange({ start: '', end: '' });
+};
 
 	const pushSearchHandler = async () => {
 		try {
@@ -303,6 +368,15 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 
 			if (searchFilter?.search?.bedsList?.length == 0) {
 				delete searchFilter.search.bedsList;
+			}
+
+			if (!searchFilter?.search?.checkIn || !searchFilter?.search?.checkOut) {
+				delete searchFilter.search.checkIn;
+				delete searchFilter.search.checkOut;
+			}
+
+			if (!searchFilter?.search?.periodsRange?.start || !searchFilter?.search?.periodsRange?.end) {
+				delete searchFilter.search.periodsRange;
 			}
 
 			await router.push(
@@ -358,18 +432,22 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						<Box className={'divider-line'} />
 
 						{/* Check In - Check Out */}
-						<Box component={'div'} className={`box`}>
-							<Box className={'box-icon'}>
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M19 3H18V1H16V3H8V1H6V3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM9 12H7V10H9V12ZM13 12H11V10H13V12ZM17 12H15V10H17V12ZM9 16H7V14H9V16ZM13 16H11V14H13V16ZM17 16H15V14H17V16Z" fill="#e8a54b"/>
-								</svg>
-							</Box>
-							<Box className={'box-text'}>
-								<span className={'box-label'}>Check In — Check Out</span>
-								<span className={'box-value'}>Select date</span>
-							</Box>
-							<ExpandMoreIcon className={'box-arrow'} />
-						</Box>
+			<Box component={'div'} className={`box ${openDate ? 'on' : ''}`} onClick={dateStateChangeHandler}>
+				<Box className={'box-icon'}>
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M19 3H18V1H16V3H8V1H6V3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM9 12H7V10H9V12ZM13 12H11V10H13V12ZM17 12H15V10H17V12ZM9 16H7V14H9V16ZM13 16H11V14H13V16ZM17 16H15V14H17V16Z" fill="#e8a54b"/>
+					</svg>
+				</Box>
+				<Box className={'box-text'}>
+					<span className={'box-label'}>Check In — Check Out</span>
+					<span className={'box-value'}>
+						{dateRange.start && dateRange.end
+							? `${format(new Date(dateRange.start), 'MMM d')} - ${format(new Date(dateRange.end), 'MMM d')}`
+							: 'Select date'}
+					</span>
+				</Box>
+				<ExpandMoreIcon className={'box-arrow'} />
+			</Box>
 
 						<Box className={'divider-line'} />
 
@@ -409,9 +487,9 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						})}
 					</div>
 
-					<div className={`filter-type ${openType ? 'on' : ''}`} ref={typeRef}>
-						{propertyType.map((type: string) => {
-							return (
+			<div className={`filter-type ${openType ? 'on' : ''}`} ref={typeRef}>
+				{propertyType.map((type: string) => {
+					return (
 								<div
 									style={{ backgroundImage: `url(/img/banner/types/${type.toLowerCase()}.webp)` }}
 									onClick={() => propertyTypeSelectHandler(type)}
@@ -431,6 +509,35 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 								</span>
 							);
 						})}
+					</div>
+
+					<div className={`filter-date ${openDate ? 'on' : ''}`} ref={dateRef}>
+						<div className={'date-grid'}>
+							<label>
+								<span>Check in</span>
+								<input
+									type="date"
+									value={dateRange.start}
+									onChange={(e) => handleDateChange(e.target.value, 'start')}
+								/>
+							</label>
+							<label>
+								<span>Check out</span>
+								<input
+									type="date"
+									value={dateRange.end}
+									onChange={(e) => handleDateChange(e.target.value, 'end')}
+								/>
+							</label>
+						</div>
+						<div className={'date-actions'}>
+							<button className={'clear-btn'} onClick={clearDateHandler} type={'button'}>
+								Clear
+							</button>
+							<Button className={'apply-btn'} onClick={() => disableAllStateHandler()} variant={'contained'}>
+								Apply
+							</Button>
+						</div>
 					</div>
 				</Stack>
 
@@ -462,9 +569,10 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 											});
 										}}
 									/>
-								</div>
-							</div>
-							<Divider sx={{ mt: '30px', mb: '35px' }} />
+				</div>
+			</div>
+
+			<Divider sx={{ mt: '30px', mb: '35px' }} />
 							<div className={'middle'}>
 								<div className={'row-box'}>
 									<div className={'box'}>

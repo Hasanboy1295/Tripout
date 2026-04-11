@@ -7,13 +7,16 @@ import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
+import { Message } from '../../enums/common.enum';
 
 interface PopularPropertyCardProps {
 	property: Property;
+	likePropertyHandler?: (user: any, id: string) => void;
 }
 
 const PopularPropertyCard = (props: PopularPropertyCardProps) => {
-	const { property } = props;
+	const { property, likePropertyHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -85,16 +88,22 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					className={'card-img'}
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${property?.propertyImages[0]})` }}
 				>
-					{/* Rating badge */}
+									{/* Rating badge */}
 					<div className={'rating-badge'}>
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="#e8a54b" xmlns="http://www.w3.org/2000/svg">
-							<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" fill="#e8a54b"/>
 						</svg>
-						<span>4.9</span>
+						<span>{property?.propertyViews || 0}</span>
 					</div>
 					{/* Heart button */}
-					<div className={`heart-btn ${user?._id ? 'liked' : ''}`} onClick={(e) => e.stopPropagation()}>
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<div 
+						className={`heart-btn ${property?.meLiked && property?.meLiked[0]?.myFavorite ? 'liked' : ''}`} 
+						onClick={(e) => {
+							e.stopPropagation();
+							likePropertyHandler && likePropertyHandler(user, property?._id);
+						}}
+					>
+						<svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/>
 						</svg>
 					</div>

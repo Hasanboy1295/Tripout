@@ -23,24 +23,26 @@ interface FilterType {
 
 // Tour type labels for travel theme
 const tourTypeLabels: Record<string, string> = {
-	APARTMENT: 'Mountains & Hills',
-	VILLA: 'Adventure',
-	HOUSE: 'Beach & Sunset',
+	CITY: 'City & Culture',
+	BATCH: 'Beach & Sunset',
+	LUXRY: 'Luxury & Romance',
 };
 
 
 
 // Destination labels
 const destinationLabels: Record<string, string> = {
-	SEOUL: 'Rome, Greece',
-	BUSAN: 'Bangkok, Thailand',
-	INCHEON: 'Paris, France',
-	DAEGU: 'Costa Rica, America',
-	GYEONGJU: 'Singapore, Asia',
-	GWANGJU: 'Dubai, United Arab Emirates',
-	CHONJU: 'Tokyo, Japan',
-	DAEJON: 'London, England',
-	JEJU: 'Bali, Indonesia',
+	UZBEKISTAN: 'Tashkent, Samarkhand',
+	BANGKOK: 'Bangkok, Thailand',
+	PARIS: 'Paris, France',
+	COSTA_RICA: 'Costa Rica, America',
+	SINGAPORE: 'Singapore, Asia',
+	DUBAI: 'Dubai, United Arab Emirates',
+	TOKYO: 'Tokyo, Japan',
+	KOREA: 'Seoul, Korea',
+	LONDON: 'London, England',
+	BALI: 'Bali, Indonesia',
+	TURKEY: 'Istanbul, Turkey',
 };
 
 

@@ -390,25 +390,36 @@
 								position: absolute;
 								bottom: -20px;
 								right: 20px;
-								width: 42px;
-								height: 42px;
+								width: 44px;
+								height: 44px;
 								border-radius: 50%;
 								background: #fff;
-								border: 1px solid rgba(196, 196, 196, 0.4);
+								border: 2px solid #eee;
 								display: flex;
 								align-items: center;
 								justify-content: center;
 								cursor: pointer;
 								color: #ccc;
-								box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-								transition: all 0.2s;
+								box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+								transition: all 0.25s ease;
 								z-index: 2;
 
-								&.liked,
 								&:hover {
+									color: #e8a54b;
+									border-color: #e8a54b;
+									transform: scale(1.05);
+								}
+
+								&.liked {
 									background: #e8a54b;
 									border-color: #e8a54b;
 									color: #fff;
+									box-shadow: 0 4px 15px rgba(232, 165, 75, 0.4);
+
+									&:hover {
+										background: #d4943f;
+										transform: scale(1.05);
+									}
 								}
 							}
 						}

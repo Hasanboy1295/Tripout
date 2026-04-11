@@ -48,26 +48,25 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 				</Box>
 				<Box component={'div'} className={'info'}>
 					<strong className={'title'}>{property?.propertyTitle}</strong>
-					<p className={'desc'}>{property?.propertyAddress}</p>
 					<div className={'options'}>
 						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property?.propertyBeds} bed</span>
+							<img src="/img/icons/ticket.svg" alt="" />
+							<span>{property?.propertyRooms} tickets left</span>
 						</div>
 						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{property?.propertyRooms} rooms</span>
-						</div>
-						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property?.propertySquare} m2</span>
+							<img src="/img/icons/calendar.svg" alt="" />
+							<span>{property?.propertyBeds} days</span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
-						<div>
-							{property?.propertyRent ? <p>Rent</p> : <span>Rent</span>}
-							{property?.propertyBarter ? <p>Barter</p> : <span>Barter</span>}
+						<div className="tour-features">
+							{property?.propertyBarter && (
+								<span className="feature-badge visa">🛂 Visa Support</span>
+							)}
+							{property?.propertyRent && (
+								<span className="feature-badge hotel">🏨 Hotel</span>
+							)}
 						</div>
 						<div className="buttons-box">
 							<IconButton color={'default'}>

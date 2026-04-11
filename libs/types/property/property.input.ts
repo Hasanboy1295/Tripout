@@ -28,6 +28,8 @@ interface PISearch {
 	pricesRange?: Range;
 	periodsRange?: PeriodsRange;
 	squaresRange?: Range;
+	checkIn?: Date | string;
+	checkOut?: Date | string;
 	text?: string;
 }
 
