@@ -141,9 +141,17 @@ const Top = () => {
 		},
 	}));
 
-	if (typeof window !== 'undefined') {
-		window.addEventListener('scroll', changeNavbarColor);
-	}
+	useEffect(() => {
+		const handleScroll = () => {
+			changeNavbarColor();
+		};
+
+		window.addEventListener('scroll', handleScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
 
 	if (device == 'mobile') {
 		return (

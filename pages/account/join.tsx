@@ -9,7 +9,7 @@ import { sweetMixinErrorAlert } from '../../libs/sweetAlert';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import dynamic from 'next/dynamic';
 import { useMutation } from '@apollo/client';
-import { TELEGRAM_LOGIN } from '../../apollo/user/mutation';
+
 
 const TelegramLoginButton: any = dynamic(
   () => import('react-telegram-auth').then((mod: any) => mod.default),
@@ -26,7 +26,7 @@ const router = useRouter();
 const device = useDeviceDetect();
 const [input, setInput] = useState({ nick: '', password: '', phone: '', type: 'USER' });
 const [loginView, setLoginView] = useState<boolean>(true);
-const [telegramLogin] = useMutation(TELEGRAM_LOGIN);
+
 const [phoneLoginStep, setPhoneLoginStep] = useState<'phone' | 'code' | null>(null);
 const [phoneNumber, setPhoneNumber] = useState('');
 const [verificationCode, setVerificationCode] = useState('');
@@ -72,29 +72,9 @@ await sweetMixinErrorAlert(err.message);
 }
 }, [input]);
 
-const handleTelegramLogin = async (telegramId: string, username: string) => {
-try {
-console.log('Authenticating with Telegram:', { telegramId, username });
-		
-const result = await telegramLogin({
-variables: {
-telegramId: telegramId,
-username: username
-}
-});
+	
 
-if (result.data?.telegramLogin) {
-const member = result.data.telegramLogin;
-await router.push(`${router.query.referrer ?? '/'}`);
-console.log('Telegram login successful!', member);
-} else {
-throw new Error('Telegram authentication failed');
-}
-} catch (err: any) {
-console.error('Telegram login error:', err);
-sweetMixinErrorAlert(err.message || 'Telegram authentication failed. Please try email login.');
-}
-};
+
 
 const handlePhoneLoginStart = async () => {
 	try {

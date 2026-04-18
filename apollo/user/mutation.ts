@@ -61,34 +61,6 @@ export const LOGIN = gql`
 	}
 `;
 
-export const TELEGRAM_LOGIN = gql`
-	mutation TelegramLogin($telegramId: String!, $username: String!) {
-		telegramLogin(telegramId: $telegramId, username: $username) {
-			_id
-			memberType
-			memberStatus
-			memberAuthType
-			memberPhone
-			memberNick
-			memberFullName
-			memberImage
-			memberAddress
-			memberDesc
-			memberWarnings
-			memberBlocks
-			memberProperties
-			memberRank
-			memberPoints
-			memberLikes
-			memberViews
-			deletedAt
-			createdAt
-			updatedAt
-			accessToken
-		}
-	}
-`;
-
 export const UPDATE_MEMBER = gql`
 	mutation UpdateMember($input: MemberUpdate!) {
 		updateMember(input: $input) {
@@ -278,8 +250,8 @@ export const UPDATE_BOARD_ARTICLE = gql`
 `;
 
 export const LIKE_TARGET_BOARD_ARTICLE = gql`
-	mutation LikeTargetBoardArticle($input: String!) {
-		likeTargetBoardArticle(articleId: $input) {
+	mutation LikeTargetArticle($input: String!) {
+		likeTargetArticle(articleId: $input) {
 			_id
 			articleCategory
 			articleStatus
