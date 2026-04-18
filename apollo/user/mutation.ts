@@ -267,6 +267,42 @@ export const LIKE_TARGET_BOARD_ARTICLE = gql`
 	}
 `;
 
+export const LIKE_TARGET_BOARD_ARTICLE_BY_BOARD_NAME = gql`
+	mutation LikeTargetBoardArticle($input: String!) {
+		likeTargetBoardArticle(articleId: $input) {
+			_id
+			articleCategory
+			articleStatus
+			articleTitle
+			articleContent
+			articleImage
+			articleViews
+			articleLikes
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const LIKE_TARGET_BOARD_ARTICLE_BY_INPUT = gql`
+	mutation LikeTargetBoardArticleByInput($input: String!) {
+		likeTargetBoardArticle(input: $input) {
+			_id
+			articleCategory
+			articleStatus
+			articleTitle
+			articleContent
+			articleImage
+			articleViews
+			articleLikes
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
 /**************************
  *         COMMENT        *
  *************************/

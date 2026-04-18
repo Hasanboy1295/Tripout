@@ -12,7 +12,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { BoardArticlesInquiry } from '../../libs/types/board-article/board-article.input';
 import { BoardArticleCategory } from '../../libs/enums/board-article.enum';
 import { useMutation, useQuery } from '@apollo/client';
-import { LIKE_TARGET_BOARD_ARTICLE } from '../../apollo/user/mutation';
+import {
+	LIKE_TARGET_BOARD_ARTICLE_BY_BOARD_NAME,
+} from '../../apollo/user/mutation';
 import { GET_BOARD_ARTICLES } from '../../apollo/user/query';
 import { Messages } from '../../libs/config';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
@@ -31,10 +33,11 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 	const [searchCommunity, setSearchCommunity] = useState<BoardArticlesInquiry>(initialInput);
 	const [boardArticles, setBoardArticles] = useState<BoardArticle[]>([]);
 	const [totalCount, setTotalCount] = useState<number>(0);
+	const [likeLoading, setLikeLoading] = useState<boolean>(false);
 	if (articleCategory) initialInput.search.articleCategory = articleCategory;
 
 	/** APOLLO REQUESTS **/
-	const [likeTargetBoardArticle] = useMutation(LIKE_TARGET_BOARD_ARTICLE);
+	const [likeTargetBoardArticleByBoardName] = useMutation(LIKE_TARGET_BOARD_ARTICLE_BY_BOARD_NAME);
 
 	const {
 		loading: boardArticlesLoading,
@@ -85,22 +88,30 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 		setSearchCommunity({ ...searchCommunity, page: value });
 	};
 
-	const likeArticleHandler = async (e: any, user: any, id: string) => {
+	const likeArticleHandler = async (e: any, user: any, id: string, articleMemberId?: string) => {
 		try {
 			e.stopPropagation();
+			if (likeLoading) return;
 			if (!id) return;
 			if (!user._id) throw new Error(Messages.error2);
+			if (articleMemberId && user._id === articleMemberId) throw new Error('You cannot like your own article.');
 
-			await likeTargetBoardArticle({
+			setLikeLoading(true);
+
+			await likeTargetBoardArticleByBoardName({
 				variables: {
 					input: id,
 				},
 			});
+
 			await boardArticlesRefetch({ input: searchCommunity });
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
 			console.log('ERROR, likePropertyHandler:', err.message);
-			sweetMixinErrorAlert(err.message).then();
+			const readableErrorMessage = err?.graphQLErrors?.[0]?.message || err?.message || 'Failed to like article';
+			sweetMixinErrorAlert(readableErrorMessage).then();
+		} finally {
+			setLikeLoading(false);
 		}
 	};
 
@@ -114,9 +125,9 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 						<Stack className="main-box">
 							<Stack className="left-config">
 								<Stack className={'image-info'}>
-									<img src={'/img/logo/logoText.svg'} />
+									<img src={'/img/logo/logo.svg'} />
 									<Stack className={'community-name'}>
-										<Typography className={'name'}>Nestar Community</Typography>
+										<Typography className={'name'}>Tripout Community</Typography>
 									</Stack>
 								</Stack>
 
