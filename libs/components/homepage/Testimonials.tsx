@@ -1,5 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
+import { useQuery } from '@apollo/client';
+import { GET_BOARD_ARTICLES } from '../../../apollo/user/query';
+import { BoardArticle } from '../../types/board-article/board-article';
+import { BoardArticleCategory } from '../../enums/board-article.enum';
+import { REACT_APP_API_URL } from '../../config';
+
+// Helper function to strip HTML tags from content
+const stripHtml = (html: string): string => {
+	if (!html) return '';
+	return html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+};
+
+const extractFirstImageFromHtml = (html?: string): string | undefined => {
+	if (!html) return undefined;
+	const imageSourceMatch = html.match(/<img[^>]+src=["']([^"']+)["'][^>]*>/i);
+	return imageSourceMatch?.[1];
+};
+
+const resolveImageUrl = (imagePath?: string): string => {
+	if (!imagePath) return '/img/community/default.jpg';
+	if (/^https?:\/\//i.test(imagePath)) return imagePath;
+	const rawBaseUrl = REACT_APP_API_URL && REACT_APP_API_URL !== 'undefined' ? REACT_APP_API_URL : '';
+	const baseUrl = rawBaseUrl.replace(/\/$/, '');
+	const normalizedPath = imagePath.replace(/^\//, '');
+	return baseUrl ? `${baseUrl}/${normalizedPath}` : `/${normalizedPath}`;
+};
+
+const formatCategory = (category?: BoardArticleCategory): string => {
+	if (!category) return 'Article';
+	return category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+};
 
 const partners = [
 	{
@@ -49,48 +80,153 @@ const partners = [
 	},
 ];
 
-const reviews = [
-	{
-		name: 'Sarah Johnson',
-		role: 'Tourist Traveled',
-		location: 'Australia',
-		text: 'My trip was an absolute dream! From the seamless booking process to the carefully curated itinerary, everything was top-notch. The guides were knowledgeable, and the local experiences were authentic. It was a perfect balance of adventure and relaxation. I can\'t wait to book my next journey with them!',
-		stars: 5,
-		image: '/img/testimonials/person2.jpg',
-	},
-	{
-		name: 'James Miller',
-		role: 'Solo Traveler',
-		location: 'Greece',
-		text: 'An incredible experience from start to finish. The team made every detail perfect and the destinations were breathtaking. I felt safe and well cared for the entire trip. Highly recommend to anyone looking for a memorable adventure.',
-		stars: 5,
-		image: '/img/testimonials/person1.jpg',
-	},
-	{
-		name: 'Carlos Rivera',
-		role: 'Adventure Tourist',
-		location: 'Thailand',
-		text: 'Absolutely loved every moment of the tour. The local guides were friendly and knowledgeable, and the itinerary was perfectly balanced between sightseeing and relaxation. Will definitely book again!',
-		stars: 5,
-		image: '/img/testimonials/person3.jpg',
-	},
-];
-
-const leftPhotos = [
-	{ image: '/img/testimonials/person1.jpg', location: 'Greece', top: true },
-	{ image: '/img/testimonials/person2.jpg', location: 'Australia', center: true },
-	{ image: '/img/testimonials/person3.jpg', location: 'Thailand', bottom: true },
-];
-
 const Testimonials = () => {
 	const device = useDeviceDetect();
 	const [activeIdx, setActiveIdx] = useState(0);
-	const [lastDir, setLastDir] = useState<'prev' | 'next'>('prev');
+	const [activeNav, setActiveNav] = useState<'prev' | 'next' | null>(null);
+	const navResetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-	const prev = () => { setLastDir('prev'); setActiveIdx((i) => (i === 0 ? reviews.length - 1 : i - 1)); };
-	const next = () => { setLastDir('next'); setActiveIdx((i) => (i === reviews.length - 1 ? 0 : i + 1)); };
+	const freeArticlesQuery = useQuery(GET_BOARD_ARTICLES, {
+		variables: {
+			input: {
+				page: 1,
+				limit: 10,
+				search: { articleCategory: BoardArticleCategory.FREE },
+			},
+		},
+		fetchPolicy: 'cache-and-network',
+	});
 
-	const review = reviews[activeIdx];
+	const recommendArticlesQuery = useQuery(GET_BOARD_ARTICLES, {
+		variables: {
+			input: {
+				page: 1,
+				limit: 10,
+				search: { articleCategory: BoardArticleCategory.RECOMMEND },
+			},
+		},
+		fetchPolicy: 'cache-and-network',
+	});
+
+	const newsArticlesQuery = useQuery(GET_BOARD_ARTICLES, {
+		variables: {
+			input: {
+				page: 1,
+				limit: 10,
+				search: { articleCategory: BoardArticleCategory.NEWS },
+			},
+		},
+		fetchPolicy: 'cache-and-network',
+	});
+
+	const humorArticlesQuery = useQuery(GET_BOARD_ARTICLES, {
+		variables: {
+			input: {
+				page: 1,
+				limit: 10,
+				search: { articleCategory: BoardArticleCategory.HUMOR },
+			},
+		},
+		fetchPolicy: 'cache-and-network',
+	});
+
+	const mergedArticles = [
+		...(freeArticlesQuery.data?.getBoardArticles?.list || []),
+		...(recommendArticlesQuery.data?.getBoardArticles?.list || []),
+		...(newsArticlesQuery.data?.getBoardArticles?.list || []),
+		...(humorArticlesQuery.data?.getBoardArticles?.list || []),
+	] as BoardArticle[];
+
+	const uniqueArticles = Array.from(new Map(mergedArticles.map((article) => [article._id, article])).values());
+
+	const articles = uniqueArticles
+		.filter((article) => {
+			const hasTitle = Boolean(article.articleTitle?.trim());
+			const hasText = Boolean(stripHtml(article.articleContent));
+			const hasImage = Boolean(article.articleImage || extractFirstImageFromHtml(article.articleContent));
+			return hasTitle || hasText || hasImage;
+		})
+		.sort((firstArticle, secondArticle) => {
+			const firstDate = new Date(firstArticle.createdAt).getTime();
+			const secondDate = new Date(secondArticle.createdAt).getTime();
+			return secondDate - firstDate;
+		});
+
+	// Real Board Article dan reviews yaratish - FAQAT articleImage ishlatamiz
+	const reviews = articles.map((a) => {
+		const cleanText = stripHtml(a.articleContent);
+		const imageFromContent = extractFirstImageFromHtml(a.articleContent);
+		const chosenImage = a.articleImage || imageFromContent;
+
+		return {
+		name: a.memberData?.memberFullName || a.memberData?.memberNick || 'Unknown Author',
+		role: a.memberData?.memberNick || 'member',
+		category: formatCategory(a.articleCategory),
+		publishedAt: a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '',
+		text: cleanText
+			? `${cleanText.slice(0, 250)}${cleanText.length > 250 ? '...' : ''}`
+			: 'Open this article to read full details.',
+		image: resolveImageUrl(chosenImage),
+		title: a.articleTitle || 'Untitled Article',
+		};
+	});
+
+	// leftPhotos - active article bilan birga aylanadigan rasmlar
+	const leftPhotos = [0, 1, 2]
+		.map((offset) => {
+			if (reviews.length === 0) return null;
+			const article = reviews[(activeIdx + offset) % reviews.length];
+			if (!article) return null;
+
+			return {
+				image: article.image,
+				title: article.title,
+				meta: `${article.category}${article.publishedAt ? ` • ${article.publishedAt}` : ''}`,
+			};
+		})
+		.filter(Boolean);
+
+	const prev = () => {
+		if (reviews.length < 2) return;
+		setActiveNav('prev');
+		if (navResetTimer.current) clearTimeout(navResetTimer.current);
+		navResetTimer.current = setTimeout(() => setActiveNav(null), 550);
+		setActiveIdx((i) => (i === 0 ? reviews.length - 1 : i - 1));
+	};
+	const next = () => {
+		if (reviews.length < 2) return;
+		setActiveNav('next');
+		if (navResetTimer.current) clearTimeout(navResetTimer.current);
+		navResetTimer.current = setTimeout(() => setActiveNav(null), 550);
+		setActiveIdx((i) => (i === reviews.length - 1 ? 0 : i + 1));
+	};
+
+	useEffect(() => {
+		return () => {
+			if (navResetTimer.current) clearTimeout(navResetTimer.current);
+		};
+	}, []);
+
+	useEffect(() => {
+		reviews.forEach((review) => {
+			if (!review.image) return;
+			const preloadedImage = new window.Image();
+			preloadedImage.src = review.image;
+		});
+	}, [reviews]);
+
+	useEffect(() => {
+		if (activeIdx >= reviews.length) setActiveIdx(0);
+	}, [activeIdx, reviews.length]);
+
+	// Loading holatini tekshirish
+	const isLoading =
+		freeArticlesQuery.loading || recommendArticlesQuery.loading || newsArticlesQuery.loading || humorArticlesQuery.loading;
+
+	if (isLoading && reviews.length === 0) return <div style={{ padding: 32, textAlign: 'center' }}>Loading real board articles...</div>;
+	if (reviews.length === 0) return <div style={{ padding: 32, textAlign: 'center' }}>No board articles found yet. Please publish articles in Free, Recommendation, News, or Humor categories.</div>;
+
+	const review = reviews[activeIdx] || reviews[0];
 
 	if (device === 'mobile') {
 		return (
@@ -109,20 +245,22 @@ const Testimonials = () => {
 							<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
 								<path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#e8a54b"/>
 							</svg>
-							Testimonials
+							Community Board
 						</div>
-						<h2 className={'t-title'}>Unforgettable Traveler Stories & Reviews</h2>
+						<h2 className={'t-title'}>Real Articles Written by Our Users</h2>
+						<div className={'t-meta-row'}>
+							<span className={'t-chip'}>{review.category}</span>
+							{review.publishedAt && <span className={'t-date'}>{review.publishedAt}</span>}
+						</div>
+						<p className={'t-article-title'}>{review.title}</p>
 						<p className={'t-text'}>{review.text}</p>
 						<div className={'t-author'}>
 							<span className={'t-name'}>{review.name}</span>
-							<span className={'t-role'}>{review.role}</span>
-							<div className={'t-stars'}>
-								{Array.from({ length: review.stars }).map((_, i) => <span key={i}>★</span>)}
-							</div>
+							<span className={'t-role'}>by {review.role}</span>
 						</div>
 						<div className={'t-nav'}>
-							<button className={`t-nav-btn${lastDir === 'prev' ? ' active' : ''}`} onClick={prev}>‹</button>
-							<button className={`t-nav-btn${lastDir === 'next' ? ' active' : ''}`} onClick={next}>›</button>
+							<button disabled={reviews.length < 2} className={`t-nav-btn${activeNav === 'prev' ? ' active' : ''}`} onClick={prev}>‹</button>
+							<button disabled={reviews.length < 2} className={`t-nav-btn${activeNav === 'next' ? ' active' : ''}`} onClick={next}>›</button>
 						</div>
 					</div>
 				</div>
@@ -146,27 +284,33 @@ const Testimonials = () => {
 			<div className={'testimonials-body'}>
 				{/* Left: traveler photos */}
 				<div className={'testimonials-left'}>
-					<div className={'photo-top'}>
-						<img src={leftPhotos[activeIdx === 0 ? 1 : activeIdx === 1 ? 2 : 0].image} alt="traveler" />
-						<div className={'location-badge'}>
-							<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-							{leftPhotos[activeIdx === 0 ? 1 : activeIdx === 1 ? 2 : 0].location}
+					{leftPhotos[0] && (
+						<div className={'photo-top'}>
+							<img src={leftPhotos[0].image} alt={leftPhotos[0].title} loading="eager" decoding="async" onError={(e) => { e.currentTarget.src = '/img/community/default.jpg'; }} />
+							<div className={'location-badge'}>
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+								{leftPhotos[0].meta}
+							</div>
 						</div>
-					</div>
-					<div className={'photo-center'}>
-						<img src={leftPhotos[activeIdx === 0 ? 2 : activeIdx === 1 ? 0 : 1].image} alt="traveler" />
-						<div className={'location-badge'}>
-							<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-							{leftPhotos[activeIdx === 0 ? 2 : activeIdx === 1 ? 0 : 1].location}
+					)}
+					{leftPhotos[1] && (
+						<div className={'photo-center'}>
+							<img src={leftPhotos[1].image} alt={leftPhotos[1].title} loading="eager" decoding="async" onError={(e) => { e.currentTarget.src = '/img/community/default.jpg'; }} />
+							<div className={'location-badge'}>
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+								{leftPhotos[1].meta}
+							</div>
 						</div>
-					</div>
-					<div className={'photo-bottom'}>
-						<img src={leftPhotos[activeIdx].image} alt="traveler" />
-						<div className={'location-badge'}>
-							<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-							{leftPhotos[activeIdx].location}
+					)}
+					{leftPhotos[2] && (
+						<div className={'photo-bottom'}>
+							<img src={leftPhotos[2].image} alt={leftPhotos[2].title} loading="eager" decoding="async" onError={(e) => { e.currentTarget.src = '/img/community/default.jpg'; }} />
+							<div className={'location-badge'}>
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+								{leftPhotos[2].meta}
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 
 				{/* Right: review content */}
@@ -175,20 +319,22 @@ const Testimonials = () => {
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
 							<path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#e8a54b"/>
 						</svg>
-						Testimonials
+						Community Board
 					</div>
-					<h2 className={'t-title'}>Unforgettable Traveler Stories & Reviews</h2>
+					<h2 className={'t-title'}>Real Articles Written by Our Users</h2>
+					<div className={'t-meta-row'}>
+						<span className={'t-chip'}>{review.category}</span>
+						{review.publishedAt && <span className={'t-date'}>{review.publishedAt}</span>}
+					</div>
+					<p className={'t-article-title'}>{review.title}</p>
 					<p className={'t-text'}>{review.text}</p>
 					<div className={'t-author'}>
 						<span className={'t-name'}>{review.name}</span>
-						<span className={'t-role'}>{review.role}</span>
-						<div className={'t-stars'}>
-							{Array.from({ length: review.stars }).map((_, i) => <span key={i}>★</span>)}
-						</div>
+						<span className={'t-role'}>by {review.role}</span>
 					</div>
 				<div className={'t-nav'}>
-					<button className={`t-nav-btn ${lastDir === 'prev' ? 'active' : ''}`} onClick={prev}>‹</button>
-					<button className={`t-nav-btn ${lastDir === 'next' ? 'active' : ''}`} onClick={next}>›</button>
+					<button disabled={reviews.length < 2} className={`t-nav-btn ${activeNav === 'prev' ? 'active' : ''}`} onClick={prev}>‹</button>
+					<button disabled={reviews.length < 2} className={`t-nav-btn ${activeNav === 'next' ? 'active' : ''}`} onClick={next}>›</button>
 				</div>
 					{/* Big quote mark */}
 					<div className={'t-quote'}>"</div>
