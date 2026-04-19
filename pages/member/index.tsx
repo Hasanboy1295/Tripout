@@ -54,6 +54,10 @@ const MemberPage: NextPage = () => {
 		try {
 			if (!id) throw new Error(Messages.error1);
 			if (!user._id) throw new Error(Messages.error2);
+			if (id === user._id) {
+				await sweetTopSmallSuccessAlert('This is your profile', 900);
+				return;
+			}
 
 			await subscribe({
 				variables: {
@@ -72,6 +76,7 @@ const MemberPage: NextPage = () => {
 		try {
 			if (!id) throw new Error(Messages.error1);
 			if (!user._id) throw new Error(Messages.error2);
+			if (id === user._id) return;
 
 			await unsubscribe({
 				variables: {

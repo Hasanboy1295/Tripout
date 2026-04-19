@@ -5,9 +5,22 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import Link from 'next/link';
 import { Member } from '../../types/member/member';
 import { REACT_APP_API_URL } from '../../config';
-import { useQuery } from '@apollo/client';
+import { useQuery, useReactiveVar } from '@apollo/client';
 import { GET_MEMBER } from '../../../apollo/user/query';
 import { T } from '../../types/common';
+import { userVar } from '../../../apollo/store';
+
+const DEFAULT_USER_AVATAR = '/img/profile/defaultUser.svg';
+
+const resolveMemberAvatar = (memberImage?: string): string => {
+	if (!memberImage) return DEFAULT_USER_AVATAR;
+	if (/^https?:\/\//i.test(memberImage)) return memberImage;
+
+	const baseUrl = REACT_APP_API_URL && REACT_APP_API_URL !== 'undefined' ? REACT_APP_API_URL.replace(/\/$/, '') : '';
+	const normalizedPath = memberImage.replace(/^\//, '');
+
+	return baseUrl ? `${baseUrl}/${normalizedPath}` : `/${normalizedPath}`;
+};
 
 interface MemberMenuProps {
 	subscribeHandler: any;
@@ -18,9 +31,12 @@ const MemberMenu = (props: MemberMenuProps) => {
 	const { subscribeHandler, unsubscribeHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const user = useReactiveVar(userVar);
 	const category: any = router.query?.category;
 	const [member, setMember] = useState<Member | null>(null);
 	const { memberId } = router.query;
+	const isOwnProfile = Boolean(user?._id && member?._id && user._id === member._id);
+	const memberAvatar = resolveMemberAvatar(member?.memberImage);
 
 	/** APOLLO REQUESTS **/
 	const {
@@ -46,7 +62,10 @@ const MemberMenu = (props: MemberMenuProps) => {
 				<Stack className={'profile'}>
 					<Box component={'div'} className={'profile-img'}>
 						<img
-							src={member?.memberImage ? `${REACT_APP_API_URL}/${member?.memberImage}` : '/img/profile/defaultUser.svg'}
+							src={memberAvatar}
+							onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+								event.currentTarget.src = DEFAULT_USER_AVATAR;
+							}}
 							alt={'member-photo'}
 						/>
 					</Box>
@@ -60,7 +79,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 					</Stack>
 				</Stack>
 				<Stack className="follow-button-box">
-					{member?.meFollowed && member?.meFollowed[0]?.myFollowing ? (
+					{isOwnProfile ? null : member?.meFollowed && member?.meFollowed[0]?.myFollowing ? (
 						<>
 							<Button
 								variant="outlined"

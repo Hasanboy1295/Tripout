@@ -19,7 +19,7 @@ const extractFirstImageFromHtml = (html?: string): string | undefined => {
 };
 
 const resolveImageUrl = (imagePath?: string): string => {
-	if (!imagePath) return '/img/community/default.jpg';
+	if (!imagePath) return '/img/community/communityImg.png';
 	if (/^https?:\/\//i.test(imagePath)) return imagePath;
 	const rawBaseUrl = REACT_APP_API_URL && REACT_APP_API_URL !== 'undefined' ? REACT_APP_API_URL : '';
 	const baseUrl = rawBaseUrl.replace(/\/$/, '');
@@ -190,14 +190,14 @@ const Testimonials = () => {
 		if (reviews.length < 2) return;
 		setActiveNav('prev');
 		if (navResetTimer.current) clearTimeout(navResetTimer.current);
-		navResetTimer.current = setTimeout(() => setActiveNav(null), 550);
+		navResetTimer.current = setTimeout(() => setActiveNav(null), 220);
 		setActiveIdx((i) => (i === 0 ? reviews.length - 1 : i - 1));
 	};
 	const next = () => {
 		if (reviews.length < 2) return;
 		setActiveNav('next');
 		if (navResetTimer.current) clearTimeout(navResetTimer.current);
-		navResetTimer.current = setTimeout(() => setActiveNav(null), 550);
+		navResetTimer.current = setTimeout(() => setActiveNav(null), 220);
 		setActiveIdx((i) => (i === reviews.length - 1 ? 0 : i + 1));
 	};
 
@@ -286,7 +286,7 @@ const Testimonials = () => {
 				<div className={'testimonials-left'}>
 					{leftPhotos[0] && (
 						<div className={'photo-top'}>
-							<img src={leftPhotos[0].image} alt={leftPhotos[0].title} loading="eager" decoding="async" onError={(e) => { e.currentTarget.src = '/img/community/default.jpg'; }} />
+							<img src={leftPhotos[0].image} alt={leftPhotos[0].title} loading="eager" decoding="async" onError={(e) => { e.currentTarget.src = '/img/community/communityImg.png'; }} />
 							<div className={'location-badge'}>
 								<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
 								{leftPhotos[0].meta}
@@ -295,7 +295,7 @@ const Testimonials = () => {
 					)}
 					{leftPhotos[1] && (
 						<div className={'photo-center'}>
-							<img src={leftPhotos[1].image} alt={leftPhotos[1].title} loading="eager" decoding="async" onError={(e) => { e.currentTarget.src = '/img/community/default.jpg'; }} />
+							<img src={leftPhotos[1].image} alt={leftPhotos[1].title} loading="eager" decoding="async" onError={(e) => { e.currentTarget.src = '/img/community/communityImg.png'; }} />
 							<div className={'location-badge'}>
 								<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
 								{leftPhotos[1].meta}
@@ -304,7 +304,7 @@ const Testimonials = () => {
 					)}
 					{leftPhotos[2] && (
 						<div className={'photo-bottom'}>
-							<img src={leftPhotos[2].image} alt={leftPhotos[2].title} loading="eager" decoding="async" onError={(e) => { e.currentTarget.src = '/img/community/default.jpg'; }} />
+							<img src={leftPhotos[2].image} alt={leftPhotos[2].title} loading="eager" decoding="async" onError={(e) => { e.currentTarget.src = '/img/community/communityImg.png'; }} />
 							<div className={'location-badge'}>
 								<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
 								{leftPhotos[2].meta}

@@ -59,6 +59,18 @@ const Filter = (props: FilterType) => {
 		searchFilter?.search?.pricesRange?.end ?? 500,
 	]);
 
+	// Reset all filters handler
+	const handleResetFilters = async () => {
+		setSearchText('');
+		setPriceRange([0, 2000]);
+		setSearchFilter({
+			page: 1,
+			limit: initialInput?.limit || 9,
+			search: {},
+		});
+		await router.push('/property', undefined, { scroll: false });
+	};
+
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (searchFilter?.search?.locationList?.length == 0) {
@@ -197,6 +209,12 @@ const Filter = (props: FilterType) => {
 	} else {
 		return (
 			<Stack className={'filter-main'}>
+				{/* Reset All Filters Button */}
+				<Stack direction="row" justifyContent="flex-end" sx={{ mb: 1 }}>
+					<Button variant="outlined" size="small" color="warning" onClick={handleResetFilters}>
+						Reset All Filters
+					</Button>
+				</Stack>
 				{/* Search Destination */}
 				<Stack className={'filter-section search-section'}>
 					<Typography className={'section-title'}>Search Destination</Typography>
@@ -211,7 +229,10 @@ const Filter = (props: FilterType) => {
 								if (event.key == 'Enter') {
 									setSearchFilter({
 										...searchFilter,
-										search: { ...searchFilter.search, text: searchText },
+										search: {
+											...searchFilter.search,
+											text: searchText.trim().toLowerCase(),
+										},
 									});
 								}
 							}}
@@ -221,7 +242,10 @@ const Filter = (props: FilterType) => {
 							onClick={() => {
 								setSearchFilter({
 									...searchFilter,
-									search: { ...searchFilter.search, text: searchText },
+									search: {
+										...searchFilter.search,
+										text: searchText.trim().toLowerCase(),
+									},
 								});
 							}}
 						>

@@ -20,6 +20,18 @@ import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
 
+const DEFAULT_USER_AVATAR = '/img/profile/defaultUser.svg';
+
+const resolveUserAvatar = (memberImage?: string): string => {
+	if (!memberImage) return DEFAULT_USER_AVATAR;
+	if (/^https?:\/\//i.test(memberImage)) return memberImage;
+
+	const baseUrl = REACT_APP_API_URL && REACT_APP_API_URL !== 'undefined' ? REACT_APP_API_URL.replace(/\/$/, '') : '';
+	const normalizedPath = memberImage.replace(/^\//, '');
+
+	return baseUrl ? `${baseUrl}/${normalizedPath}` : `/${normalizedPath}`;
+};
+
 const Top = () => {
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
@@ -38,6 +50,7 @@ const Top = () => {
 	const [bgColor, setBgColor] = useState<boolean>(false);
 	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
 	const logoutOpen = Boolean(logoutAnchor);
+	const userAvatar = resolveUserAvatar(user?.memberImage);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -225,9 +238,10 @@ const Top = () => {
 								<>
 									<div className={'login-user'} onClick={(event: any) => setLogoutAnchor(event.currentTarget)}>
 										<img
-											src={
-												user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'
-											}
+											src={userAvatar}
+											onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+												event.currentTarget.src = DEFAULT_USER_AVATAR;
+											}}
 											alt=""
 										/>
 									</div>
