@@ -440,22 +440,8 @@ const HeaderFilter = (props: HeaderFilterProps) => {
           {/* MENUS */}
           <div className={`filter-location ${openLocation ? 'on' : ''}`} ref={locationRef}>
             {/* Special entry for Turkey with external link and ideal image */}
-            <a
-              href="https://en.wikipedia.org/wiki/Turkey"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: 'flex', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', marginBottom: '16px' }}
-              key="TURKEY-EXTERNAL"
-            >
-              <img
-                src="/img/destinations/turkey.jpg"
-                alt="Ancient Wonders of Turkey"
-                style={{ width: '100%', borderRadius: '20px', display: 'block' }}
-              />
-              <span style={{ display: 'block', textAlign: 'center', marginTop: '8px', fontWeight: 500 }}>
-                Ancient Wonders of Turkey
-              </span>
-            </a>
+        
+      
             {/* Render the rest of the locations as before */}
             {propertyLocation.map((location: string) => (
               <div onClick={() => propertyLocationSelectHandler(location)} key={location}>

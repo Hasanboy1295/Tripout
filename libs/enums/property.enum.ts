@@ -23,6 +23,4 @@ export enum PropertyLocation {
 	PARIS = 'PARIS',
 	TOKYO = 'TOKYO',
 	DUBAI = 'DUBAI',
-
-
 }
