@@ -19,12 +19,6 @@ const destinations = [
   link: 'https://www.santorini.com/',
  },
  {
-  id: 3,
-  title: 'Ancient Wonders of Turkey',
-  image: '/img/destinations/turkey.jpg',
-  link: 'https://www.goturkey.com/',
- },
- {
   id: 4,
   title: 'Malta Coastal Views',
   image: '/img/destinations/malta.jpg',

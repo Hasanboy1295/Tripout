@@ -444,7 +444,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
               href="https://en.wikipedia.org/wiki/Turkey"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: 'block', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', marginBottom: '16px' }}
+              style={{ display: 'flex', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', marginBottom: '16px' }}
               key="TURKEY-EXTERNAL"
             >
               <img

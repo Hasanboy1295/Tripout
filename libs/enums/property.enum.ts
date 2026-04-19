@@ -1,9 +1,7 @@
 export enum PropertyType {
-	    APARTMENT = 'APARTMENT', 
-		CITY = 'CITY',
-		HOUSE = 'HOUSE',
-		VILLA = 'VILLA',
-	BATCH = 'BATCH',
+	CITY = 'CITY',
+    VILLA = 'VILLA',
+	BICH = 'BICH',
 	LUXURY = 'LUXURY',
 }
 
@@ -26,10 +24,5 @@ export enum PropertyLocation {
 	TOKYO = 'TOKYO',
 	DUBAI = 'DUBAI',
 
-	SEOUL = 'SEOUL',
-	BUSAN = 'BUSAN',
-	DEUGU = 'DEUGU',
-	INCHEON = 'INCHEON',
-	GWANGJU = 'GWANGJU',
 
 }

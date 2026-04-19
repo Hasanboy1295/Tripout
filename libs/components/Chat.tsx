@@ -124,15 +124,21 @@ const Chat = () => {
 	};
 
 	const onClickHandler = () => {
-		if (!messageInput) sweetErrorAlert(Messages.error4);
-		else {
+		const trimmed = messageInput.trim();
+		if (!trimmed) {
+			sweetErrorAlert(Messages.error4);
+			return;
+		}
+		if (socket && socket.readyState === 1) {
 			socket.send(
 				JSON.stringify({
 					event: 'message',
-					data: messageInput,
-				}),
+					data: trimmed,
+				})
 			);
 			setMessageInput('');
+		} else {
+			sweetErrorAlert('Chat connection not ready. Please try again later.');
 		}
 	};
 
@@ -194,6 +200,7 @@ const Chat = () => {
 						value={messageInput}
 						onChange={getInputMessageHandler}
 						onKeyDown={getKeyHandler}
+						autoComplete="off"
 					/>
 					<button className={'send-msg-btn'} onClick={onClickHandler}>
 						<SendIcon style={{ color: '#fff' }} />
