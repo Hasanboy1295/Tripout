@@ -364,9 +364,9 @@ const HeaderFilter = (props: HeaderFilterProps) => {
                 </svg>
               </Box>
               <Box className={'box-text'}>
-                <span className={'box-label'}>Destination</span>
+                <span className={'box-label'}>{t('destination_label')}</span>
                 <span className={'box-value'}>
-                  {searchFilter?.search?.locationList ? searchFilter?.search?.locationList[0] : 'Where to go?'}
+                  {searchFilter?.search?.locationList ? searchFilter?.search?.locationList[0] : t('destination_placeholder')}
                 </span>
               </Box>
               <ExpandMoreIcon className={'box-arrow'} />
@@ -382,9 +382,9 @@ const HeaderFilter = (props: HeaderFilterProps) => {
                 </svg>
               </Box>
               <Box className={'box-text'}>
-                <span className={'box-label'}>Choose Tour Type</span>
+                <span className={'box-label'}>{t('tourtype_label')}</span>
                 <span className={'box-value'}>
-                  {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : 'Select type'}
+                  {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : t('tourtype_placeholder')}
                 </span>
               </Box>
               <ExpandMoreIcon className={'box-arrow'} />
@@ -400,11 +400,11 @@ const HeaderFilter = (props: HeaderFilterProps) => {
                 </svg>
               </Box>
               <Box className={'box-text'}>
-                <span className={'box-label'}>Check In — Check Out</span>
+                <span className={'box-label'}>{t('checkinout_label')}</span>
                 <span className={'box-value'}>
                   {dateRange.start && dateRange.end
                     ? `${format(new Date(dateRange.start), 'MMM d')} - ${format(new Date(dateRange.end), 'MMM d')}`
-                    : 'Select date'}
+                    : t('checkinout_placeholder')}
                 </span>
               </Box>
               <ExpandMoreIcon className={'box-arrow'} />
@@ -420,9 +420,9 @@ const HeaderFilter = (props: HeaderFilterProps) => {
                 </svg>
               </Box>
               <Box className={'box-text'}>
-                <span className={'box-label'}>Total Guests</span>
+                <span className={'box-label'}>{t('guests_label')}</span>
                 <span className={'box-value'}>
-                  {searchFilter?.search?.roomsList ? `${searchFilter?.search?.roomsList[0]} guests` : 'Add guests'}
+                  {searchFilter?.search?.roomsList ? `${searchFilter?.search?.roomsList[0]} ${t('guests_unit')}` : t('guests_placeholder')}
                 </span>
               </Box>
               <ExpandMoreIcon className={'box-arrow'} />

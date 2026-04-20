@@ -82,4 +82,14 @@
   "aboutus_home_feature1": "꿈과 버킷리스트에 맞춘 맞춤 일정 제공.",
   "aboutus_home_feature2": "숨겨진 명소와 진짜 경험을 알려주는 현지 전문가 가이드.",
   "aboutus_home_feature3": "24/7 지원으로 언제 어디서나 안심하고 여행하세요."
+  ,
+  "destination_label": "여행지",
+  "destination_placeholder": "어디로 가시나요?",
+  "tourtype_label": "투어 유형 선택",
+  "tourtype_placeholder": "유형 선택",
+  "checkinout_label": "체크인 — 체크아웃",
+  "checkinout_placeholder": "날짜 선택",
+  "guests_label": "총 인원",
+  "guests_placeholder": "인원 추가",
+  "guests_unit": "명"
 }

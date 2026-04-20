@@ -82,4 +82,14 @@
   "aboutus_home_feature1": "Индивидуальные маршруты под ваши мечты и желания.",
   "aboutus_home_feature2": "Экспертные гиды, которые покажут скрытые жемчужины и настоящие впечатления.",
   "aboutus_home_feature3": "Круглосуточная поддержка — путешествуйте спокойно в любой точке мира."
+  ,
+  "destination_label": "Место назначения",
+  "destination_placeholder": "Куда поехать?",
+  "tourtype_label": "Выберите тип тура",
+  "tourtype_placeholder": "Выберите тип",
+  "checkinout_label": "Заезд — Выезд",
+  "checkinout_placeholder": "Выберите дату",
+  "guests_label": "Гости",
+  "guests_placeholder": "Добавить гостей",
+  "guests_unit": "гостей"
 }

@@ -83,4 +83,14 @@
   "aboutus_home_feature1": "Tailor-made itineraries crafted to match your dreams and bucket list.",
   "aboutus_home_feature2": "Expert local guides who reveal hidden gems and authentic experiences.",
   "aboutus_home_feature3": "24/7 support so you travel with complete peace of mind, anywhere."
+  ,
+  "destination_label": "Destination",
+  "destination_placeholder": "Where to go?",
+  "tourtype_label": "Choose Tour Type",
+  "tourtype_placeholder": "Select type",
+  "checkinout_label": "Check In — Check Out",
+  "checkinout_placeholder": "Select date",
+  "guests_label": "Total Guests",
+  "guests_placeholder": "Add guests",
+  "guests_unit": "guests"
 }
