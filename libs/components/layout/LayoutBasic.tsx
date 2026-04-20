@@ -28,72 +28,71 @@ const withLayoutBasic = (Component: any) => {
 				bgImage = '',
 				breadcrumbCurrent = '';
 
-			switch (router.pathname) {
-				case '/property':
-					title = 'Destination List';
-					desc = 'Curated escapes and unforgettable routes';
-					bgImage = '/img/banner/hero-travel-1.jpg';
-					breadcrumbCurrent = 'Destination';
-					break;
-					
-				case '/agent':
-					title = 'Agents';
-					desc = 'Meet trusted travel experts ready to guide your trip';
-					bgImage = '/img/banner/hero-travel-1.jpg';
-					breadcrumbCurrent = 'Agents';
-					break;
-				case '/agent/detail':
-					title = 'Agent Profile';
-					desc = 'Learn more about your travel specialist';
-					bgImage = '/img/banner/hero-travel-1.jpg';
-					breadcrumbCurrent = 'Agent Detail';
-					break;
-				case '/mypage':
-					title = 'my page';
-					desc = 'Manage your account and saved plans';
-					bgImage = '/img/banner/hero-travel-1.jpg';
-					breadcrumbCurrent = 'My Page';
-					break;
-				case '/about':
-					title = 'About Us';
-					desc = 'Learn more about the team behind your trips';
-					bgImage = '/img/banner/hero-travel-1.jpg';
-					breadcrumbCurrent = 'About Us';
-					break;
-				case '/community':
-					title = 'Community';
-					desc = 'Stories, ideas, and travel conversations';
-					bgImage = '/img/banner/hero-travel-1.jpg';
-					breadcrumbCurrent = 'Community';
-					break;
-				case '/community/detail':
-					title = 'Community Detail';
-					desc = 'Read the latest travel discussion';
-					bgImage = '/img/banner/hero-travel-1.jpg';
-					breadcrumbCurrent = 'Community Detail';
-					break;
-				case '/cs':
-					title = 'CS';
-					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/hero-travel-1.jpg';
-					breadcrumbCurrent = 'CS';
-					break;
-				case '/account/join':
-					title = 'Login/Signup';
-					desc = 'Authentication Process';
-					bgImage = '/img/banner/hero-travel-1.jpg';
-					breadcrumbCurrent = 'Login/Signup';
-					setAuthHeader(true);
-					break;
-				case '/member':
-					title = 'Member Page';
-					desc = 'Discover profile details and activity';
-					bgImage = '/img/banner/hero-travel-1.jpg';
-					breadcrumbCurrent = 'Member Page';
-					break;
-				default:
-					break;
-			}
+			   switch (router.pathname) {
+				   case '/property':
+					   title = 'destination_title';
+					   desc = 'destination_desc';
+					   bgImage = '/img/banner/hero-travel-1.jpg';
+					   breadcrumbCurrent = 'destination_breadcrumb';
+					   break;
+				   case '/agent':
+					   title = 'agents_title';
+					   desc = 'agents_desc';
+					   bgImage = '/img/banner/hero-travel-1.jpg';
+					   breadcrumbCurrent = 'agents_breadcrumb';
+					   break;
+				   case '/agent/detail':
+					   title = 'agent_profile_title';
+					   desc = 'agent_profile_desc';
+					   bgImage = '/img/banner/hero-travel-1.jpg';
+					   breadcrumbCurrent = 'agent_profile_breadcrumb';
+					   break;
+				   case '/mypage':
+					   title = 'mypage_title';
+					   desc = 'mypage_desc';
+					   bgImage = '/img/banner/hero-travel-1.jpg';
+					   breadcrumbCurrent = 'mypage_breadcrumb';
+					   break;
+				   case '/about':
+					   title = 'aboutus_title';
+					   desc = 'aboutus_desc';
+					   bgImage = '/img/banner/hero-travel-1.jpg';
+					   breadcrumbCurrent = 'aboutus_breadcrumb';
+					   break;
+				   case '/community':
+					   title = 'community_title';
+					   desc = 'community_desc';
+					   bgImage = '/img/banner/hero-travel-1.jpg';
+					   breadcrumbCurrent = 'community_breadcrumb';
+					   break;
+				   case '/community/detail':
+					   title = 'community_detail_title';
+					   desc = 'community_detail_desc';
+					   bgImage = '/img/banner/hero-travel-1.jpg';
+					   breadcrumbCurrent = 'community_detail_breadcrumb';
+					   break;
+				   case '/cs':
+					   title = 'cs_title';
+					   desc = 'cs_desc';
+					   bgImage = '/img/banner/hero-travel-1.jpg';
+					   breadcrumbCurrent = 'cs_breadcrumb';
+					   break;
+				   case '/account/join':
+					   title = 'login_signup_title';
+					   desc = 'login_signup_desc';
+					   bgImage = '/img/banner/hero-travel-1.jpg';
+					   breadcrumbCurrent = 'login_signup_breadcrumb';
+					   setAuthHeader(true);
+					   break;
+				   case '/member':
+					   title = 'member_title';
+					   desc = 'member_desc';
+					   bgImage = '/img/banner/hero-travel-1.jpg';
+					   breadcrumbCurrent = 'member_breadcrumb';
+					   break;
+				   default:
+					   break;
+			   }
 
 			return { title, desc, bgImage, breadcrumbCurrent };
 		}, [router.pathname]);
@@ -152,14 +151,14 @@ const withLayoutBasic = (Component: any) => {
 							}}
 						>
 							<Stack className={'container'}>
-								<span className={'eyebrow'}>Plan Your Next Journey</span>
-								<strong>{t(memoizedValues.title)}</strong>
-								<span className={'header-desc'}>{t(memoizedValues.desc)}</span>
-								<span className="breadcrumb">
-									<span className="breadcrumb-home">HOME</span>
-									<span className="breadcrumb-sep"> / </span>
-									<span className="breadcrumb-current">{t(memoizedValues.breadcrumbCurrent || memoizedValues.title)}</span>
-								</span>
+								   <span className={'eyebrow'}>{t('plan_your_next_journey')}</span>
+								   <strong>{t(memoizedValues.title)}</strong>
+								   <span className={'header-desc'}>{t(memoizedValues.desc)}</span>
+								   <span className="breadcrumb">
+									   <span className="breadcrumb-home">{t('Home')}</span>
+									   <span className="breadcrumb-sep"> / </span>
+									   <span className="breadcrumb-current">{t(memoizedValues.breadcrumbCurrent || memoizedValues.title)}</span>
+								   </span>
 							</Stack>
 						</Stack>
 

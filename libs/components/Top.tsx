@@ -292,31 +292,28 @@ const Top = () => {
 										<img
 											className="img-flag"
 											src={'/img/flag/langen.png'}
-											onClick={langChoice}
 											id="en"
-											alt={'usaFlag'}
+											alt={'English'}
 										/>
-										{t('English')}
+										English
 									</MenuItem>
 									<MenuItem disableRipple onClick={langChoice} id="kr">
 										<img
 											className="img-flag"
 											src={'/img/flag/langkr.png'}
-											onClick={langChoice}
-											id="uz"
-											alt={'koreanFlag'}
+											id="kr"
+											alt={'Korean'}
 										/>
-										{t('Korean')}
+										Korean
 									</MenuItem>
 									<MenuItem disableRipple onClick={langChoice} id="ru">
 										<img
 											className="img-flag"
 											src={'/img/flag/langru.png'}
-											onClick={langChoice}
 											id="ru"
-											alt={'russiaFlag'}
+											alt={'Russian'}
 										/>
-										{t('Russian')}
+										Russian
 									</MenuItem>
 								</StyledMenu>
 							</div>
