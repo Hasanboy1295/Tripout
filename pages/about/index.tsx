@@ -1,52 +1,60 @@
+
 import React from 'react';
 import { NextPage } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { Stack, Box } from '@mui/material';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await serverSideTranslations(locale, ['common'])),
+	},
+});
+
 const About: NextPage = () => {
 	const device = useDeviceDetect();
+	const { t } = useTranslation('common');
 
-	if (device === 'mobile') {
-		return <div>ABOUT PAGE MOBILE</div>;
-	} else {
-		return (
-			<Stack className={'about-page'}>
-				{/* Hero Section */}
-				<Stack className={'hero-section'}>
-					<Stack className={'container'}>
-						<Stack className={'hero-content'}>
-							<Stack className={'left-content'}>
-								<div className={'tag-line'}>
-									<FlightTakeoffIcon />
-									<span>Travel With Us</span>
-								</div>
-								<h1 className={'main-title'}>
-									Discover New Destinations and  <br />
-									Adventures Around the World
-								</h1>
-								<p className={'description'}>
-									Explore breathtaking destinations around the world with our expert travel guides. 
-									We create unforgettable journeys tailored to your dreams and preferences. 
-									Start your adventure today and discover the beauty of new horizons.
-								</p>
-							</Stack>
-							<Stack className={'right-content'}>
-								<div className={'experience-badge'}>
-									<span className={'number'}>25+</span>
-									<div className={'text'}>
-										<span>Years of Travel</span>
-										<span>Experiences</span>
-									</div>
-								</div>
-							</Stack>
-						</Stack>
-						<Stack className={'hero-image'}>
-							<img src="/img/banner/hero-travel-1.jpg" alt="Travelers exploring" />
-						</Stack>
-					</Stack>
-				</Stack>
+	   if (device === 'mobile') {
+		   return <div>{t('aboutus_mobile')}</div>;
+	   } else {
+		   return (
+			   <Stack className={'about-page'}>
+				   {/* Hero Section */}
+				   <Stack className={'hero-section'}>
+					   <Stack className={'container'}>
+						   <Stack className={'hero-content'}>
+							   <Stack className={'left-content'}>
+								   <div className={'tag-line'}>
+									   <FlightTakeoffIcon />
+									   <span>{t('aboutus_tagline')}</span>
+								   </div>
+								   <h1 className={'main-title'}>
+									   {t('aboutus_hero_title1')}<br />
+									   {t('aboutus_hero_title2')}
+								   </h1>
+								   <p className={'description'}>
+									   {t('aboutus_hero_desc')}
+								   </p>
+							   </Stack>
+							   <Stack className={'right-content'}>
+								   <div className={'experience-badge'}>
+									   <span className={'number'}>25+</span>
+									   <div className={'text'}>
+										   <span>{t('aboutus_years')}</span>
+										   <span>{t('aboutus_experiences')}</span>
+									   </div>
+								   </div>
+							   </Stack>
+						   </Stack>
+						   <Stack className={'hero-image'}>
+							   <img src="/img/banner/hero-travel-1.jpg" alt="Travelers exploring" />
+						   </Stack>
+					   </Stack>
+				   </Stack>
 
 				{/* Partners Section */}
 				<Stack className={'partners-section'}>
@@ -76,41 +84,41 @@ const About: NextPage = () => {
 					</Stack>
 				</Stack>
 
-				{/* Process Section */}
-				<Stack className={'process-section'}>
-					<Stack className={'container'}>
-						<div className={'section-header'}>
-							<div className={'tag-line'}>
-								<FlightTakeoffIcon />
-								<span>Our Process</span>
-							</div>
-							<h2>Simple Steps to Your Dream Vacation</h2>
-						</div>
-						<Stack className={'steps-wrap'}>
-							<div className={'step'}>
-								<div className={'step-image'}>
-									<img src="/img/icons/search-destination.svg" alt="Search" />
-								</div>
-								<h3>Search Your Destination</h3>
-								<p>Enter your desired location, travel dates, and preferences to explore available options</p>
-							</div>
-							<div className={'step'}>
-								<div className={'step-image'}>
-									<img src="/img/icons/select-package.svg" alt="Select" />
-								</div>
-								<h3>Select Your Package</h3>
-								<p>Browse through the curated offers and choose the travel package that suits your needs.</p>
-							</div>
-							<div className={'step'}>
-								<div className={'step-image'}>
-									<img src="/img/icons/complete-booking.svg" alt="Complete" />
-								</div>
-								<h3>Complete Your Booking</h3>
-								<p>Fill in your details, make payment, and receive your confirmation to start your adventure!</p>
-							</div>
-						</Stack>
-					</Stack>
-				</Stack>
+				   {/* Process Section */}
+				   <Stack className={'process-section'}>
+					   <Stack className={'container'}>
+						   <div className={'section-header'}>
+							   <div className={'tag-line'}>
+								   <FlightTakeoffIcon />
+								   <span>{t('aboutus_process_tagline')}</span>
+							   </div>
+							   <h2>{t('aboutus_process_title')}</h2>
+						   </div>
+						   <Stack className={'steps-wrap'}>
+							   <div className={'step'}>
+								   <div className={'step-image'}>
+									   <img src="/img/icons/search-destination.svg" alt="Search" />
+								   </div>
+								   <h3>{t('aboutus_step1_title')}</h3>
+								   <p>{t('aboutus_step1_desc')}</p>
+							   </div>
+							   <div className={'step'}>
+								   <div className={'step-image'}>
+									   <img src="/img/icons/select-package.svg" alt="Select" />
+								   </div>
+								   <h3>{t('aboutus_step2_title')}</h3>
+								   <p>{t('aboutus_step2_desc')}</p>
+							   </div>
+							   <div className={'step'}>
+								   <div className={'step-image'}>
+									   <img src="/img/icons/complete-booking.svg" alt="Complete" />
+								   </div>
+								   <h3>{t('aboutus_step3_title')}</h3>
+								   <p>{t('aboutus_step3_desc')}</p>
+							   </div>
+						   </Stack>
+					   </Stack>
+				   </Stack>
 
 				{/* About Us Section */}
 				<Stack className={'about-us-section'}>
@@ -137,24 +145,22 @@ const About: NextPage = () => {
 							</div>
 						</Stack>
 						<Stack className={'right-side'}>
-							<div className={'tag-line'}>
-								<FlightTakeoffIcon />
-								<span>About Us</span>
-							</div>
-							<h2>Your Journey Begins Here<br />Explore with Us</h2>
-							<p className={'description'}>
-								Morbi ornare turpis quis lobortis porttitor. Morbi mollis nulla consectetur ullamcorper 
-								dapibus. Maecenas vehicula faucibus sollicitudin. Praesent laoreet pretium augue. 
-								Pellentesque habitant morbi tristique senectus
-							</p>
+							   <div className={'tag-line'}>
+								   <FlightTakeoffIcon />
+								   <span>{t('aboutus_tagline')}</span>
+							   </div>
+							   <h2>{t('aboutus_about_title1')}<br />{t('aboutus_about_title2')}</h2>
+							   <p className={'description'}>
+								   {t('aboutus_about_desc')}
+							   </p>
 							<Stack className={'features'}>
 								<div className={'feature'}>
 									<div className={'feature-icon discovery'}>
 										<img src="/img/icons/globe.svg" alt="" />
 									</div>
 									<div className={'feature-content'}>
-										<h4>Discovery</h4>
-										<p>Mauris diam erat, facilisis a nibh, dignissim sapien.</p>
+										   <h4>{t('aboutus_feature1_title')}</h4>
+										   <p>{t('aboutus_feature1_desc')}</p>
 									</div>
 								</div>
 								<div className={'feature'}>
@@ -162,15 +168,15 @@ const About: NextPage = () => {
 										<img src="/img/icons/sun-orange.svg" alt="" />
 									</div>
 									<div className={'feature-content'}>
-										<h4>Inspiration</h4>
-										<p>Mauris diam erat, facilisis a nibh, dignissim sapien.</p>
+										   <h4>{t('aboutus_feature2_title')}</h4>
+										   <p>{t('aboutus_feature2_desc')}</p>
 									</div>
 								</div>
 							</Stack>
-							<button className={'explore-btn'}>
-								EXPLORE MORE
-								<img src="/img/icons/arrow-right.svg" alt="" />
-							</button>
+							   <button className={'explore-btn'}>
+								   {t('explore_more')}
+								   <img src="/img/icons/arrow-right.svg" alt="" />
+							   </button>
 						</Stack>
 					</Stack>
 				</Stack>
@@ -181,20 +187,20 @@ const About: NextPage = () => {
 	
 				<Stack className={'help'}>
 					<Stack className={'container'}>
-						<Box component={'div'} className={'left'}>
-							<strong>Need help? Talk to our expert.</strong>
-							<p>Talk to our experts or Browse through more properties.</p>
-						</Box>
-						<Box component={'div'} className={'right'}>
-							<div className={'white'}>
-								Contact Us
-								<img src="/img/icons/rightup.svg" alt="" />
-							</div>
-							<div className={'black'}>
-								<img src="/img/icons/call.svg" alt="" />
-								82 1057191295
-							</div>
-						</Box>
+						   <Box component={'div'} className={'left'}>
+							   <strong>{t('aboutus_help_title')}</strong>
+							   <p>{t('aboutus_help_desc')}</p>
+						   </Box>
+						   <Box component={'div'} className={'right'}>
+							   <div className={'white'}>
+								   {t('aboutus_contact')}
+								   <img src="/img/icons/rightup.svg" alt="" />
+							   </div>
+							   <div className={'black'}>
+								   <img src="/img/icons/call.svg" alt="" />
+								   82 1057191295
+							   </div>
+						   </Box>
 					</Stack>
 				</Stack>
 			</Stack>
