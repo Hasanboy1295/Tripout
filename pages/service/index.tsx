@@ -80,20 +80,21 @@ const testimonials = [
 ];
 
 const ServicePage: NextPage = () => {
-	return (
-		<div className={'service-page'}>
-			{/* 1. Banner */}
-			<div className={'service-banner'}>
-				<img src="/img/banner/hero-travel-1.jpg" alt="Services" />
-				<div className={'banner-overlay'}>
-					<h1>Services</h1>
-					<div className={'breadcrumb'}>
-						<Link href={'/'}>HOME</Link>
-						<span>{'>'}</span>
-						<span>SERVICES</span>
-					</div>
-				</div>
-			</div>
+   const { t } = require('next-i18next').useTranslation('common');
+   return (
+	   <div className={'service-page'}>
+		   {/* 1. Banner */}
+		   <div className={'service-banner'}>
+			   <img src="/img/banner/hero-travel-1.jpg" alt={t('services_title')} />
+			   <div className={'banner-overlay'}>
+				   <h1>{t('services_title')}</h1>
+				   <div className={'breadcrumb'}>
+					   <Link href={'/'}>{t('Home')}</Link>
+					   <span>{'>'}</span>
+					   <span>{t('services_breadcrumb')}</span>
+				   </div>
+			   </div>
+		   </div>
 
 			{/* 2. What We Do - Services Grid */}
 			<div className={'services-section'}>
@@ -102,9 +103,9 @@ const ServicePage: NextPage = () => {
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
 							<path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="#e8a54b"/>
 						</svg>
-						What We Do
+						{t('services_what_we_do')}
 					</div>
-					<h2>Exceptional Travel Services Just for You</h2>
+					<h2>{t('services_exceptional_title')}</h2>
 				</div>
 				<div className={'services-grid'}>
 					<div className={'services-col left'}>
@@ -112,22 +113,22 @@ const ServicePage: NextPage = () => {
 							<div key={i} className={'service-item'}>
 								<div className={'service-icon'}>{s.icon}</div>
 								<div className={'service-text'}>
-									<h3>{s.title}</h3>
-									<p>{s.desc}</p>
+									<h3>{t(`services_grid_title_${i+1}`)}</h3>
+									<p>{t(`services_grid_desc_${i+1}`)}</p>
 								</div>
 							</div>
 						))}
 					</div>
 					<div className={'services-center'}>
-						<img src="/img/banner/hero-travel-2.jpg" alt="Travel" />
+						<img src="/img/banner/hero-travel-2.jpg" alt={t('services_center_img_alt')} />
 					</div>
 					<div className={'services-col right'}>
 						{services.slice(3).map((s, i) => (
 							<div key={i} className={'service-item'}>
 								<div className={'service-icon'}>{s.icon}</div>
 								<div className={'service-text'}>
-									<h3>{s.title}</h3>
-									<p>{s.desc}</p>
+									<h3>{t(`services_grid_title_${i+4}`)}</h3>
+									<p>{t(`services_grid_desc_${i+4}`)}</p>
 								</div>
 							</div>
 						))}
@@ -140,16 +141,16 @@ const ServicePage: NextPage = () => {
 				<div className={'stats-bar'}>
 					<div className={'stats-header'}>
 						<div className={'stats-line'}></div>
-						<span>We Are Proudly Operating On</span>
+						<span>{t('services_stats_operating_on')}</span>
 						<span className={'stats-badge'}>50</span>
-						<span>Countries Globally Now</span>
+						<span>{t('services_stats_countries_now')}</span>
 						<div className={'stats-line'}></div>
 					</div>
 					<div className={'stats-row'}>
 						{stats.map((s, i) => (
 							<div key={i} className={'stat-item'}>
 								<span className={'stat-num'}>{s.num}</span>
-								<span className={'stat-label'}>{s.label}</span>
+								<span className={'stat-label'}>{t(`services_stats_label_${i+1}`)}</span>
 							</div>
 						))}
 					</div>
@@ -160,7 +161,7 @@ const ServicePage: NextPage = () => {
 			<div className={'who-we-are'}>
 				<div className={'who-left'}>
 					<div className={'who-img'}>
-						<img src="/img/destinations/turkey.jpg" alt="Traveler" />
+						<img src="/img/destinations/turkey.jpg" alt={t('services_who_img_alt')} />
 					</div>
 					<div className={'who-badge-compass'}>
 						<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#e8a54b" strokeWidth="1.5"/><path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z" stroke="#e8a54b" strokeWidth="1.5"/></svg>
@@ -174,18 +175,18 @@ const ServicePage: NextPage = () => {
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
 							<path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="#e8a54b"/>
 						</svg>
-						Who We Are
+						{t('services_who_we_are')}
 					</div>
-					<h2>Passionate About Your Travel Adventures</h2>
-					<p>Praesent gravida, turpis a tristique placerat, libero elit euismod metus, sit amet feugiat turpis quam eu nisi. Duis lobortis rutrum lacus. Integer lacinia mi erat, sed fermentum eros bibendum nec.</p>
+					<h2>{t('services_who_title')}</h2>
+					<p>{t('services_who_desc')}</p>
 					<div className={'who-features'}>
 						<div className={'who-feature'}>
 							<div className={'feature-icon'}>
 								<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" stroke="#e8a54b" strokeWidth="1.5"/></svg>
 							</div>
 							<div>
-								<h4>Personalized Plans</h4>
-								<p>Praesent feugiat eu nisi nec tempor aenean ultrices.</p>
+								<h4>{t('services_who_feature_1_title')}</h4>
+								<p>{t('services_who_feature_1_desc')}</p>
 							</div>
 						</div>
 						<div className={'who-feature'}>
@@ -193,8 +194,8 @@ const ServicePage: NextPage = () => {
 								<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#e8a54b" strokeWidth="1.5"/><path d="M12 6v6l4 2" stroke="#e8a54b" strokeWidth="1.5" strokeLinecap="round"/></svg>
 							</div>
 							<div>
-								<h4>Exclusive Plans</h4>
-								<p>Praesent feugiat eu nisi nec tempor aenean ultrices.</p>
+								<h4>{t('services_who_feature_2_title')}</h4>
+								<p>{t('services_who_feature_2_desc')}</p>
 							</div>
 						</div>
 					</div>
@@ -206,7 +207,7 @@ const ServicePage: NextPage = () => {
 						</div>
 						<div>
 							<span className={'traveler-count'}>1500+</span>
-							<span className={'traveler-label'}>Travelers Have Traveled</span>
+							<span className={'traveler-label'}>{t('services_who_travelers_label')}</span>
 						</div>
 					</div>
 				</div>
@@ -219,21 +220,21 @@ const ServicePage: NextPage = () => {
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
 							<path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="#e8a54b"/>
 						</svg>
-						Destination Story
+						{t('services_dest_story')}
 					</div>
-					<h2>Explore Our Destination Highlights</h2>
+					<h2>{t('services_dest_highlights_title')}</h2>
 				</div>
 				<div className={'dest-grid'}>
 					<div className={'dest-card tall'}>
 						<img src="/img/destinations/santorini.jpg" alt="Santorini" />
 					</div>
 					<div className={'dest-card tall featured'}>
-						<img src="/img/destinations/turkey.jpg" alt="Bali" />
+						<img src="/img/destinations/turkey.jpg" alt={t('services_dest_featured_img_alt')} />
 						<div className={'dest-overlay'}>
 							<div className={'link-circle'}>
 								<svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="#fff" strokeWidth="2" fill="none"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#fff" strokeWidth="2" fill="none"/></svg>
 							</div>
-							<span>Discover the Magic of Bali</span>
+							<span>{t('services_dest_featured_text')}</span>
 						</div>
 					</div>
 					<div className={'dest-card'}>
@@ -245,9 +246,9 @@ const ServicePage: NextPage = () => {
 				</div>
 				<div className={'dest-bottom-bar'}>
 					<span className={'dest-count'}>+100</span>
-					<span className={'dest-text'}>Discover Stunning Destinations for Your Next Adventure</span>
+					<span className={'dest-text'}>{t('services_dest_bottom_text')}</span>
 					<Link href={'/property'} className={'explore-btn'}>
-						EXPLORE MORE
+						{t('services_dest_explore_btn')}
 						<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
 					</Link>
 				</div>
@@ -260,9 +261,8 @@ const ServicePage: NextPage = () => {
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
 							<path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="#e8a54b"/>
 						</svg>
-						Testimonial
-					</div>
-					<h2>Unforgettable Experiences That Inspire</h2>
+						{t('services_testimonial')}</div>
+					<h2>{t('services_testimonial_title')}</h2>
 				</div>
 				<div className={'test-cards'}>
 					{testimonials.map((t, i) => (
@@ -271,7 +271,7 @@ const ServicePage: NextPage = () => {
 								<img src={t.image} alt={t.name} className={'test-avatar'} />
 								<div className={'test-info'}>
 									<h4>{t.name}</h4>
-									<span>{t.role}</span>
+									<span>{t('services_testimonial_role')}</span>
 								</div>
 								<div className={'test-location'}>
 									<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3" fill="#fff"/></svg>
@@ -282,14 +282,14 @@ const ServicePage: NextPage = () => {
 								{Array.from({ length: t.stars }).map((_, j) => <span key={j}>★</span>)}
 							</div>
 							<hr />
-							<p>{t.text}</p>
+							<p>{t(`services_testimonial_text_${i+1}`)}</p>
 						</div>
 					))}
 				</div>
 				<div className={'test-dots'}>
-					<span className={'dot active'}></span>
-					<span className={'dot'}></span>
-					<span className={'dot'}></span>
+					<span className={'dot active'} aria-label={t('services_testimonial_dot_1')}></span>
+					<span className={'dot'} aria-label={t('services_testimonial_dot_2')}></span>
+					<span className={'dot'} aria-label={t('services_testimonial_dot_3')}></span>
 				</div>
 			</div>
 		</div>

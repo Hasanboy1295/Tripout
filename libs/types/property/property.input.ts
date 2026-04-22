@@ -7,7 +7,6 @@ export interface PropertyInput {
 	propertyAddress: string;
 	propertyTitle: string;
 	propertyPrice: number;
-	propertySquare: number;
 	propertyBeds: number;
 	propertyRooms: number;
 	propertyImages: string[];
@@ -27,7 +26,6 @@ interface PISearch {
 	bedsList?: Number[];
 	pricesRange?: Range;
 	periodsRange?: PeriodsRange;
-	squaresRange?: Range;
 	checkIn?: Date | string;
 	checkOut?: Date | string;
 	text?: string;

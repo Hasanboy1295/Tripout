@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { propertySquare, propertyYears } from '../../config';
+import { propertyYears } from '../../config';
 import { PropertyLocation, PropertyType } from '../../enums/property.enum';
 import { PropertiesInquiry } from '../../types/property/property.input';
 import { useRouter } from 'next/router';
@@ -274,31 +274,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
     setSearchFilter({ ...searchFilter, search: newSearch });
   };
 
-  const propertySquareHandler = useCallback(
-    async (e: any, type: string) => {
-      const value = e.target.value;
-      if (type == 'start') {
-        setSearchFilter({
-          ...searchFilter,
-          search: {
-            ...searchFilter.search,
-            // @ts-ignore
-            squaresRange: { ...searchFilter.search.squaresRange, start: parseInt(value) },
-          },
-        });
-      } else {
-        setSearchFilter({
-          ...searchFilter,
-          search: {
-            ...searchFilter.search,
-            // @ts-ignore
-            squaresRange: { ...searchFilter.search.squaresRange, end: parseInt(value) },
-          },
-        });
-      }
-    },
-    [searchFilter],
-  );
+  // Removed propertySquareHandler and all propertySquare logic
 
   const yearStartChangeHandler = async (event: any) => {
     setYearCheck({ ...yearCheck, start: Number(event.target.value) });
@@ -611,48 +587,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
                   </div>
 
                   <div className={'box'}>
-                    <span>square meter</span>
-                    <div className={'inside space-between align-center'}>
-                      <FormControl sx={{ width: '122px' }}>
-                        <Select
-                          value={searchFilter?.search?.squaresRange?.start}
-                          onChange={(e: any) => propertySquareHandler(e, 'start')}
-                          displayEmpty
-                          inputProps={{ 'aria-label': 'Without label' }}
-                          MenuProps={MenuProps}
-                        >
-                          {propertySquare.map((square: number) => (
-                            <MenuItem
-                              value={square}
-                              disabled={(searchFilter?.search?.squaresRange?.end || 0) < square}
-                              key={square}
-                            >
-                              {square}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <div className={'minus-line'}></div>
-                      <FormControl sx={{ width: '122px' }}>
-                        <Select
-                          value={searchFilter?.search?.squaresRange?.end}
-                          onChange={(e: any) => propertySquareHandler(e, 'end')}
-                          displayEmpty
-                          inputProps={{ 'aria-label': 'Without label' }}
-                          MenuProps={MenuProps}
-                        >
-                          {propertySquare.map((square: number) => (
-                            <MenuItem
-                              value={square}
-                              disabled={(searchFilter?.search?.squaresRange?.start || 0) > square}
-                              key={square}
-                            >
-                              {square}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </div>
+                    {/* Removed propertySquare UI */}
                   </div>
                 </div>
               </div>

@@ -8,7 +8,6 @@ export interface PropertyUpdate {
 	propertyAddress?: string;
 	propertyTitle?: string;
 	propertyPrice?: number;
-	propertySquare?: number;
 	propertyBeds?: number;
 	propertyRooms?: number;
 	propertyImages?: string[];

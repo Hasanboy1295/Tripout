@@ -218,11 +218,6 @@ const MyMenu = () => {
 									scroll={false}
 								>
 									<div className={'flex-box'}>
-										<ShoppingBagIcon className="menu-icon" />
-										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											My Orders
-										</Typography>
-										<ChevronRightIcon className="chevron-icon" />
 									</div>
 								</Link>
 							</ListItem>

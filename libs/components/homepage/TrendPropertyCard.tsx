@@ -53,7 +53,7 @@ const TrendPropertyCard = (props: TrendPropertyCardProps) => {
 						</div>
 						<div>
 							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property.propertySquare} m2</span>
+							{/* Removed propertySquare */}
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
@@ -107,7 +107,7 @@ const TrendPropertyCard = (props: TrendPropertyCardProps) => {
 						</div>
 						<div>
 							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property.propertySquare} m2</span>
+							{/* Removed propertySquare */}
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />

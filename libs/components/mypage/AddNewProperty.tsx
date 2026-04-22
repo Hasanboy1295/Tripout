@@ -26,7 +26,6 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 	/** APOLLO REQUESTS **/
 	const [createProperty] = useMutation(CREATE_PROPERTY);
 	const [updateProperty] = useMutation(UPDATE_PROPERTY);
-
 	const {
 		loading: getPropertyLoading,
 		data: getPropertyData,
@@ -47,6 +46,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			propertyPrice: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyPrice : 0,
 			propertyType: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyType : '',
 			propertyLocation: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyLocation : '',
+			propertyAddress: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyAddress : '',
 			propertyRooms: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyRooms : 0,
 			propertyBeds: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyBeds : 0,
 			propertyBarter: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyBarter : false,
@@ -62,31 +62,30 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			const formData = new FormData();
 			const selectedFiles = inputRef.current.files;
 
-			if (selectedFiles.length == 0) return false;
-			if (selectedFiles.length > 5) throw new Error('Cannot upload more than 5 images!');
+			   if (selectedFiles.length == 0) return false;
+			   if (selectedFiles.length > 4) throw new Error('Cannot upload more than 4 images!');
 
-			formData.append(
-				'operations',
-				JSON.stringify({
-					query: `mutation ImagesUploader($files: [Upload!]!, $target: String!) { 
-						imagesUploader(files: $files, target: $target)
-				  }`,
-					variables: {
-						files: [null, null, null, null, null],
-						target: 'property',
-					},
-				}),
-			);
-			formData.append(
-				'map',
-				JSON.stringify({
-					'0': ['variables.files.0'],
-					'1': ['variables.files.1'],
-					'2': ['variables.files.2'],
-					'3': ['variables.files.3'],
-					'4': ['variables.files.4'],
-				}),
-			);
+			   formData.append(
+				   'operations',
+				   JSON.stringify({
+					   query: `mutation ImagesUploader($files: [Upload!]!, $target: String!) { 
+						   imagesUploader(files: $files, target: $target)
+					 }`,
+					   variables: {
+						   files: [null, null, null, null],
+						   target: 'property',
+					   },
+				   }),
+			   );
+			   formData.append(
+				   'map',
+				   JSON.stringify({
+					   '0': ['variables.files.0'],
+					   '1': ['variables.files.1'],
+					   '2': ['variables.files.2'],
+					   '3': ['variables.files.3'],
+				   }),
+			   );
 			for (const key in selectedFiles) {
 				if (/^\d+$/.test(key)) formData.append(`${key}`, selectedFiles[key]);
 			}
@@ -115,6 +114,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			insertPropertyData.propertyPrice === 0 || // @ts-ignore
 			insertPropertyData.propertyType === '' || // @ts-ignore
 			insertPropertyData.propertyLocation === '' ||
+			insertPropertyData.propertyAddress === '' || // <-- required
 			insertPropertyData.propertyRooms === 0 ||
 			insertPropertyData.propertyBeds === 0 ||
 			insertPropertyData.propertyDesc === '' ||
@@ -185,6 +185,18 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 				<div>
 					<Stack className="config">
 						<Stack className="description-box">
+							<Stack className="config-column">
+								<Typography className="title">Address</Typography>
+								<input
+									type="text"
+									className="description-input"
+									placeholder={'Address'}
+									value={insertPropertyData.propertyAddress}
+									onChange={({ target: { value } }) =>
+										setInsertPropertyData({ ...insertPropertyData, propertyAddress: value })
+									}
+								/>
+							</Stack>
 							<Stack className="config-column">
 								<Typography className="title">Title</Typography>
 								<input
@@ -476,6 +488,7 @@ AddProperty.defaultProps = {
 		propertyPrice: 0,
 		propertyType: '',
 		propertyLocation: '',
+		propertyAddress: '',
 		propertyRooms: 0,
 		propertyBeds: 0,
 		propertyBarter: false,

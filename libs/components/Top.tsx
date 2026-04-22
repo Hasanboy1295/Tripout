@@ -212,8 +212,12 @@ const Top = () => {
 									<svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
 								</div>
 								<div className={'nav-dropdown-menu'}>
-									<Link href={'/service'}><div>Services</div></Link>
-									<Link href={'/service/detail'}><div>Service Detail</div></Link>
+									<Link href={'/service'}>
+										<div className={router.pathname === '/service' ? 'active' : ''}>{t('Services')}</div>
+									</Link>
+									<Link href={'/service/detail'}>
+										<div className={router.pathname === '/service/detail' ? 'active' : ''}>{t('service_detail')}</div>
+									</Link>
 								</div>
 							</div>
 						
