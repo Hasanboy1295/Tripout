@@ -298,20 +298,31 @@
 							}
 
 							.badge-text {
-								gap: 2px;
-
+								gap: 8px;
+								display: flex;
+								align-items: center;
+								flex-wrap: wrap;
 								.badge-label {
 									font-family: $font;
 									font-size: 14px;
 									font-weight: 600;
 									color: #181a20;
 								}
-
 								.badge-value {
 									font-family: $font;
 									font-size: 13px;
 									font-weight: 400;
 									color: #717171;
+								}
+								.trip-info-label {
+									font-family: $font;
+									font-size: 14px;
+									font-weight: 600;
+									color: #181a20;
+									margin-right: 8px;
+								}
+								svg {
+									vertical-align: middle;
 								}
 							}
 						}
@@ -613,141 +624,145 @@
 				}
 
 				/* RIGHT SIDEBAR - Trip Booking Card */
-				.right-config {
-					width: 340px;
-					height: fit-content;
-					padding: 30px 25px;
-					gap: 20px;
-					border-radius: 16px;
-					border: 1px solid #e8e8e8;
-					background: #fff;
-					box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-					position: sticky;
-					top: 100px;
+				   .right-config {
+					   width: 370px;
+					   padding: 36px 32px 32px 32px;
+					   border-radius: 20px;
+					   border: 1.5px solid #e8e8e8;
+					   background: #fff;
+					   box-shadow: 0 6px 32px rgba(0, 0, 0, 0.08);
+					   position: sticky;
+					   top: 100px;
+					   display: flex;
+					   flex-direction: column;
+					   gap: 0;
 
-					.price-box {
-						width: 100%;
-						align-items: flex-start;
-						gap: 4px;
-						padding-bottom: 20px;
-						border-bottom: 1px solid #eee;
+					   /* trip-info-sidebar removed from right sidebar */
 
-						.start-from {
-							font-family: $font;
-							font-size: 14px;
-							font-weight: 400;
-							color: #717171;
-						}
-
-						.price {
-							font-family: $font;
-							font-size: 32px;
-							font-weight: 700;
-							color: #f5a623;
-						}
-					}
-
-					.booking-option {
-						width: 100%;
-						flex-direction: row;
-						align-items: center;
-						gap: 12px;
-						padding: 14px 18px;
-						border-radius: 30px;
-						border: 1px solid #e0e0e0;
-						cursor: pointer;
-						transition: border-color 0.2s;
-
-						&:hover {
-							border-color: #f5a623;
-						}
-
-						svg {
-							font-size: 20px;
-							color: #f5a623;
-						}
-
-						p {
-							font-family: $font;
-							font-size: 14px;
-							font-weight: 400;
-							color: #555;
-						}
-					}
-
-					.landmarks-section {
-						width: 100%;
-						gap: 15px;
-						margin-top: 10px;
-
-						.landmarks-title {
-							font-family: $font;
-							font-size: 18px;
-							font-weight: 700;
-							color: #181a20;
-						}
-
-						.landmark-list {
-							width: 100%;
-							gap: 12px;
-
-							.landmark-item {
-								width: 100%;
-								flex-direction: row;
-								align-items: center;
-								gap: 10px;
-
-								svg {
-									font-size: 20px;
-									flex-shrink: 0;
-								}
-
-								.landmark-name {
-									flex: 1;
-									font-family: $font;
-									font-size: 14px;
-									font-weight: 400;
-									color: #555;
-								}
-
-								.landmark-dist {
-									font-family: $font;
-									font-size: 14px;
-									font-weight: 600;
-									color: #181a20;
-								}
-							}
-						}
-					}
-
-					.get-started-btn {
-						width: 100%;
-						display: flex;
-						flex-direction: row;
-						padding: 16px 30px;
-						justify-content: center;
-						align-items: center;
-						gap: 10px;
-						border-radius: 30px;
-						background: #f5a623;
-						margin-top: 10px;
-						text-transform: uppercase;
-						cursor: pointer;
-						transition: background 0.2s;
-
-						&:hover {
-							background: #e09515;
-						}
-
-						p {
-							color: #fff;
-							font-family: $font;
-							font-size: 14px;
-							font-weight: 700;
-							letter-spacing: 1px;
-						}
-					}
-				}
+					   .info-box {
+						   display: flex;
+						   flex-direction: column;
+						   gap: 12px;
+						   margin-bottom: 0;
+						   &:first-child {
+							   align-items: center;
+							   margin-bottom: 18px;
+						   }
+						   .main-title {
+							   font-size: 24px;
+							   font-weight: 700;
+							   color: #181a20;
+							   margin-bottom: 10px;
+							   text-align: center;
+						   }
+						   .image-info {
+							   display: flex;
+							   align-items: center;
+							   gap: 18px;
+							   margin-bottom: 8px;
+							   .member-image {
+								   width: 90px;
+								   height: 90px;
+								   border-radius: 50%;
+								   object-fit: cover;
+								   border: 2.5px solid #f5a623;
+							   }
+							   .name-phone-listings {
+								   display: flex;
+								   flex-direction: column;
+								   gap: 2px;
+								   .name {
+									   font-size: 20px;
+									   font-weight: 700;
+									   color: #181a20;
+									   margin-bottom: 2px;
+								   }
+								   .phone-number {
+									   display: flex;
+									   align-items: center;
+									   gap: 7px;
+									   font-size: 15px;
+									   color: #717171;
+									   svg {
+										   color: #f5a623;
+									   }
+									   .number {
+										   font-weight: 500;
+									   }
+								   }
+								   .listings {
+									   font-size: 15px;
+									   color: #181a20;
+									   font-weight: 600;
+									   text-decoration: underline;
+									   cursor: pointer;
+									   margin-top: 2px;
+								   }
+							   }
+						   }
+						   .sub-title {
+							   font-size: 16px;
+							   font-weight: 700;
+							   color: #181a20;
+							   margin-bottom: 2px;
+						   }
+						   input,
+						   textarea {
+							   width: 100%;
+							   padding: 16px 18px;
+							   border-radius: 12px;
+							   border: 1.5px solid #e0e0e0;
+							   font-size: 16px;
+							   font-family: inherit;
+							   color: #181a20;
+							   background: #faf9f6;
+							   resize: none;
+							   transition: border 0.2s;
+							   &:focus {
+								   border-color: #f5a623;
+								   outline: none;
+								   background: #fff;
+							   }
+						   }
+						   textarea {
+							   min-height: 90px;
+							   max-height: 180px;
+						   }
+					   }
+					   .send-message {
+						   width: 100%;
+						   padding: 18px 0;
+						   border-radius: 16px;
+						   background: #f27052;
+						   color: #fff;
+						   font-size: 18px;
+						   font-weight: 700;
+						   display: flex;
+						   align-items: center;
+						   justify-content: center;
+						   gap: 12px;
+						   margin-top: 18px;
+						   transition: background 0.2s;
+						   box-shadow: 0 2px 8px rgba(245, 166, 35, 0.08);
+						   cursor: pointer;
+						   border: none;
+						   .title {
+							   color: #fff;
+							   font-size: 18px;
+							   font-weight: 700;
+						   }
+						   svg {
+							   width: 20px;
+							   height: 20px;
+							   path {
+								   fill: #fff;
+							   }
+						   }
+						   &:hover {
+							   background: #e95c3c;
+						   }
+					   }
+				   }
 			}
 
 			/* SIMILAR PROPERTIES */
