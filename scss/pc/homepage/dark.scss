@@ -29,36 +29,48 @@ body.dark-mode {
 
 	#pc-wrap { background: #0f1419; }
 
-	/* ── Top navbar ─────────────────────────────────────────────── */
-	.navbar {
+	/* ── Top navbar ─────────────────────────────────────────────────
+	 * Original selectors live under `#pc-wrap #top .navbar .navbar-main`
+	 * (specificity 0,2,2,0). Match that depth here so we win, instead
+	 * of leaning on !important. */
+	#pc-wrap #top .navbar {
 		background: #0f1419;
 
 		.navbar-main {
 			background: #0f1419;
 			border-bottom: 1px solid #2a313a;
+			box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
 
-			&.scrolled { background: #181c22; }
+			&.scrolled {
+				background: rgba(15, 20, 25, 0.96);
+				box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+			}
 
-			.logo-text { color: #e6e8eb; }
+			.logo-box .logo-text { color: #e6e8eb; }
 
 			.router-box {
 				> a > div,
 				.nav-dropdown-trigger {
-					color: #e6e8eb;
+					color: #cdd2da;
+					&:hover { color: #e8a54b; }
 					&.active { color: #e8a54b; }
 				}
-				.nav-dropdown-menu {
-					background: #1e242c;
-					border: 1px solid #2a313a;
-					box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
-					a > div { color: #e6e8eb; }
+				.nav-dropdown {
+					.nav-dropdown-menu {
+						background: #1e242c;
+						border: 1px solid #2a313a;
+						box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+						a > div { color: #cdd2da; &:hover { color: #e8a54b; } }
+					}
 				}
 			}
 
 			.user-box {
-				.search-btn { color: #e6e8eb; }
+				.search-btn { color: #e6e8eb; svg { color: #e6e8eb; } }
 				.notification-icon { color: #e6e8eb; }
 				.btn-lang { color: #e6e8eb; }
+				.theme-toggle-box svg { color: #e6e8eb; }
+				.lan-box { border-color: #2a313a; }
 			}
 		}
 	}
