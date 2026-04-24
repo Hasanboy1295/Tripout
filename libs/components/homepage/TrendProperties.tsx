@@ -12,6 +12,7 @@ import { LIKE_TARGET_PROPERTY } from '../../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { Message } from '../../enums/common.enum';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { REACT_APP_API_URL } from '../../config';
 
 interface TrendPropertiesProps {
@@ -22,6 +23,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { t } = useTranslation('common');
 	const [trendProperties, setTrendProperties] = useState<Property[]>([]);
 
 	/** APOLLO REQUESTS **/
@@ -69,7 +71,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 			<Stack className={'trend-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span>Trending Tours</span>
+						<span>{t('trending_tours')}</span>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper
@@ -90,7 +92,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 										</div>
 										<div className={'dest-info'}>
 											<span className={'dest-name'}>{property.propertyTitle}</span>
-											<span className={'dest-visitors'}>{property.propertyViews} People Visit</span>
+											<span className={'dest-visitors'}>{property.propertyViews} {t('people_visit')}</span>
 										</div>
 									</div>
 								</SwiperSlide>
@@ -110,9 +112,9 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="#e8a54b"/>
 							</svg>
-							Trending Tours
+							{t('trending_tours')}
 						</span>
-						<h2 className={'section-title'}>Explore the World Adventures Await</h2>
+						<h2 className={'section-title'}>{t('explore_adventures_await')}</h2>
 					</Stack>
 
 					{/* Destination Grid */}
@@ -130,7 +132,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 								<div className={'dest-info'}>
 									<span className={'dest-name'}>{property.propertyTitle}</span>
 									<span className={`dest-visitors ${idx === 1 ? 'featured' : ''}`}>
-										{property.propertyViews} People Visit
+										{property.propertyViews} {t('people_visit')}
 									</span>
 								</div>
 							</div>
@@ -143,7 +145,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 							className={'see-more-btn'}
 							onClick={() => router.push('/property')}
 						>
-							SEE MORE
+							{t('see_more')}
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M7 17L17 7M17 7H7M17 7V17" stroke="#e8a54b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 							</svg>

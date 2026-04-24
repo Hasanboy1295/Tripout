@@ -261,7 +261,7 @@ const Top = () => {
 									>
 										<MenuItem onClick={() => logOut()}>
 											<Logout fontSize="small" style={{ color: 'blue', marginRight: '10px' }} />
-											Logout
+											{t('logout')}
 										</MenuItem>
 									</Menu>
 								</>
@@ -269,7 +269,7 @@ const Top = () => {
 								<Link href={'/account/join'}>
 									<div className={'join-box'}>
 										<LockOutlinedIcon />
-										<span>LOG IN / SIGN UP</span>
+										<span>{t('login_signup_cta')}</span>
 									</div>
 								</Link>
 							)}

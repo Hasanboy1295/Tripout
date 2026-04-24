@@ -14,6 +14,7 @@ import { T } from '../../types/common';
 import { LIKE_TARGET_PROPERTY } from '../../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { Message } from '../../enums/common.enum';
+import { useTranslation } from 'next-i18next';
 
 interface PopularPropertiesProps {
 	initialInput: PropertiesInquiry;
@@ -22,6 +23,7 @@ interface PopularPropertiesProps {
 const PopularProperties = (props: PopularPropertiesProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
+	const { t } = useTranslation('common');
 	const [popularProperties, setPopularProperties] = useState<Property[]>([]);
 
 	/** APOLLO REQUESTS **/
@@ -66,7 +68,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 			<Stack className={'popular-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span>Popular properties</span>
+						<span>{t('popular_tour')}</span>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper
@@ -97,9 +99,9 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="#e8a54b"/>
 							</svg>
-							<span>Popular Tour</span>
+							<span>{t('popular_tour')}</span>
 						</div>
-						<h2 className={'section-title'}>Discover Your Next Great Adventure</h2>
+						<h2 className={'section-title'}>{t('discover_next_adventure')}</h2>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper

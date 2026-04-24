@@ -1,40 +1,7 @@
 import React from 'react';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import Link from 'next/link';
-
-const posts = [
-	{
-		id: 1,
-		image: '/img/destinations/santorini.jpg',
-		author: 'Liam Patel',
-		date: 'Sep 20, 2024',
-		title: 'Cultural Experiences Immersive Activities for Every Destination Visit',
-		excerpt:
-			'Quisque at felis euismod, pulvinar tellus id, venenatis lectus. Morbi in maximus tortor, nec volutpat libero. Nam nisl justo, tempor ut leo nec, vehicula rutrum nisi. Curabitur bibendum ipsum id ultrices placerat. Suspendisse ex elit, sagittis sit amet massa at, tincidunt aliquet elit.',
-		featured: true,
-	},
-	{
-		id: 2,
-		image: '/img/destinations/turkey.jpg',
-		author: 'Liam Patel',
-		date: 'Sep 20, 2024',
-		title: 'How to Find Affordable Flights and Save Money for Vacation',
-	},
-	{
-		id: 3,
-		image: '/img/destinations/greece.jpg',
-		author: 'Liam Patel',
-		date: 'Sep 20, 2024',
-		title: 'Must-Visit Cultural Festivals Around the World Celebrating',
-	},
-	{
-		id: 4,
-		image: '/img/destinations/paris.jpg',
-		author: 'Liam Patel',
-		date: 'Sep 20, 2024',
-		title: 'Packing Essentials What You Should Always Bring',
-	},
-];
+import { useTranslation } from 'next-i18next';
 
 const PersonIcon = () => (
 	<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -60,6 +27,41 @@ const ArrowIcon = () => (
 
 const BlogSection = () => {
 	const device = useDeviceDetect();
+	const { t } = useTranslation('common');
+
+	const posts = [
+		{
+			id: 1,
+			image: '/img/destinations/santorini.jpg',
+			author: 'Liam Patel',
+			date: 'Sep 20, 2024',
+			title: t('blog_post_1_title'),
+			excerpt: t('blog_post_1_excerpt'),
+			featured: true,
+		},
+		{
+			id: 2,
+			image: '/img/destinations/turkey.jpg',
+			author: 'Liam Patel',
+			date: 'Sep 20, 2024',
+			title: t('blog_post_2_title'),
+		},
+		{
+			id: 3,
+			image: '/img/destinations/greece.jpg',
+			author: 'Liam Patel',
+			date: 'Sep 20, 2024',
+			title: t('blog_post_3_title'),
+		},
+		{
+			id: 4,
+			image: '/img/destinations/paris.jpg',
+			author: 'Liam Patel',
+			date: 'Sep 20, 2024',
+			title: t('blog_post_4_title'),
+		},
+	];
+
 	const featured = posts[0];
 	const sidePosts = posts.slice(1);
 
@@ -71,9 +73,9 @@ const BlogSection = () => {
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
 							<path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="#e8a54b"/>
 						</svg>
-						Our Blog
+						{t('our_blog')}
 					</div>
-					<h2 className={'blog-title'}>Travel Adventure Tips and Inspiration</h2>
+					<h2 className={'blog-title'}>{t('travel_tips_inspiration')}</h2>
 				</div>
 				<div className={'blog-grid'}>
 					{posts.map((post) => (
@@ -83,12 +85,12 @@ const BlogSection = () => {
 							</div>
 							<div className={'side-info'}>
 								<div className={'post-meta'}>
-									<span><PersonIcon /> By {post.author}</span>
+									<span><PersonIcon /> {t('by_label')} {post.author}</span>
 									<span><CalIcon /> {post.date}</span>
 								</div>
 								<h3 className={'post-title'}>{post.title}</h3>
 								<hr className={'post-divider'} />
-								<Link href={'/community'} className={'read-more'}>READ MORE <ArrowIcon /></Link>
+								<Link href={'/community'} className={'read-more'}>{t('read_more')} <ArrowIcon /></Link>
 							</div>
 						</div>
 					))}
@@ -105,9 +107,9 @@ const BlogSection = () => {
 					<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
 						<path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="#e8a54b"/>
 					</svg>
-					Our Blog
+					{t('our_blog')}
 				</div>
-				<h2 className={'blog-title'}>Travel Adventure Tips and Inspiration</h2>
+				<h2 className={'blog-title'}>{t('travel_tips_inspiration')}</h2>
 			</div>
 
 			{/* Grid */}
@@ -119,13 +121,13 @@ const BlogSection = () => {
 					</div>
 					<div className={'featured-info'}>
 						<div className={'post-meta'}>
-							<span><PersonIcon /> By {featured.author}</span>
+							<span><PersonIcon /> {t('by_label')} {featured.author}</span>
 							<span><CalIcon /> {featured.date}</span>
 						</div>
 						<h3 className={'post-title'}>{featured.title}</h3>
 						<p className={'post-excerpt'}>{featured.excerpt}</p>
 						<hr className={'post-divider'} />
-						<Link href={'/community'} className={'read-more'}>READ MORE <ArrowIcon /></Link>
+						<Link href={'/community'} className={'read-more'}>{t('read_more')} <ArrowIcon /></Link>
 					</div>
 				</div>
 
@@ -138,12 +140,12 @@ const BlogSection = () => {
 							</div>
 							<div className={'side-info'}>
 								<div className={'post-meta'}>
-									<span><PersonIcon /> By {post.author}</span>
+									<span><PersonIcon /> {t('by_label')} {post.author}</span>
 									<span><CalIcon /> {post.date}</span>
 								</div>
 								<h3 className={'post-title'}>{post.title}</h3>
 								<hr className={'post-divider'} />
-								<Link href={'/community'} className={'read-more'}>READ MORE <ArrowIcon /></Link>
+								<Link href={'/community'} className={'read-more'}>{t('read_more')} <ArrowIcon /></Link>
 							</div>
 						</div>
 					))}

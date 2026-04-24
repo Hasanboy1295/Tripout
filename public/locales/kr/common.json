@@ -136,5 +136,59 @@
   "services_testimonial_text_2": "이번 여행은 모든 기대를 뛰어넘었습니다! 모험과 휴식이 완벽하게 조화를 이루었고, 숙소와 현지 음식도 최고였습니다. 팀의 전문성과 세심한 배려 덕분에 VIP처럼 느꼈어요.",
   "services_testimonial_dot_1": "후기 1",
   "services_testimonial_dot_2": "후기 2",
-  "services_testimonial_dot_3": "후기 3"
+  "services_testimonial_dot_3": "후기 3",
+
+  "login_signup_cta": "로그인 / 회원가입",
+  "logout": "로그아웃",
+
+  "trending_tours": "인기 투어",
+  "explore_adventures_await": "세계를 탐험하세요, 모험이 기다립니다",
+  "people_visit": "명 방문",
+  "see_more": "더 보기",
+
+  "popular_tour": "인기 투어",
+  "discover_next_adventure": "다음 최고의 모험을 발견하세요",
+
+  "offer_for_you": "당신을 위한 특별 혜택",
+  "discover_incredible_deals": "당신만을 위한 놀라운 할인을 만나보세요!",
+  "discover_incredible_deals_line1": "놀라운 할인을",
+  "discover_incredible_deals_line2": "당신만을 위해!",
+  "contact_us_now": "지금 문의하기",
+
+  "destination_story": "여행지 이야기",
+  "uncover_magic": "각 여행지의 마법을 발견하세요",
+  "uncover_magic_line1": "각 여행지의",
+  "uncover_magic_line2": "마법을 발견하세요",
+
+  "community_board": "커뮤니티 게시판",
+  "real_articles": "사용자가 직접 작성한 실제 글",
+  "by_prefix": "작성자",
+  "untitled_article": "제목 없음",
+  "unknown_author": "알 수 없는 작성자",
+  "open_article_full": "전체 내용을 보려면 기사를 여세요.",
+  "loading_articles": "실제 게시글을 불러오는 중...",
+  "no_articles": "아직 게시된 글이 없습니다. 자유, 추천, 뉴스, 유머 카테고리에 글을 게시해 주세요.",
+
+  "faq": "자주 묻는 질문",
+  "travel_questions_answered": "여행에 관한 궁금증 해결",
+  "mountain_hiking_tour": "산악 하이킹 투어",
+  "zermatt_switzerland": "체르마트, 스위스",
+  "faq_q1": "여행 준비물은 무엇인가요?",
+  "faq_a1": "목적지에 따라 필요한 물품이 다를 수 있습니다. 기본적으로 여권, 의류, 세면도구, 상비약, 전자기기 충전기 등을 준비하시고 출발 2주 전 최신 정보를 확인하시는 것을 권장합니다.",
+  "faq_q2": "알아두어야 할 여행 제한 사항이 있나요?",
+  "faq_a2": "여행 제한 사항은 목적지마다 다릅니다. 출발 최소 2주 전에 최신 입국 요건, 비자 정책, 보건 안내를 확인하시기 바랍니다.",
+  "faq_q3": "예약을 변경하거나 취소하려면 어떻게 하나요?",
+  "faq_a3": "출발 48시간 전까지 계정 대시보드에서 예약을 변경하거나 취소할 수 있습니다. 취소 정책과 수수료를 꼭 확인해 주세요.",
+  "faq_q4": "어떤 종류의 숙소를 이용할 수 있나요?",
+  "faq_a4": "저렴한 호스텔부터 고급 리조트까지 다양한 숙소를 제공합니다. 모든 숙소는 여행자의 편안함과 안전을 위해 꼼꼼히 검증되어 있습니다.",
+
+  "our_blog": "블로그",
+  "travel_tips_inspiration": "여행 팁과 영감",
+  "by_label": "작성자",
+  "read_more": "더 읽기",
+  "blog_post_1_title": "목적지에서 즐길 수 있는 몰입형 문화 체험",
+  "blog_post_1_excerpt": "다양한 문화 체험으로 여행지의 매력을 더 깊이 느껴보세요. 현지 축제, 전통 음식, 장인 공방 방문 등 여러분의 여행을 특별하게 만들어 줄 활동을 소개합니다.",
+  "blog_post_2_title": "저렴한 항공권 찾기와 휴가 비용 절약 팁",
+  "blog_post_3_title": "꼭 가봐야 할 세계의 문화 축제",
+  "blog_post_4_title": "여행 시 꼭 챙겨야 할 필수 준비물"
 }

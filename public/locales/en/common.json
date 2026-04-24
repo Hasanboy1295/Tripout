@@ -137,5 +137,59 @@
   "services_testimonial_text_2": "This travel experience surpassed all our expectations! The itinerary struck the perfect balance between adventure and relaxation, allowing us to truly enjoy every moment. The accommodations were top-notch, and the local cuisine was a highlight. The team's expertise and attention to detail made us feel like VIPs throughout the trip.",
   "services_testimonial_dot_1": "Testimonial 1",
   "services_testimonial_dot_2": "Testimonial 2",
-  "services_testimonial_dot_3": "Testimonial 3"
+  "services_testimonial_dot_3": "Testimonial 3",
+
+  "login_signup_cta": "LOG IN / SIGN UP",
+  "logout": "Logout",
+
+  "trending_tours": "Trending Tours",
+  "explore_adventures_await": "Explore the World Adventures Await",
+  "people_visit": "People Visit",
+  "see_more": "SEE MORE",
+
+  "popular_tour": "Popular Tour",
+  "discover_next_adventure": "Discover Your Next Great Adventure",
+
+  "offer_for_you": "Offer For You",
+  "discover_incredible_deals": "Discover Incredible Deals Just for You!",
+  "discover_incredible_deals_line1": "Discover Incredible",
+  "discover_incredible_deals_line2": "Deals Just for You!",
+  "contact_us_now": "CONTACT US NOW",
+
+  "destination_story": "Destination Story",
+  "uncover_magic": "Uncover the Magic of Each Destination",
+  "uncover_magic_line1": "Uncover the Magic of",
+  "uncover_magic_line2": "Each Destination",
+
+  "community_board": "Community Board",
+  "real_articles": "Real Articles Written by Our Users",
+  "by_prefix": "by",
+  "untitled_article": "Untitled Article",
+  "unknown_author": "Unknown Author",
+  "open_article_full": "Open this article to read full details.",
+  "loading_articles": "Loading real board articles...",
+  "no_articles": "No board articles found yet. Please publish articles in Free, Recommendation, News, or Humor categories.",
+
+  "faq": "FAQ",
+  "travel_questions_answered": "Your Travel Questions Answered",
+  "mountain_hiking_tour": "Mountain Hiking Tour",
+  "zermatt_switzerland": "Zermatt, Switzerland",
+  "faq_q1": "What should I pack for my trip?",
+  "faq_a1": "Fusce sed nulla ultricies, viverra lacus euismod, elementum mi. Fusce non dictum lorem. Sed semper dictum sapien sit amet volutpat. Fusce at nisl a nisi rhoncus mattis. Sed eu placerat risus, a efficitur mauris.",
+  "faq_q2": "Are there any travel restrictions I should know about?",
+  "faq_a2": "Travel restrictions vary by destination. We recommend checking the latest entry requirements, visa policies, and health advisories for your destination at least 2 weeks before your trip.",
+  "faq_q3": "How do I change or cancel my booking?",
+  "faq_a3": "You can change or cancel your booking through your account dashboard up to 48 hours before departure. Please review our cancellation policy for applicable fees.",
+  "faq_q4": "What types of accommodations are available?",
+  "faq_a4": "We offer a wide range of accommodations from budget-friendly hostels to luxury resorts. All options are carefully vetted to ensure comfort and safety for our travelers.",
+
+  "our_blog": "Our Blog",
+  "travel_tips_inspiration": "Travel Adventure Tips and Inspiration",
+  "by_label": "By",
+  "read_more": "READ MORE",
+  "blog_post_1_title": "Cultural Experiences Immersive Activities for Every Destination Visit",
+  "blog_post_1_excerpt": "Quisque at felis euismod, pulvinar tellus id, venenatis lectus. Morbi in maximus tortor, nec volutpat libero. Nam nisl justo, tempor ut leo nec, vehicula rutrum nisi. Curabitur bibendum ipsum id ultrices placerat. Suspendisse ex elit, sagittis sit amet massa at, tincidunt aliquet elit.",
+  "blog_post_2_title": "How to Find Affordable Flights and Save Money for Vacation",
+  "blog_post_3_title": "Must-Visit Cultural Festivals Around the World Celebrating",
+  "blog_post_4_title": "Packing Essentials What You Should Always Bring"
 }

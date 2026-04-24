@@ -4,6 +4,7 @@ import { Stack } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type SwiperCore from 'swiper';
+import { useTranslation } from 'next-i18next';
 
 const destinations = [
  {
@@ -53,6 +54,7 @@ const destinations = [
 
 const DestinationStory = () => {
  const device = useDeviceDetect();
+ const { t } = useTranslation('common');
  const swiperRef = useRef<SwiperCore | null>(null);
 
  /** HANDLERS **/
@@ -69,9 +71,9 @@ const DestinationStory = () => {
        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="#e8a54b" />
        </svg>
-       <span>Destination Story</span>
+       <span>{t('destination_story')}</span>
       </div>
-      <h2 className={'story-title'}>Uncover the Magic of Each Destination</h2>
+      <h2 className={'story-title'}>{t('uncover_magic')}</h2>
      </div>
     </div>
     <Swiper
@@ -99,10 +101,10 @@ const DestinationStory = () => {
        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="#e8a54b" />
        </svg>
-       <span>Destination Story</span>
+       <span>{t('destination_story')}</span>
       </div>
       <h2 className={'story-title'}>
-       Uncover the Magic of<br />Each Destination
+       {t('uncover_magic_line1')}<br />{t('uncover_magic_line2')}
       </h2>
      </div>
      <div className={'story-nav'}>
