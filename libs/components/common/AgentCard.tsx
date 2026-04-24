@@ -21,7 +21,8 @@ const AgentCard = (props: AgentCardProps) => {
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
 	const { t, i18n } = useTranslation('common');
-	const imagePath: string = agent?.memberImage
+	const hasAvatar = Boolean(agent?.memberImage);
+	const avatarSrc = hasAvatar
 		? `${REACT_APP_API_URL}/${agent?.memberImage}`
 		: '/img/profile/defaultUser.svg';
 
@@ -36,16 +37,14 @@ const AgentCard = (props: AgentCardProps) => {
 						query: { agentId: agent?._id },
 					}}
 				>
-					<Box
-						component={'div'}
-						className={'agent-img'}
-						style={{
-							backgroundImage: `url(${imagePath})`,
-							backgroundSize: 'cover',
-							backgroundPosition: 'center',
-							backgroundRepeat: 'no-repeat',
-						}}
-					>
+					<Box component={'div'} className={`agent-img${hasAvatar ? '' : ' no-avatar'}`}>
+						<img
+							src={avatarSrc}
+							alt={agent?.memberNick ?? ''}
+							onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+								event.currentTarget.src = '/img/profile/defaultUser.svg';
+							}}
+						/>
 						<div>{agent?.memberProperties} {t('agent_destinations')}</div>
 					</Box>
 				</Link>

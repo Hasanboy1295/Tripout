@@ -867,30 +867,74 @@ body.dark-mode {
 
 	/* =========================================================================
 	 * AGENT LIST
+	 * Light mode paints the page with a bright radial+linear gradient on a
+	 * near-white base. Override with a deep, subtly-warm dark surface so the
+	 * section reads as one piece with the banner above it.
 	 * ====================================================================== */
 	#pc-wrap .agent-list-page {
+		background:
+			radial-gradient(circle at 20% 20%, rgba(232, 165, 75, 0.08), transparent 32%),
+			radial-gradient(circle at 78% 15%, rgba(59, 130, 246, 0.05), transparent 28%),
+			linear-gradient(180deg, #141927 0%, #161b2a 45%, #141927 100%);
+
 		.filter {
 			.left input {
-				background: #232838; color: #e8eaf2; border: 1px solid #2f3547;
+				background: #232838;
+				color: #f1e9dc;
+				border: 1px solid #2f3547;
+				box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 				&::placeholder { color: #6d768f; }
-				&:focus { border-color: #e8a54b; }
+				&:focus { border-color: #e8a54b; box-shadow: 0 0 0 3px rgba(232, 165, 75, 0.15); }
 			}
 			.right {
 				span { color: #a7b0c2; }
-				.MuiButton-root { color: #e8eaf2; background: #232838; border: 1px solid #2f3547; }
+				.MuiButton-root {
+					color: #e8eaf2;
+					background: #232838;
+					border: 1px solid #2f3547;
+					&:hover { border-color: #e8a54b; color: #f5c585; }
+				}
 			}
 		}
 		.card-wrap .no-data p { color: #a7b0c2; }
 		.pagination span { color: #a7b0c2; }
 	}
 
-	/* Agent card */
+	/* Agent card — elevated dark surface with a warm hover glow */
 	.agent-general-card {
-		background: #232838; border: 1px solid #2f3547; border-radius: 12px;
-		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-		.agent-img > div { background: rgba(20, 25, 39, 0.6); color: #fff; }
+		background: linear-gradient(145deg, #242a3c 0%, #1e2432 100%);
+		border: 1px solid #2f3547;
+		border-radius: 20px;
+		box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+		transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+
+		&:hover {
+			border-color: rgba(232, 165, 75, 0.45);
+			box-shadow: 0 22px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(232, 165, 75, 0.15);
+			transform: translateY(-4px);
+		}
+
+		.agent-img {
+			background: #1b2030;
+			/* Fallback state in dark mode — orange-tinted warm card so
+			 * the SVG user glyph stays visible. */
+			&.no-avatar {
+				background: linear-gradient(135deg, #2a3045 0%, #1f2433 100%);
+				> img { filter: drop-shadow(0 4px 12px rgba(232, 165, 75, 0.35)); opacity: 0.85; }
+			}
+			> div {
+				background: linear-gradient(135deg, #e8a54b, #f6c47a);
+				color: #141927;
+				box-shadow: 0 6px 16px rgba(232, 165, 75, 0.4);
+			}
+		}
+
 		.agent-desc {
-			.agent-info strong { color: #e8eaf2; }
+			.agent-info strong {
+				color: #f1e9dc;
+				transition: color 0.2s;
+				&:hover { color: #f5c585; }
+			}
 			.agent-info span { color: #a7b0c2; }
 			.buttons {
 				.MuiIconButton-root { color: #a7b0c2; &:hover { color: #e8a54b; } }
@@ -903,16 +947,33 @@ body.dark-mode {
 	 * AGENT DETAIL
 	 * ====================================================================== */
 	#pc-wrap .agent-detail-page {
+		background: linear-gradient(180deg, #141927 0%, #161b2a 100%);
+
 		.agent-info {
-			background: #232838; border: 1px solid #2f3547; border-radius: 12px;
+			background: linear-gradient(135deg, #232838 0%, #1c2131 100%);
+			border: 1px solid #2f3547;
+			border-radius: 16px;
+			box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+
+			> img {
+				border: 2px solid rgba(232, 165, 75, 0.4);
+				box-shadow: 0 0 0 4px rgba(232, 165, 75, 0.1), 0 8px 20px rgba(0, 0, 0, 0.45);
+			}
 			.info {
-				strong { color: #e8eaf2; }
-				div span { color: #a7b0c2; }
+				strong { color: #f1e9dc; }
+				div span { color: #cfd5e2; }
 			}
 		}
-		.agent-home-list .pagination {
-			span { color: #a7b0c2; }
-			.no-data p { color: #a7b0c2; }
+		.agent-home-list {
+			background: linear-gradient(180deg, #1c2131 0%, #181d2b 100%);
+			border: 1px solid #2f3547;
+			border-radius: 16px;
+			box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+
+			.pagination {
+				span { color: #a7b0c2; }
+				.no-data p { color: #a7b0c2; }
+			}
 		}
 		.review-box {
 			.main-intro {

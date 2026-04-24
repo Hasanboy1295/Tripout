@@ -188,6 +188,9 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 					<Stack className={'agent-info'}>
 						<img
 							src={agent?.memberImage ? `${REACT_APP_API_URL}/${agent?.memberImage}` : '/img/profile/defaultUser.svg'}
+							onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+								event.currentTarget.src = '/img/profile/defaultUser.svg';
+							}}
 							alt=""
 						/>
 						<Box component={'div'} className={'info'} onClick={() => redirectToMemberPageHandler(agent?._id as string)}>
