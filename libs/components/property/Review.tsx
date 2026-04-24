@@ -25,7 +25,7 @@ const Review = (props: ReviewProps) => {
 	const { t } = useTranslation('common');
 	const memberImage = comment?.memberData?.memberImage;
 	const avatarSrc = memberImage ? `${REACT_APP_API_URL}/${memberImage}` : DEFAULT_USER_AVATAR;
-	const memberViews = comment?.memberData?.memberViews ?? 0;
+	const commentViews = comment?.commentViews ?? 0;
 
 	/** HANDLERS **/
 	const goMemberPage = (id: string) => {
@@ -61,7 +61,7 @@ const Review = (props: ReviewProps) => {
 						<Stack className={'views-row'}>
 							<RemoveRedEyeIcon />
 							<Typography className={'view-count'}>
-								{memberViews.toLocaleString()} {memberViews === 1 ? t('detail_view') : t('detail_views')}
+								{commentViews.toLocaleString()} {commentViews === 1 ? t('detail_view') : t('detail_views')}
 							</Typography>
 						</Stack>
 						<Stack className={'desc-box'}>
