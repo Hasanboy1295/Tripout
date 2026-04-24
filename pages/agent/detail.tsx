@@ -146,7 +146,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	const createCommentHandler = async () => {
 		try {
 			if (!user._id) throw new Error(Messages.error2);
-			if (user._id === agentId) throw new Error('Cannot write a rewiew for yourself');
+			if (user._id === agentId) throw new Error(t('agent_review_self_error'));
 			await createComment({
 				variables: {
 					input: insertCommentData,

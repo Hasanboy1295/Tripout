@@ -332,5 +332,7 @@
   "sd_service_3": "항공편 예약",
   "sd_service_4": "그룹 할인",
   "sd_service_5": "투어 패키지",
-  "sd_service_6": "현지 가이드"
+  "sd_service_6": "현지 가이드",
+
+  "agent_review_self_error": "본인에게는 후기를 작성할 수 없습니다"
 }

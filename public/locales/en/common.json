@@ -332,5 +332,7 @@
   "sd_service_3": "Flight Arrangements",
   "sd_service_4": "Group Discounts",
   "sd_service_5": "Tour Packages",
-  "sd_service_6": "Local Guides"
+  "sd_service_6": "Local Guides",
+
+  "agent_review_self_error": "Cannot write a review for yourself"
 }
