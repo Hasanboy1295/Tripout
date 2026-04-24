@@ -20,7 +20,6 @@ const Review = (props: ReviewProps) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
-	const { t } = useTranslation('common');
 	const memberImage = comment?.memberData?.memberImage;
 	const avatarSrc = memberImage ? `${REACT_APP_API_URL}/${memberImage}` : DEFAULT_USER_AVATAR;
 
