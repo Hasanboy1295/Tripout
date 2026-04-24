@@ -15,6 +15,7 @@ import { userVar } from '../../apollo/store';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
 import { Messages } from '../../libs/config';
+import { useTranslation } from 'next-i18next';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -25,6 +26,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 const MemberPage: NextPage = () => {
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { t } = useTranslation('common');
 	const category: any = router.query?.category;
 	const user = useReactiveVar(userVar);
 
@@ -55,7 +57,7 @@ const MemberPage: NextPage = () => {
 			if (!id) throw new Error(Messages.error1);
 			if (!user._id) throw new Error(Messages.error2);
 			if (id === user._id) {
-				await sweetTopSmallSuccessAlert('This is your profile', 900);
+				await sweetTopSmallSuccessAlert(t('mb_this_is_your_profile'), 900);
 				return;
 			}
 
@@ -65,7 +67,7 @@ const MemberPage: NextPage = () => {
 				},
 			});
 
-			await sweetTopSmallSuccessAlert('Followed!', 800);
+			await sweetTopSmallSuccessAlert(t('mp_followed'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
@@ -84,7 +86,7 @@ const MemberPage: NextPage = () => {
 				},
 			});
 
-			await sweetTopSmallSuccessAlert('Unfollowed!', 800);
+			await sweetTopSmallSuccessAlert(t('mp_unfollowed'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
@@ -101,7 +103,7 @@ const MemberPage: NextPage = () => {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert('Success!', 800);
+			await sweetTopSmallSuccessAlert(t('mp_success'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			console.log('ERROR, likeMemberHandler:', err.message);
