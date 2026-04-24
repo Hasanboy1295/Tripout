@@ -77,6 +77,21 @@ const Top = () => {
 		if (jwt) updateUserInfo(jwt);
 	}, []);
 
+	// Restore scroll position after a locale change re-renders the page.
+	useEffect(() => {
+		const saved = sessionStorage.getItem('localeScrollY');
+		if (saved === null) return;
+		const y = Number(saved);
+		sessionStorage.removeItem('localeScrollY');
+		// Re-apply across several frames so we win against the post-render reset.
+		const restore = () => window.scrollTo(0, y);
+		restore();
+		requestAnimationFrame(restore);
+		setTimeout(restore, 0);
+		setTimeout(restore, 50);
+		setTimeout(restore, 150);
+	}, [router.locale]);
+
 	/** HANDLERS **/
 	const langClick = (e: any) => {
 		setAnchorEl2(e.currentTarget);
@@ -88,17 +103,12 @@ const Top = () => {
 
 	const langChoice = useCallback(
 		async (e: any) => {
-			const scrollY = window.scrollY;
+			// Persist scroll position across the locale-driven re-render.
+			sessionStorage.setItem('localeScrollY', String(window.scrollY));
 			setLang(e.target.id);
 			localStorage.setItem('locale', e.target.id);
 			setAnchorEl2(null);
 			await router.push(router.asPath, router.asPath, { locale: e.target.id, scroll: false });
-			// Locale change re-renders the page; restore scroll on next frames
-			// to override any reset that happens after the navigation completes.
-			requestAnimationFrame(() => {
-				window.scrollTo(0, scrollY);
-				requestAnimationFrame(() => window.scrollTo(0, scrollY));
-			});
 		},
 		[router],
 	);
