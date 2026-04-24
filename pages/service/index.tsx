@@ -270,8 +270,8 @@ const ServicePage: NextPage = () => {
 							<div className={'test-card-top'}>
 								<img src={t.image} alt={t.name} className={'test-avatar'} />
 								<div className={'test-info'}>
-									<h4>{t.name}</h4>
-									<span>{t('services_testimonial_role')}</span>
+												<h4>{t.name}</h4>
+												<span>{t.role}</span>
 								</div>
 								<div className={'test-location'}>
 									<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3" fill="#fff"/></svg>
@@ -282,7 +282,7 @@ const ServicePage: NextPage = () => {
 								{Array.from({ length: t.stars }).map((_, j) => <span key={j}>★</span>)}
 							</div>
 							<hr />
-							<p>{t(`services_testimonial_text_${i+1}`)}</p>
+												<p>{t.text}</p>
 						</div>
 					))}
 				</div>

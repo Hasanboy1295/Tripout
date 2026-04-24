@@ -528,7 +528,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 								</Stack>
 								<Stack className="info-box">
 									<Typography className="sub-title">Message</Typography>
-									<textarea placeholder="Hello, I am interested in [Property details]"></textarea>
+									<textarea placeholder="Hello, I am interested in [Destination details]"></textarea>
 								</Stack>
 								<Stack className="info-box">
 									<Button className="send-message">
