@@ -489,6 +489,9 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 													? `${REACT_APP_API_URL}/${property?.memberData?.memberImage}`
 													: '/img/profile/defaultUser.svg'
 											}
+											onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+												event.currentTarget.src = '/img/profile/defaultUser.svg';
+											}}
 											alt="Agent"
 										/>
 										<Stack className="name-phone-listings">

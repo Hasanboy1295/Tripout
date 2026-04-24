@@ -9,8 +9,9 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import { useTranslation } from 'next-i18next';
+
+const DEFAULT_USER_AVATAR = '/img/profile/defaultUser.svg';
 
 interface ReviewProps {
 	comment: Comment;
@@ -23,6 +24,7 @@ const Review = (props: ReviewProps) => {
 	const user = useReactiveVar(userVar);
 	const { t } = useTranslation('common');
 	const memberImage = comment?.memberData?.memberImage;
+	const avatarSrc = memberImage ? `${REACT_APP_API_URL}/${memberImage}` : DEFAULT_USER_AVATAR;
 	const memberViews = comment?.memberData?.memberViews ?? 0;
 
 	/** HANDLERS **/
@@ -36,13 +38,14 @@ const Review = (props: ReviewProps) => {
 		return (
 			<Stack className={'review-config'}>
 				<Stack className={'review-mb-info'}>
-					{memberImage ? (
-						<img src={`${REACT_APP_API_URL}/${memberImage}`} alt="" className={'img-box'} />
-					) : (
-						<Stack className={'img-box img-box-fallback'}>
-							<PersonRoundedIcon />
-						</Stack>
-					)}
+					<img
+						src={avatarSrc}
+						alt=""
+						className={'img-box'}
+						onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+							event.currentTarget.src = DEFAULT_USER_AVATAR;
+						}}
+					/>
 					<Stack className={'review-right'}>
 						<Stack className={'name-date-row'}>
 							<Typography className={'name'} onClick={() => goMemberPage(comment?.memberData?._id as string)}>
