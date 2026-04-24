@@ -334,5 +334,30 @@
   "sd_service_5": "Tour Packages",
   "sd_service_6": "Local Guides",
 
-  "agent_review_self_error": "Cannot write a review for yourself"
+  "agent_review_self_error": "Cannot write a review for yourself",
+
+  "comm_brand": "Tripout Community",
+  "comm_brand_detail": "Community Board Article",
+  "comm_tab_free": "Free Board",
+  "comm_tab_recommend": "Recommendation",
+  "comm_tab_news": "News",
+  "comm_tab_humor": "Humor",
+  "comm_board_suffix": "BOARD",
+  "comm_subtitle": "Express your opinions freely here without content restrictions",
+  "comm_write": "Write",
+  "comm_no_articles": "No Article found!",
+  "comm_total_one": "Total {{count}} article available",
+  "comm_total_many": "Total {{count}} articles available",
+  "comm_like_self_error": "You cannot like your own article.",
+  "comm_like_failed": "Failed to like article",
+  "comm_comments_count": "Comments ({{count}})",
+  "comm_leave_comment": "Leave a comment",
+  "comm_comment_btn": "comment",
+  "comm_comments_title": "Comments",
+  "comm_update_comment": "Update comment",
+  "comm_cancel": "Cancel",
+  "comm_update": "Update",
+  "comm_success": "Success!",
+  "comm_commented": "Successfully commented!",
+  "comm_confirm_delete": "Do you want to delete the comment?"
 }

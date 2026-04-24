@@ -31,6 +31,7 @@ import {
 	sweetTopSmallSuccessAlert,
 } from '../../libs/sweetAlert';
 import { CommentUpdate } from '../../libs/types/comment/comment.update';
+import { useTranslation } from 'next-i18next';
 const ToastViewerComponent = dynamic(() => import('../../libs/components/community/TViewer'), { ssr: false });
 
 export const getStaticProps = async ({ locale }: any) => ({
@@ -42,6 +43,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { t } = useTranslation('common');
 	const { query } = router;
 
 	const articleId = query?.id as string;
@@ -138,7 +140,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 				},
 			});
 			await boardArticleRefetch({ input: articleId });
-			await sweetTopSmallSuccessAlert('Success!', 800);
+			await sweetTopSmallSuccessAlert(t('comm_success'), 800);
 		} catch (err: any) {
 			console.log('ERROR, likeArticleHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
@@ -164,7 +166,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 			await getCommentsRefetch({ input: searchFilter });
 			await boardArticleRefetch({ input: articleId });
 			setComment('');
-			await sweetMixinSuccessAlert('Successfully commented!');
+			await sweetMixinSuccessAlert(t('comm_commented'));
 		} catch (error: any) {
 			await sweetMixinErrorAlert(error.message);
 		}
@@ -185,7 +187,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 				throw new Error('Provide data to update your comment!');
 
 			if (commentStatus) {
-				if (await sweetConfirmAlert('Do you want to delete the comment?')) {
+				if (await sweetConfirmAlert(t('comm_confirm_delete'))) {
 					await updateComment({
 						variables: {
 							input: updateData,
@@ -249,7 +251,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 							<Stack className={'image-info'}>
 								<img src={'/img/logo/logoText.svg'} />
 								<Stack className={'community-name'}>
-									<Typography className={'name'}>Community Board Article</Typography>
+									<Typography className={'name'}>{t('comm_brand_detail')}</Typography>
 								</Stack>
 							</Stack>
 							<Tabs
@@ -263,22 +265,22 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 							>
 								<Tab
 									value={'FREE'}
-									label={'Free Board'}
+									label={t('comm_tab_free')}
 									className={`tab-button ${articleCategory === 'FREE' ? 'active' : ''}`}
 								/>
 								<Tab
 									value={'RECOMMEND'}
-									label={'Recommendation'}
+									label={t('comm_tab_recommend')}
 									className={`tab-button ${articleCategory === 'RECOMMEND' ? 'active' : ''}`}
 								/>
 								<Tab
 									value={'NEWS'}
-									label={'News'}
+									label={t('comm_tab_news')}
 									className={`tab-button ${articleCategory === 'NEWS' ? 'active' : ''}`}
 								/>
 								<Tab
 									value={'HUMOR'}
-									label={'Humor'}
+									label={t('comm_tab_humor')}
 									className={`tab-button ${articleCategory === 'HUMOR' ? 'active' : ''}`}
 								/>
 							</Tabs>
@@ -286,9 +288,9 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 						<div className="community-detail-config">
 							<Stack className="title-box">
 								<Stack className="left">
-									<Typography className="title">{articleCategory} BOARD</Typography>
+									<Typography className="title">{articleCategory ? t(`comm_tab_${articleCategory.toLowerCase()}`) : ''} {t('comm_board_suffix')}</Typography>
 									<Typography className="sub-title">
-										Express your opinions freely here without content restrictions
+										{t('comm_subtitle')}
 									</Typography>
 								</Stack>
 								<Button
@@ -302,7 +304,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 									}
 									className="right"
 								>
-									Write
+									{t('comm_write')}
 								</Button>
 							</Stack>
 							<div className="config">
@@ -368,11 +370,11 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 									className="second-box-config"
 									sx={{ borderBottom: total > 0 ? 'none' : '1px solid #eee', border: '1px solid #eee' }}
 								>
-									<Typography className="title-text">Comments ({total})</Typography>
+									<Typography className="title-text">{t('comm_comments_count', { count: total })}</Typography>
 									<Stack className="leave-comment">
 										<input
 											type="text"
-											placeholder="Leave a comment"
+											placeholder={t('comm_leave_comment')}
 											value={comment}
 											onChange={(e) => {
 												if (e.target.value.length > 100) return;
@@ -382,13 +384,13 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 										/>
 										<Stack className="button-box">
 											<Typography>{wordsCnt}/100</Typography>
-											<Button onClick={creteCommentHandler}>comment</Button>
+											<Button onClick={creteCommentHandler}>{t('comm_comment_btn')}</Button>
 										</Stack>
 									</Stack>
 								</Stack>
 								{total > 0 && (
 									<Stack className="comments">
-										<Typography className="comments-title">Comments</Typography>
+										<Typography className="comments-title">{t('comm_comments_title')}</Typography>
 									</Stack>
 								)}
 								{comments?.map((commentData, index) => {
@@ -456,7 +458,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 																	}}
 																>
 																	<Typography variant="h4" color={'#b9b9b9'}>
-																		Update comment
+																		{t('comm_update_comment')}
 																	</Typography>
 																	<Stack gap={'20px'}>
 																		<input
@@ -482,14 +484,14 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 																					color="inherit"
 																					onClick={() => cancelButtonHandler()}
 																				>
-																					Cancel
+																					{t('comm_cancel')}
 																				</Button>
 																				<Button
 																					variant="contained"
 																					color="inherit"
 																					onClick={() => updateButtonHandler(updatedCommentId, undefined)}
 																				>
-																					Update
+																					{t('comm_update')}
 																				</Button>
 																			</Stack>
 																		</Stack>

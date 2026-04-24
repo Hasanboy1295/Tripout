@@ -290,5 +290,30 @@
   "sd_service_5": "Турпакеты",
   "sd_service_6": "Местные гиды",
 
-  "agent_review_self_error": "Нельзя оставить отзыв самому себе"
+  "agent_review_self_error": "Нельзя оставить отзыв самому себе",
+
+  "comm_brand": "Сообщество Tripout",
+  "comm_brand_detail": "Статья сообщества",
+  "comm_tab_free": "Свободный форум",
+  "comm_tab_recommend": "Рекомендации",
+  "comm_tab_news": "Новости",
+  "comm_tab_humor": "Юмор",
+  "comm_board_suffix": "ФОРУМ",
+  "comm_subtitle": "Делитесь мнениями свободно без ограничений по содержанию",
+  "comm_write": "Написать",
+  "comm_no_articles": "Статьи не найдены!",
+  "comm_total_one": "Всего {{count}} статья доступна",
+  "comm_total_many": "Всего {{count}} статей доступно",
+  "comm_like_self_error": "Нельзя поставить лайк своей статье.",
+  "comm_like_failed": "Не удалось поставить лайк",
+  "comm_comments_count": "Комментарии ({{count}})",
+  "comm_leave_comment": "Оставьте комментарий",
+  "comm_comment_btn": "отправить",
+  "comm_comments_title": "Комментарии",
+  "comm_update_comment": "Изменить комментарий",
+  "comm_cancel": "Отмена",
+  "comm_update": "Сохранить",
+  "comm_success": "Успешно!",
+  "comm_commented": "Комментарий добавлен!",
+  "comm_confirm_delete": "Вы хотите удалить комментарий?"
 }
