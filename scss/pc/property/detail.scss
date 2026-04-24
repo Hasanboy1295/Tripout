@@ -473,7 +473,23 @@
 										min-width: 60px;
 										border-radius: 50%;
 										object-fit: cover;
-										background: #1a1a2e;
+										background: #eef1f5;
+									}
+
+									/* Fallback avatar when the member has no image:
+									 * shows a Person icon inside a branded circle. */
+									.img-box.img-box-fallback {
+										display: flex;
+										align-items: center;
+										justify-content: center;
+										background: linear-gradient(135deg, #fdeccf 0%, #f5cf99 100%);
+										color: #9c6a1a;
+										border: 1.5px solid rgba(232, 165, 75, 0.3);
+
+										svg {
+											width: 34px;
+											height: 34px;
+										}
 									}
 
 									.review-right {

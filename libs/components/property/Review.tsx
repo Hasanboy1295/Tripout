@@ -9,6 +9,7 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import { useTranslation } from 'next-i18next';
 
 interface ReviewProps {
@@ -21,9 +22,8 @@ const Review = (props: ReviewProps) => {
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const { t } = useTranslation('common');
-	const imagePath: string = comment?.memberData?.memberImage
-		? `${REACT_APP_API_URL}/${comment?.memberData?.memberImage}`
-		: '/img/profile/defaultUser.svg';
+	const memberImage = comment?.memberData?.memberImage;
+	const memberViews = comment?.memberData?.memberViews ?? 0;
 
 	/** HANDLERS **/
 	const goMemberPage = (id: string) => {
@@ -36,7 +36,13 @@ const Review = (props: ReviewProps) => {
 		return (
 			<Stack className={'review-config'}>
 				<Stack className={'review-mb-info'}>
-					<img src={imagePath} alt="" className={'img-box'} />
+					{memberImage ? (
+						<img src={`${REACT_APP_API_URL}/${memberImage}`} alt="" className={'img-box'} />
+					) : (
+						<Stack className={'img-box img-box-fallback'}>
+							<PersonRoundedIcon />
+						</Stack>
+					)}
 					<Stack className={'review-right'}>
 						<Stack className={'name-date-row'}>
 							<Typography className={'name'} onClick={() => goMemberPage(comment?.memberData?._id as string)}>
@@ -51,7 +57,9 @@ const Review = (props: ReviewProps) => {
 						</Stack>
 						<Stack className={'views-row'}>
 							<RemoveRedEyeIcon />
-							<Typography className={'view-count'}>{comment?.memberData?.memberViews ?? 0} {t('detail_views')}</Typography>
+							<Typography className={'view-count'}>
+								{memberViews.toLocaleString()} {memberViews === 1 ? t('detail_view') : t('detail_views')}
+							</Typography>
 						</Stack>
 						<Stack className={'desc-box'}>
 							<Typography className={'description'}>{comment.commentContent}</Typography>

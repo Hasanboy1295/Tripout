@@ -765,12 +765,50 @@ body.dark-mode {
 		}
 	}
 
-	/* Review card on property detail */
+	/* Review card on property detail — polished card in dark mode */
+	#pc-wrap #property-detail-page .property-detail-config .left-config .reviews-config .review-list .review-config {
+		background: linear-gradient(180deg, #1c2131 0%, #181d2b 100%);
+		border: 1px solid #2f3547;
+		border-radius: 14px;
+		padding: 20px 22px;
+		margin-bottom: 14px;
+		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+		transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
+		&:hover {
+			border-color: rgba(232, 165, 75, 0.35);
+			box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+		}
+	}
+
 	.review-config .review-mb-info {
+		.img-box {
+			background: #232838;
+			box-shadow: 0 0 0 2px rgba(232, 165, 75, 0.25), 0 4px 12px rgba(0, 0, 0, 0.4);
+		}
+		.img-box.img-box-fallback {
+			background: linear-gradient(135deg, #2a3045 0%, #1f2433 100%);
+			color: #f5c585;
+			border: 1.5px solid rgba(232, 165, 75, 0.35);
+		}
 		.review-right {
-			.name-date-row .name { color: #e8eaf2; }
-			.date-box { color: #a7b0c2; .date { color: #a7b0c2; } }
-			.views-row { color: #a7b0c2; .view-count { color: #a7b0c2; } }
+			.name-date-row {
+				.name {
+					color: #f1e9dc;
+					transition: color 0.2s;
+					&:hover { color: #f5c585; }
+				}
+				.date-box {
+					color: #a7b0c2;
+					svg { color: #e8a54b; }
+					.date { color: #a7b0c2; }
+				}
+			}
+			.views-row {
+				color: #a7b0c2;
+				svg { color: #e8a54b; }
+				.view-count { color: #a7b0c2; }
+			}
 			.desc-box .description { color: #cfd5e2; }
 		}
 	}
