@@ -332,5 +332,23 @@
   "cs_faq_cat_agents": "Для агентов",
   "cs_faq_cat_membership": "Членство",
   "cs_faq_cat_community": "Сообщество",
-  "cs_faq_cat_other": "Другое"
+  "cs_faq_cat_other": "Другое",
+
+  "mp_workspace": "РАБОЧАЯ ОБЛАСТЬ",
+  "mp_connections": "СВЯЗИ",
+  "mp_community": "СООБЩЕСТВО",
+  "mp_my_profile": "Мой профиль",
+  "mp_my_favorites": "Избранное",
+  "mp_recently_visited": "Недавно посещённые",
+  "mp_add_property": "Добавить направление",
+  "mp_my_properties": "Мои направления",
+  "mp_my_followers": "Подписчики",
+  "mp_my_following": "Подписки",
+  "mp_blog_post": "Статьи блога",
+  "mp_write_blog_post": "Написать статью",
+  "mp_logout_confirm": "Вы хотите выйти?",
+  "mp_orders_coming_soon": "Мои заказы — скоро",
+  "mp_followed": "Подписка оформлена!",
+  "mp_unfollowed": "Подписка отменена!",
+  "mp_success": "Успешно!"
 }

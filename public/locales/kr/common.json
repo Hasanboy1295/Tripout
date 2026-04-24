@@ -376,5 +376,23 @@
   "cs_faq_cat_agents": "에이전트용",
   "cs_faq_cat_membership": "멤버십",
   "cs_faq_cat_community": "커뮤니티",
-  "cs_faq_cat_other": "기타"
+  "cs_faq_cat_other": "기타",
+
+  "mp_workspace": "워크스페이스",
+  "mp_connections": "연결",
+  "mp_community": "커뮤니티",
+  "mp_my_profile": "내 프로필",
+  "mp_my_favorites": "찜 목록",
+  "mp_recently_visited": "최근 방문",
+  "mp_add_property": "여행지 추가",
+  "mp_my_properties": "내 여행지",
+  "mp_my_followers": "팔로워",
+  "mp_my_following": "팔로잉",
+  "mp_blog_post": "블로그 글",
+  "mp_write_blog_post": "블로그 글 작성",
+  "mp_logout_confirm": "로그아웃 하시겠습니까?",
+  "mp_orders_coming_soon": "내 주문 - 곧 출시",
+  "mp_followed": "팔로우 완료!",
+  "mp_unfollowed": "언팔로우 완료!",
+  "mp_success": "성공!"
 }

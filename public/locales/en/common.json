@@ -376,5 +376,23 @@
   "cs_faq_cat_agents": "For Agents",
   "cs_faq_cat_membership": "Membership",
   "cs_faq_cat_community": "Community",
-  "cs_faq_cat_other": "Other"
+  "cs_faq_cat_other": "Other",
+
+  "mp_workspace": "WORKSPACE",
+  "mp_connections": "CONNECTIONS",
+  "mp_community": "COMMUNITY",
+  "mp_my_profile": "My Profile",
+  "mp_my_favorites": "My Favorites",
+  "mp_recently_visited": "Recently Visited",
+  "mp_add_property": "Add Property",
+  "mp_my_properties": "My Properties",
+  "mp_my_followers": "My Followers",
+  "mp_my_following": "My Following",
+  "mp_blog_post": "Blog Post",
+  "mp_write_blog_post": "Write Blog Post",
+  "mp_logout_confirm": "Do you want to logout?",
+  "mp_orders_coming_soon": "My Orders - Coming Soon",
+  "mp_followed": "Followed!",
+  "mp_unfollowed": "Unfollowed!",
+  "mp_success": "Success!"
 }
