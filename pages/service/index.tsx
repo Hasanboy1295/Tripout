@@ -73,11 +73,13 @@ const ServicePage: NextPage = () => {
 		   <div className={'service-banner'}>
 			   <img src="/img/banner/hero-travel-1.jpg" alt={t('services_title')} />
 			   <div className={'banner-overlay'}>
+				   <span className={'eyebrow'}>{t('services_eyebrow')}</span>
 				   <h1>{t('services_title')}</h1>
+				   <p className={'lead'}>{t('services_lead')}</p>
 				   <div className={'breadcrumb'}>
 					   <Link href={'/'}>{t('Home')}</Link>
-					   <span>{'>'}</span>
-					   <span>{t('services_breadcrumb')}</span>
+					   <span className={'sep'}>/</span>
+					   <span className={'current'}>{t('services_breadcrumb')}</span>
 				   </div>
 			   </div>
 		   </div>
@@ -216,12 +218,6 @@ const ServicePage: NextPage = () => {
 					</div>
 					<Link href={'/property'} className={'dest-card tall featured'}>
 						<img src="/img/destinations/turkey.jpg" alt={t('services_dest_featured_img_alt')} />
-						<div className={'dest-overlay'}>
-							<div className={'link-circle'}>
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="#fff" strokeWidth="2" fill="none"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#fff" strokeWidth="2" fill="none"/></svg>
-							</div>
-							<span>{t('services_dest_featured_text')}</span>
-						</div>
 					</Link>
 					<div className={'dest-card'}>
 						<img src="/img/destinations/greece.jpg" alt="Greece" />
