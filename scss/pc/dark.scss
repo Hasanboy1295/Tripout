@@ -410,43 +410,97 @@ body.dark-mode {
 
 	/* =========================================================================
 	 * PROPERTY LIST (destinations)
+	 *
+	 * Goal: premium-feeling dark surface. Uses a soft vertical gradient on the
+	 * page, elevated cards with a warm accent glow on hover, glassmorphic
+	 * rating badges, and restrained orange highlights on interactive states.
 	 * ====================================================================== */
 	#pc-wrap #property-list-page {
-		background: #141927;
+		background: linear-gradient(180deg, #141927 0%, #161b2a 45%, #171c2c 100%);
 
 		.property-page {
+			/* Sidebar filter */
 			.filter-config .filter-main {
-				background: #232838;
+				background: linear-gradient(180deg, #232838 0%, #1f2434 100%);
 				border: 1px solid #2f3547;
-				border-radius: 12px;
+				border-radius: 16px;
 				padding: 20px;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 
 				.filter-section {
-					.section-title { color: #e8eaf2; }
-					.search-input input {
-						background: #2b3143;
-						color: #e8eaf2;
-						&::placeholder { color: #6d768f; }
+					background: transparent;
+					border-radius: 12px;
+
+					.section-title {
+						color: #f1e9dc;
+						letter-spacing: 0.2px;
 					}
-					.search-input fieldset { border-color: #2f3547; }
-					.search-btn { color: #e8a54b; }
-					.checkbox-label { color: #cfd5e2; }
+
+					.search-box {
+						.search-input {
+							background: #1b2030;
+							border: 1px solid #2f3547;
+							border-radius: 25px;
+							transition: border-color 0.2s, box-shadow 0.2s;
+
+							input {
+								background: transparent;
+								color: #e8eaf2;
+								&::placeholder { color: #6d768f; }
+							}
+							&:focus-within {
+								border-color: #e8a54b;
+								box-shadow: 0 0 0 3px rgba(232, 165, 75, 0.15);
+							}
+							fieldset { border-color: transparent; }
+						}
+						.search-btn {
+							background: #e8a54b;
+							color: #141927;
+							&:hover { background: #f1b562; }
+						}
+					}
+
+					.checkbox-list .checkbox-row {
+						.checkbox-label { color: #cfd5e2; }
+						.checkbox-count { color: #6d768f; }
+					}
 					.price-slider-box .price-labels span { color: #a7b0c2; }
 				}
 			}
 
+			/* Top toolbar */
 			.main-config {
 				.toolbar {
 					.view-toggles .toggle-btn {
-						background: #232838;
+						background: #1f2434;
 						border: 1px solid #2f3547;
 						color: #a7b0c2;
-						&:hover { background: #2b3143; }
-						&.active { background: #e8a54b; color: #141927; border-color: #e8a54b; }
+						transition: all 0.2s;
+						&:hover {
+							background: #2b3143;
+							border-color: #3e4558;
+							color: #f5c585;
+						}
+						&.active {
+							background: #e8a54b;
+							border-color: #e8a54b;
+							color: #141927;
+							box-shadow: 0 4px 14px rgba(232, 165, 75, 0.3);
+						}
 					}
 					.sorting-box {
 						span { color: #a7b0c2; }
-						.MuiButton-root { color: #e8eaf2; background: #232838; border: 1px solid #2f3547; }
+						.MuiButton-root {
+							color: #e8eaf2;
+							background: #1f2434;
+							border: 1px solid #2f3547;
+							transition: all 0.2s;
+							&:hover {
+								background: #2b3143;
+								border-color: #e8a54b;
+							}
+						}
 					}
 				}
 				.list-config { background: transparent; }
@@ -455,19 +509,67 @@ body.dark-mode {
 			}
 		}
 
-		/* Property card */
+		/* Property card — refined dark surface with warm hover glow */
 		.card-config {
-			background: #232838;
+			background: linear-gradient(180deg, #242a3c 0%, #1e2432 100%);
 			border: 1px solid #2f3547;
-			border-radius: 12px;
-			box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-			.top .rating-badge { background: rgba(20, 25, 39, 0.85); color: #fff; }
+			border-radius: 14px;
+			box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+			transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+
+			&:hover {
+				border-color: rgba(232, 165, 75, 0.45);
+				box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(232, 165, 75, 0.15);
+				transform: translateY(-3px);
+			}
+
+			.top {
+				.rating-badge {
+					background: rgba(20, 25, 39, 0.7);
+					backdrop-filter: blur(10px);
+					-webkit-backdrop-filter: blur(10px);
+					border: 1px solid rgba(255, 255, 255, 0.08);
+					color: #f5c585;
+					box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+				}
+			}
+
 			.bottom {
-				.name .title { color: #e8eaf2; }
+				.name .title {
+					color: #f1e9dc;
+					transition: color 0.2s;
+				}
+				&:hover .name .title { color: #f5c585; }
 				.address-row .location span { color: #a7b0c2; }
+				.heart-btn {
+					color: #8d95a8;
+					transition: color 0.2s, transform 0.2s;
+					&:hover { color: #eb6753; transform: scale(1.1); }
+				}
 				.days span { color: #a7b0c2; }
-				.price .label { color: #a7b0c2; }
-				.price .amount { color: #e8a54b; }
+				.price {
+					.label { color: #a7b0c2; }
+					.amount {
+						color: #f5c585;
+						text-shadow: 0 0 12px rgba(232, 165, 75, 0.25);
+					}
+				}
+			}
+		}
+
+		/* Pagination */
+		.pagination-config {
+			.total-result p { color: #a7b0c2; }
+			.MuiPagination-ul .MuiPaginationItem-root {
+				color: #cfd5e2;
+				border-color: #2f3547;
+				&:hover { background: #2b3143; color: #f5c585; }
+				&.Mui-selected {
+					background: #e8a54b;
+					color: #141927;
+					box-shadow: 0 4px 14px rgba(232, 165, 75, 0.35);
+					&:hover { background: #f1b562; }
+				}
 			}
 		}
 	}
