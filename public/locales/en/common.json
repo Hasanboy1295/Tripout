@@ -191,5 +191,24 @@
   "blog_post_1_excerpt": "Quisque at felis euismod, pulvinar tellus id, venenatis lectus. Morbi in maximus tortor, nec volutpat libero. Nam nisl justo, tempor ut leo nec, vehicula rutrum nisi. Curabitur bibendum ipsum id ultrices placerat. Suspendisse ex elit, sagittis sit amet massa at, tincidunt aliquet elit.",
   "blog_post_2_title": "How to Find Affordable Flights and Save Money for Vacation",
   "blog_post_3_title": "Must-Visit Cultural Festivals Around the World Celebrating",
-  "blog_post_4_title": "Packing Essentials What You Should Always Bring"
+  "blog_post_4_title": "Packing Essentials What You Should Always Bring",
+
+  "footer_hero_title": "Explore the World Your Journey",
+  "footer_hero_highlight": "Begins Here!",
+  "footer_subscribe_placeholder": "Email Address...",
+  "footer_subscribe_btn": "SUBSCRIBE",
+  "footer_links_title": "Our Links",
+  "footer_link_home": "Home",
+  "footer_link_about": "About Us",
+  "footer_link_services": "Services",
+  "footer_link_destination": "Destination",
+  "footer_link_blog": "Blog",
+  "footer_link_contact": "Contact Us",
+  "footer_contact_title": "Contact Us",
+  "footer_contact_address_line1": "123 Adventure Lane, Suiteroad 456,",
+  "footer_contact_address_line2": "Cityville, ST 12345",
+  "footer_contact_address_mobile_line1": "Chungju 109-7 Manjeong-ri,",
+  "footer_contact_address_mobile_line2": "Chungju",
+  "footer_copyright": "Copyright",
+  "footer_rights": "All Rights Reserved."
 }

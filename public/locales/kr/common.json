@@ -190,5 +190,24 @@
   "blog_post_1_excerpt": "다양한 문화 체험으로 여행지의 매력을 더 깊이 느껴보세요. 현지 축제, 전통 음식, 장인 공방 방문 등 여러분의 여행을 특별하게 만들어 줄 활동을 소개합니다.",
   "blog_post_2_title": "저렴한 항공권 찾기와 휴가 비용 절약 팁",
   "blog_post_3_title": "꼭 가봐야 할 세계의 문화 축제",
-  "blog_post_4_title": "여행 시 꼭 챙겨야 할 필수 준비물"
+  "blog_post_4_title": "여행 시 꼭 챙겨야 할 필수 준비물",
+
+  "footer_hero_title": "세상을 탐험하세요, 당신의 여정은",
+  "footer_hero_highlight": "여기서 시작됩니다!",
+  "footer_subscribe_placeholder": "이메일 주소...",
+  "footer_subscribe_btn": "구독하기",
+  "footer_links_title": "바로가기",
+  "footer_link_home": "홈",
+  "footer_link_about": "회사 소개",
+  "footer_link_services": "서비스",
+  "footer_link_destination": "여행지",
+  "footer_link_blog": "블로그",
+  "footer_link_contact": "문의하기",
+  "footer_contact_title": "문의하기",
+  "footer_contact_address_line1": "123 Adventure Lane, Suiteroad 456,",
+  "footer_contact_address_line2": "Cityville, ST 12345",
+  "footer_contact_address_mobile_line1": "충주시 만정리 109-7,",
+  "footer_contact_address_mobile_line2": "충주",
+  "footer_copyright": "Copyright",
+  "footer_rights": "All Rights Reserved."
 }

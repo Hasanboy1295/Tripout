@@ -145,5 +145,24 @@
   "blog_post_1_excerpt": "Откройте для себя яркие культурные события, традиционную кухню и мастерские местных умельцев. Эти занятия сделают ваше путешествие особенным и незабываемым.",
   "blog_post_2_title": "Как найти дешёвые авиабилеты и сэкономить на отпуске",
   "blog_post_3_title": "Культурные фестивали мира, которые стоит посетить",
-  "blog_post_4_title": "Что всегда нужно брать с собой в путешествие"
+  "blog_post_4_title": "Что всегда нужно брать с собой в путешествие",
+
+  "footer_hero_title": "Исследуйте мир — ваше путешествие",
+  "footer_hero_highlight": "начинается здесь!",
+  "footer_subscribe_placeholder": "Электронная почта...",
+  "footer_subscribe_btn": "ПОДПИСАТЬСЯ",
+  "footer_links_title": "Навигация",
+  "footer_link_home": "Главная",
+  "footer_link_about": "О нас",
+  "footer_link_services": "Услуги",
+  "footer_link_destination": "Направления",
+  "footer_link_blog": "Блог",
+  "footer_link_contact": "Контакты",
+  "footer_contact_title": "Контакты",
+  "footer_contact_address_line1": "123 Adventure Lane, Suiteroad 456,",
+  "footer_contact_address_line2": "Cityville, ST 12345",
+  "footer_contact_address_mobile_line1": "Чхунджу, Манджон-ри 109-7,",
+  "footer_contact_address_mobile_line2": "Чхунджу",
+  "footer_copyright": "Авторские права",
+  "footer_rights": "Все права защищены."
 }
