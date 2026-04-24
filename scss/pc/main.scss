@@ -141,9 +141,15 @@ body::-webkit-scrollbar {
 						.nav-dropdown {
 							position: relative;
 
+							/* Active state — match the plain nav items:
+							 * color change + full underline (no caret flip,
+							 * no hover-underline duplication). */
 							&.active > .nav-dropdown-trigger {
 								color: #e8a54b;
 								font-weight: 600;
+								&::after {
+									transform: scaleX(1);
+								}
 							}
 
 							.nav-dropdown-trigger {
@@ -225,10 +231,12 @@ body::-webkit-scrollbar {
 								}
 							}
 
+							/* Hover opens the dropdown and flips the caret — but
+							 * does NOT add an underline. The plain nav items don't
+							 * underline on hover either, and doing so here on top
+							 * of the .active underline was rendering a doubled
+							 * line when the user was already on /service. */
 							&:hover {
-								.nav-dropdown-trigger::after {
-									transform: scaleX(1);
-								}
 								.nav-dropdown-trigger svg {
 									transform: rotate(180deg);
 								}
@@ -2154,6 +2162,11 @@ body::-webkit-scrollbar {
 				border-radius: 16px;
 				overflow: hidden;
 				position: relative;
+				/* Also renders as an <a> when `featured` (linked to /property),
+				 * so kill link decoration + give it block sizing. */
+				display: block;
+				color: inherit;
+				text-decoration: none;
 
 				img {
 					width: 100%;
@@ -2172,6 +2185,7 @@ body::-webkit-scrollbar {
 				}
 
 				&.featured {
+					cursor: pointer;
 					.dest-overlay {
 						position: absolute;
 						inset: 0;

@@ -1224,11 +1224,41 @@ body.dark-mode {
 		}
 
 		.dest-highlights {
+			/* Light-mode set background: #fdf8f3 (warm cream) which was
+			 * punching through in dark mode as a bright slab. Swap to a
+			 * proper dark gradient surface, keep the section title readable,
+			 * and give the featured card a warm hover state now that it's a
+			 * clickable Link. */
+			background: linear-gradient(180deg, #1a1f2e 0%, #161b2a 100%);
+			border: 1px solid #2f3547;
+			border-radius: 20px;
+			box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+
 			.dest-header {
 				.section-subtitle { color: #f5c585; }
-				h2 { color: #e8eaf2; }
+				h2 { color: #f1e9dc; }
 			}
-			.dest-grid .dest-card { border: 1px solid #2f3547; border-radius: 12px; overflow: hidden; }
+			.dest-grid .dest-card {
+				border: 1px solid #2f3547;
+				border-radius: 14px;
+				overflow: hidden;
+				transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+
+				&.featured {
+					cursor: pointer;
+					text-decoration: none;
+					&:hover {
+						border-color: rgba(232, 165, 75, 0.55);
+						box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(232, 165, 75, 0.2);
+						transform: translateY(-3px);
+						.link-circle {
+							box-shadow: 0 8px 24px rgba(232, 165, 75, 0.55);
+							transform: scale(1.08);
+						}
+					}
+					.link-circle { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+				}
+			}
 			.dest-bottom-bar {
 				background: linear-gradient(135deg, #232838 0%, #2b3143 100%);
 				border: 1px solid #2f3547;

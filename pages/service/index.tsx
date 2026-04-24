@@ -214,7 +214,7 @@ const ServicePage: NextPage = () => {
 					<div className={'dest-card tall'}>
 						<img src="/img/destinations/santorini.jpg" alt="Santorini" />
 					</div>
-					<div className={'dest-card tall featured'}>
+					<Link href={'/property'} className={'dest-card tall featured'}>
 						<img src="/img/destinations/turkey.jpg" alt={t('services_dest_featured_img_alt')} />
 						<div className={'dest-overlay'}>
 							<div className={'link-circle'}>
@@ -222,7 +222,7 @@ const ServicePage: NextPage = () => {
 							</div>
 							<span>{t('services_dest_featured_text')}</span>
 						</div>
-					</div>
+					</Link>
 					<div className={'dest-card'}>
 						<img src="/img/destinations/greece.jpg" alt="Greece" />
 					</div>
