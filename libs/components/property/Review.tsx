@@ -8,8 +8,6 @@ import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import { useTranslation } from 'next-i18next';
 
 const DEFAULT_USER_AVATAR = '/img/profile/defaultUser.svg';
 
@@ -25,7 +23,6 @@ const Review = (props: ReviewProps) => {
 	const { t } = useTranslation('common');
 	const memberImage = comment?.memberData?.memberImage;
 	const avatarSrc = memberImage ? `${REACT_APP_API_URL}/${memberImage}` : DEFAULT_USER_AVATAR;
-	const memberViews = comment?.memberData?.memberViews ?? 0;
 
 	/** HANDLERS **/
 	const goMemberPage = (id: string) => {
@@ -57,12 +54,6 @@ const Review = (props: ReviewProps) => {
 									<Moment format={'MMM DD, YYYY'}>{comment.createdAt}</Moment>
 								</Typography>
 							</Stack>
-						</Stack>
-						<Stack className={'views-row'}>
-							<RemoveRedEyeIcon />
-							<Typography className={'view-count'}>
-								{memberViews.toLocaleString()} {memberViews === 1 ? t('detail_view') : t('detail_views')}
-							</Typography>
 						</Stack>
 						<Stack className={'desc-box'}>
 							<Typography className={'description'}>{comment.commentContent}</Typography>

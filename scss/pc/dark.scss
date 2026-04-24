@@ -124,7 +124,17 @@ body.dark-mode {
 			}
 
 			.user-box {
-				.search-btn { color: #e8eaf2; svg { color: #e8eaf2; } }
+				.search-btn {
+					background: rgba(232, 165, 75, 0.1);
+					border: 1px solid rgba(232, 165, 75, 0.35);
+					color: #f5c585;
+					svg { color: #f5c585; }
+					&:hover {
+						background: #e8a54b;
+						border-color: #e8a54b;
+						svg { color: #141927; }
+					}
+				}
 				.notification-icon { color: #e8eaf2; }
 				.btn-lang { color: #e8eaf2; }
 				.theme-toggle-box svg { color: #e8eaf2; }
@@ -798,11 +808,6 @@ body.dark-mode {
 					svg { color: #e8a54b; }
 					.date { color: #a7b0c2; }
 				}
-			}
-			.views-row {
-				color: #a7b0c2;
-				svg { color: #e8a54b; }
-				.view-count { color: #a7b0c2; }
 			}
 			.desc-box .description { color: #cfd5e2; }
 		}
