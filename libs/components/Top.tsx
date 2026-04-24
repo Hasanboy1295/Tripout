@@ -16,8 +16,10 @@ import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import { useReactiveVar } from '@apollo/client';
-import { userVar } from '../../apollo/store';
+import { userVar, themeVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import { REACT_APP_API_URL } from '../config';
 
 const DEFAULT_USER_AVATAR = '/img/profile/defaultUser.svg';
@@ -41,6 +43,7 @@ const Top = () => {
 	const isAgentRoute = router.pathname.startsWith('/agent');
 	const isMyPageRoute = router.pathname.startsWith('/mypage');
 	const isAboutRoute = router.pathname.startsWith('/about');
+	const themeMode = useReactiveVar(themeVar);
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
 	const [lang, setLang] = useState<string | null>('en');
 	const drop = Boolean(anchorEl2);
@@ -105,6 +108,10 @@ const Top = () => {
 		} else {
 			setColorChange(false);
 		}
+	};
+
+	const themeChangeHandler = () => {
+		themeVar(themeMode === 'dark' ? 'light' : 'dark');
 	};
 
 	const handleClose = () => {
@@ -323,6 +330,10 @@ const Top = () => {
 										Russian
 									</MenuItem>
 								</StyledMenu>
+
+								<Box component={'div'} className={'theme-toggle-box'} onClick={themeChangeHandler} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', ml: 1, p: 1, borderRadius: '50%', flexShrink: 0, color: themeMode === 'dark' ? '#fff' : '#222', '&:hover': { background: themeMode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' } }}>
+									{themeMode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
+								</Box>
 							</div>
 						</Box>
 					</Stack>

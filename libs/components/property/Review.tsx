@@ -9,6 +9,7 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { useTranslation } from 'next-i18next';
 
 interface ReviewProps {
 	comment: Comment;

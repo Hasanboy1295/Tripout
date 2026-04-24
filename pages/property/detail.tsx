@@ -42,6 +42,7 @@ import { GET_COMMENTS, GET_PROPERTIES, GET_PROPERTY } from '../../apollo/user/qu
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { useTranslation } from 'next-i18next';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -55,6 +56,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
+	const { t } = useTranslation('common');
 	const [propertyId, setPropertyId] = useState<string | null>(null);
 	const [property, setProperty] = useState<Property | null>(null);
 	const [slideImage, setSlideImage] = useState<string>('');
@@ -219,15 +221,15 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			<div id={'property-detail-page'}>
 				{/* Banner */}
 				<div className={'detail-banner'}>
-					<img src="/img/banner/hero-travel-1.jpg" alt="Destination Detail" />
+					<img src="/img/banner/hero-travel-1.jpg" alt={t('detail_banner_title')} />
 					<div className={'banner-overlay'}>
-						<h1>Destination Detail</h1>
+						<h1>{t('detail_banner_title')}</h1>
 						<div className={'breadcrumb'}>
-							<Link href={'/'}>HOME</Link>
+							<Link href={'/'}>{t('detail_breadcrumb_home')}</Link>
 							<span>{'>'}</span>
-							<Link href={'/property'}>DESTINATION</Link>
+							<Link href={'/property'}>{t('detail_breadcrumb_destination')}</Link>
 							<span>{'>'}</span>
-							<span>DESTINATION DETAIL</span>
+							<span>{t('detail_breadcrumb_current')}</span>
 						</div>
 					</div>
 				</div>
@@ -277,7 +279,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										</Stack>
 										<Stack className={'meta-item booked'}>
 											<GroupOutlinedIcon />
-											<Typography>{property?.propertyViews}+ Booked</Typography>
+											<Typography>{property?.propertyViews}+ {t('detail_booked_suffix')}</Typography>
 										</Stack>
 										<Stack className={'action-buttons'}>
 											<Button
@@ -289,11 +291,11 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 												) : (
 													<FavoriteBorderIcon />
 												)}
-												<Typography>Wishlist</Typography>
+												<Typography>{t('detail_wishlist')}</Typography>
 											</Button>
 											<Button className={'share-btn'}>
 												<ShareIcon />
-												<Typography>Share</Typography>
+												<Typography>{t('detail_share')}</Typography>
 											</Button>
 										</Stack>
 									</Stack>
@@ -302,7 +304,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 								{/* Description */}
 								<Stack className={'description-section'}>
 									<Typography className={'desc-text'}>
-										{property?.propertyDesc ?? 'No Description!'}
+										{property?.propertyDesc ?? t('detail_no_description')}
 									</Typography>
 								</Stack>
 
@@ -314,9 +316,9 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<AccessTimeIcon />
 										</Stack>
 										<Stack className={'badge-text'}>
-											<Typography className={'badge-label'}>Duration</Typography>
+											<Typography className={'badge-label'}>{t('detail_duration')}</Typography>
 											<Stack direction="row" alignItems="center" gap={1}>
-												<Typography className={'badge-value'}>{property?.propertyRooms || 10} Days</Typography>
+												<Typography className={'badge-value'}>{property?.propertyRooms || 10} {t('detail_days_unit')}</Typography>
 												<Typography className={'badge-value'} style={{color:'#f5a623', fontWeight:600}}>
 													{/* Show date range if available, else placeholder */}
 													{/* {property?.startDate && property?.endDate
@@ -332,8 +334,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<GroupsIcon />
 										</Stack>
 										<Stack className={'badge-text'}>
-											<Typography className={'badge-label'}>Group Size</Typography>
-											<Typography className={'badge-value'}>{(property?.propertyBeds ?? 0) * 3} People</Typography>
+											<Typography className={'badge-label'}>{t('detail_group_size')}</Typography>
+											<Typography className={'badge-value'}>{(property?.propertyBeds ?? 0) * 3} {t('detail_people_unit')}</Typography>
 										</Stack>
 									</Stack>
 									{/* Ages Badge */}
@@ -342,8 +344,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<PersonOutlineIcon />
 										</Stack>
 										<Stack className={'badge-text'}>
-											<Typography className={'badge-label'}>Ages</Typography>
-											<Typography className={'badge-value'}>18 - 65 Years</Typography>
+											<Typography className={'badge-label'}>{t('detail_ages')}</Typography>
+											<Typography className={'badge-value'}>{t('detail_ages_value')}</Typography>
 										</Stack>
 									</Stack>
 									{/* Price Badge */}
@@ -356,7 +358,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											</svg>
 										</Stack>
 										<Stack className={'badge-text'}>
-											<Typography className={'badge-label'}>Price</Typography>
+											<Typography className={'badge-label'}>{t('detail_price')}</Typography>
 											<Typography className={'badge-value'}>${formatterStr(property?.propertyPrice) || 880}</Typography>
 										</Stack>
 									</Stack>
@@ -364,13 +366,13 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 
 								{/* Destination Itinerary */}
 								<Stack className={'itinerary-section'}>
-									<Typography className={'section-title'}>Destination Itinerary</Typography>
+									<Typography className={'section-title'}>{t('detail_itinerary_title')}</Typography>
 									<Stack className={'itinerary-timeline'}>
 										<Stack className={'timeline-item active'}>
 											<Stack className={'timeline-dot'}></Stack>
 											<Stack className={'timeline-content'}>
 												<Typography className={'day-title'}>
-													<strong>Day 1:</strong> Airport Pick Up & Arrival
+													<strong>{t('detail_day_label')} 1:</strong> {t('detail_day1_title')}
 												</Typography>
 											</Stack>
 										</Stack>
@@ -378,12 +380,12 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<Stack className={'timeline-dot'}></Stack>
 											<Stack className={'timeline-content'}>
 												<Typography className={'day-title'}>
-													<strong>Day 2:</strong> Temples & River Cruise
+													<strong>{t('detail_day_label')} 2:</strong> {t('detail_day2_title')}
 												</Typography>
 												<Typography className={'day-desc'}>
 													{property?.propertyDesc
 														? property.propertyDesc.substring(0, 300)
-														: 'Mauris volutpat ultrices iaculis. Aliquam erat volutpat. Quisque maximus luctus aliquam. Etiam maximus vel magna ac viverra. Curabitur at odio et turpis consectetur ultricies id non nulla. Aenean non maximus leo, a bibendum magna. Praesent ultrices eu diam ac eleifend.'}
+														: t('detail_day2_desc')}
 												</Typography>
 											</Stack>
 										</Stack>
@@ -391,7 +393,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<Stack className={'timeline-dot'}></Stack>
 											<Stack className={'timeline-content'}>
 												<Typography className={'day-title'}>
-													<strong>Day 3:</strong> Local Market Visit
+													<strong>{t('detail_day_label')} 3:</strong> {t('detail_day3_title')}
 												</Typography>
 											</Stack>
 										</Stack>
@@ -399,7 +401,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<Stack className={'timeline-dot'}></Stack>
 											<Stack className={'timeline-content'}>
 												<Typography className={'day-title'}>
-													<strong>Day 4:</strong> Adventure Activity
+													<strong>{t('detail_day_label')} 4:</strong> {t('detail_day4_title')}
 												</Typography>
 											</Stack>
 										</Stack>
@@ -407,8 +409,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<Stack className={'timeline-dot'}></Stack>
 											<Stack className={'timeline-content'}>
 												<Typography className={'day-title'}>
-													<strong>Day 5:</strong> Hotel to Airport & Departure
-	
+													<strong>{t('detail_day_label')} 5:</strong> {t('detail_day5_title')}
 												</Typography>
 											</Stack>
 										</Stack>
@@ -419,8 +420,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 								{commentTotal !== 0 && (
 									<Stack className={'reviews-config'}>
 										<Stack className={'review-header'}>
-											<Typography className={'subtitle'}>✈ Destination Review</Typography>
-											<Typography className={'main-heading'}>Real Experiences Shared</Typography>
+											<Typography className={'subtitle'}>✈ {t('detail_review_subtitle')}</Typography>
+											<Typography className={'main-heading'}>{t('detail_review_heading')}</Typography>
 										</Stack>
 										<Stack className={'review-list'}>
 											{propertyComments?.map((comment: Comment) => {
@@ -441,8 +442,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 
 								{/* Leave Review */}
 								<Stack className={'leave-review-config'}>
-									<Typography className={'main-title'}>Leave A Review</Typography>
-									<Typography className={'review-title'}>Review</Typography>
+									<Typography className={'main-title'}>{t('leave_a_review')}</Typography>
+									<Typography className={'review-title'}>{t('review')}</Typography>
 									<textarea
 										onChange={({ target: { value } }: any) => {
 											setInsertCommentData({ ...insertCommentData, commentContent: value });
@@ -455,7 +456,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											disabled={insertCommentData.commentContent === '' || user?._id === ''}
 											onClick={createCommentHandler}
 										>
-											<Typography className={'title'}>Submit Review</Typography>
+											<Typography className={'title'}>{t('submit_review')}</Typography>
 											<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
 												<g clipPath="url(#clip0_6975_3642)">
 													<path
@@ -479,7 +480,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 
 								{/* Agent Info & Contact Form */}
 								<Stack className="info-box">
-									<Typography className="main-title">Get More Information</Typography>
+									<Typography className="main-title">{t('detail_get_more_info')}</Typography>
 									<Stack className="image-info">
 										<img
 											className="member-image"
@@ -509,30 +510,30 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 												<Typography className="number">{property?.memberData?.memberPhone}</Typography>
 											</Stack>
 											<Link href={`/member?memberId=${property?.memberData?._id}&tab=properties`} passHref legacyBehavior>
-												<Typography className="listings" component="a" style={{cursor:'pointer', textDecoration:'underline'}}>View Listings</Typography>
+												<Typography className="listings" component="a" style={{cursor:'pointer', textDecoration:'underline'}}>{t('detail_view_listings')}</Typography>
 											</Link>
 										</Stack>
 									</Stack>
 								</Stack>
 								<Stack className="info-box">
-									<Typography className="sub-title">Name</Typography>
-									<input type="text" placeholder="Enter your name" />
+									<Typography className="sub-title">{t('detail_name')}</Typography>
+									<input type="text" placeholder={t('detail_name_placeholder')} />
 								</Stack>
 								<Stack className="info-box">
-									<Typography className="sub-title">Phone</Typography>
-									<input type="text" placeholder="Enter your phone" />
+									<Typography className="sub-title">{t('detail_phone')}</Typography>
+									<input type="text" placeholder={t('detail_phone_placeholder')} />
 								</Stack>
 								<Stack className="info-box">
-									<Typography className="sub-title">Email</Typography>
-									<input type="text" placeholder="Enter your email" />
+									<Typography className="sub-title">{t('detail_email')}</Typography>
+									<input type="text" placeholder={t('detail_email_placeholder')} />
 								</Stack>
 								<Stack className="info-box">
-									<Typography className="sub-title">Message</Typography>
-									<textarea placeholder="Hello, I am interested in [Destination details]"></textarea>
+									<Typography className="sub-title">{t('detail_message')}</Typography>
+									<textarea placeholder={t('detail_message_placeholder')}></textarea>
 								</Stack>
 								<Stack className="info-box">
 									<Button className="send-message">
-										<Typography className="title">Send Message</Typography>
+										<Typography className="title">{t('detail_send_message')}</Typography>
 										{/* Send icon SVG */}
 										<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
 											<g clipPath="url(#clip0_6975_593)">
