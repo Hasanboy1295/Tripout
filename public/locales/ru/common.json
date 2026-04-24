@@ -315,5 +315,22 @@
   "comm_update": "Сохранить",
   "comm_success": "Успешно!",
   "comm_commented": "Комментарий добавлен!",
-  "comm_confirm_delete": "Вы хотите удалить комментарий?"
+  "comm_confirm_delete": "Вы хотите удалить комментарий?",
+
+  "cs_center": "Служба поддержки",
+  "cs_intro": "Мы ответим на ваши вопросы",
+  "cs_tab_notice": "Объявления",
+  "cs_tab_faq": "ЧАВО",
+  "cs_notice_title": "Объявления",
+  "cs_notice_col_number": "номер",
+  "cs_notice_col_title": "заголовок",
+  "cs_notice_col_date": "дата",
+  "cs_notice_event": "событие",
+  "cs_faq_cat_property": "Направления",
+  "cs_faq_cat_payment": "Оплата",
+  "cs_faq_cat_buyers": "Для покупателей",
+  "cs_faq_cat_agents": "Для агентов",
+  "cs_faq_cat_membership": "Членство",
+  "cs_faq_cat_community": "Сообщество",
+  "cs_faq_cat_other": "Другое"
 }

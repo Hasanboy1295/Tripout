@@ -359,5 +359,22 @@
   "comm_update": "수정",
   "comm_success": "성공!",
   "comm_commented": "댓글이 등록되었습니다!",
-  "comm_confirm_delete": "댓글을 삭제하시겠습니까?"
+  "comm_confirm_delete": "댓글을 삭제하시겠습니까?",
+
+  "cs_center": "고객센터",
+  "cs_intro": "여러분의 문의에 답변해 드립니다",
+  "cs_tab_notice": "공지사항",
+  "cs_tab_faq": "자주 묻는 질문",
+  "cs_notice_title": "공지사항",
+  "cs_notice_col_number": "번호",
+  "cs_notice_col_title": "제목",
+  "cs_notice_col_date": "날짜",
+  "cs_notice_event": "이벤트",
+  "cs_faq_cat_property": "여행지",
+  "cs_faq_cat_payment": "결제",
+  "cs_faq_cat_buyers": "구매자용",
+  "cs_faq_cat_agents": "에이전트용",
+  "cs_faq_cat_membership": "멤버십",
+  "cs_faq_cat_community": "커뮤니티",
+  "cs_faq_cat_other": "기타"
 }

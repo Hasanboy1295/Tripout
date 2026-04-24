@@ -359,5 +359,22 @@
   "comm_update": "Update",
   "comm_success": "Success!",
   "comm_commented": "Successfully commented!",
-  "comm_confirm_delete": "Do you want to delete the comment?"
+  "comm_confirm_delete": "Do you want to delete the comment?",
+
+  "cs_center": "Cs center",
+  "cs_intro": "I will answer your questions",
+  "cs_tab_notice": "Notice",
+  "cs_tab_faq": "FAQ",
+  "cs_notice_title": "Notice",
+  "cs_notice_col_number": "number",
+  "cs_notice_col_title": "title",
+  "cs_notice_col_date": "date",
+  "cs_notice_event": "event",
+  "cs_faq_cat_property": "Property",
+  "cs_faq_cat_payment": "Payment",
+  "cs_faq_cat_buyers": "For Buyers",
+  "cs_faq_cat_agents": "For Agents",
+  "cs_faq_cat_membership": "Membership",
+  "cs_faq_cat_community": "Community",
+  "cs_faq_cat_other": "Other"
 }
