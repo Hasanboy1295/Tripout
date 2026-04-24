@@ -139,7 +139,7 @@ const About: NextPage = () => {
 									</div>
 									<div className={'badge-content'}>
 										<span className={'number'}>+500</span>
-										<span className={'label'}>Destination</span>
+										<span className={'label'}>{t('aboutus_destination_label')}</span>
 									</div>
 								</div>
 							</div>

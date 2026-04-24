@@ -61,22 +61,8 @@ const stats = [
 ];
 
 const testimonials = [
-	{
-		name: 'Sarah Thompson',
-		role: 'Tourists',
-		location: 'Thailand, Asia',
-		stars: 5,
-		image: '/img/testimonials/person1.jpg',
-		text: 'Our recent trip was absolutely unforgettable! Every detail was meticulously planned, from our stunning accommodations to the incredible local experiences. The guides were friendly and knowledgeable, making us feel immersed in the culture. We discovered hidden gems that we never would have found on our own. I can\'t wait to book our next adventure with this amazing team.',
-	},
-	{
-		name: 'Michael Lee',
-		role: 'Tourists',
-		location: 'Bali, Indonesia',
-		stars: 5,
-		image: '/img/testimonials/person2.jpg',
-		text: 'This travel experience surpassed all our expectations! The itinerary struck the perfect balance between adventure and relaxation, allowing us to truly enjoy every moment. The accommodations were top-notch, and the local cuisine was a highlight. The team\'s expertise and attention to detail made us feel like VIPs throughout the trip.',
-	},
+	{ index: 1, stars: 5, image: '/img/testimonials/person1.jpg' },
+	{ index: 2, stars: 5, image: '/img/testimonials/person2.jpg' },
 ];
 
 const ServicePage: NextPage = () => {
@@ -265,24 +251,24 @@ const ServicePage: NextPage = () => {
 					<h2>{t('services_testimonial_title')}</h2>
 				</div>
 				<div className={'test-cards'}>
-					{testimonials.map((t, i) => (
-						<div key={i} className={'test-card'}>
+					{testimonials.map((tm) => (
+						<div key={tm.index} className={'test-card'}>
 							<div className={'test-card-top'}>
-								<img src={t.image} alt={t.name} className={'test-avatar'} />
+								<img src={tm.image} alt={t(`svc_testimonial_name_${tm.index}`)} className={'test-avatar'} />
 								<div className={'test-info'}>
-												<h4>{t.name}</h4>
-												<span>{t.role}</span>
+												<h4>{t(`svc_testimonial_name_${tm.index}`)}</h4>
+												<span>{t(`svc_testimonial_role_${tm.index}`)}</span>
 								</div>
 								<div className={'test-location'}>
 									<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3" fill="#fff"/></svg>
-									{t.location}
+									{t(`svc_testimonial_location_${tm.index}`)}
 								</div>
 							</div>
 							<div className={'test-stars'}>
-								{Array.from({ length: t.stars }).map((_, j) => <span key={j}>★</span>)}
+								{Array.from({ length: tm.stars }).map((_, j) => <span key={j}>★</span>)}
 							</div>
 							<hr />
-												<p>{t.text}</p>
+												<p>{t(`svc_testimonial_text_${tm.index}`)}</p>
 						</div>
 					))}
 				</div>
