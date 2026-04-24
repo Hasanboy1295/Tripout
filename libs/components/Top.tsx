@@ -88,10 +88,17 @@ const Top = () => {
 
 	const langChoice = useCallback(
 		async (e: any) => {
+			const scrollY = window.scrollY;
 			setLang(e.target.id);
 			localStorage.setItem('locale', e.target.id);
 			setAnchorEl2(null);
 			await router.push(router.asPath, router.asPath, { locale: e.target.id, scroll: false });
+			// Locale change re-renders the page; restore scroll on next frames
+			// to override any reset that happens after the navigation completes.
+			requestAnimationFrame(() => {
+				window.scrollTo(0, scrollY);
+				requestAnimationFrame(() => window.scrollTo(0, scrollY));
+			});
 		},
 		[router],
 	);
