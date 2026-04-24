@@ -18,6 +18,7 @@ import { LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
+import { useTranslation } from 'next-i18next';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -28,6 +29,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { t } = useTranslation('common');
 	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
 	);
@@ -36,8 +38,14 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [sortingOpen, setSortingOpen] = useState(false);
-	const [filterSortName, setFilterSortName] = useState('New');
+	const [sortKey, setSortKey] = useState<'new' | 'lowest' | 'highest'>('new');
 	const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
+	const sortKeyToLabel: Record<'new' | 'lowest' | 'highest', string> = {
+		new: 'dest_sort_new',
+		lowest: 'dest_sort_lowest',
+		highest: 'dest_sort_highest',
+	};
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
@@ -116,15 +124,15 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 		switch (e.currentTarget.id) {
 			case 'new':
 				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.ASC });
-				setFilterSortName('New');
+				setSortKey('new');
 				break;
 			case 'lowest':
 				setSearchFilter({ ...searchFilter, sort: 'propertyPrice', direction: Direction.ASC });
-				setFilterSortName('Lowest Price');
+				setSortKey('lowest');
 				break;
 			case 'highest':
 				setSearchFilter({ ...searchFilter, sort: 'propertyPrice', direction: Direction.DESC });
-				setFilterSortName('Highest Price');
+				setSortKey('highest');
 		}
 		setSortingOpen(false);
 		setAnchorEl(null);
@@ -152,23 +160,23 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 									<button
 										className={`toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
 										onClick={() => setViewMode('grid')}
-										title="Grid View"
+										title={t('dest_grid_view')}
 									>
 										<GridViewRoundedIcon fontSize="small" />
 									</button>
 									<button
 										className={`toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
 										onClick={() => setViewMode('list')}
-										title="List View"
+										title={t('dest_list_view')}
 									>
 										<ViewListRoundedIcon fontSize="small" />
 									</button>
 								</div>
 								<Box component={'div'} className={'sorting-box'}>
-									<span>Sort by</span>
+									<span>{t('dest_sort_by')}</span>
 									<div>
 										<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
-											{filterSortName}
+											{t(sortKeyToLabel[sortKey])}
 										</Button>
 										<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
 											<MenuItem
@@ -177,7 +185,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 												disableRipple
 												sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 											>
-												New
+												{t('dest_sort_new')}
 											</MenuItem>
 											<MenuItem
 												onClick={sortingHandler}
@@ -185,7 +193,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 												disableRipple
 												sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 											>
-												Lowest Price
+												{t('dest_sort_lowest')}
 											</MenuItem>
 											<MenuItem
 												onClick={sortingHandler}
@@ -193,7 +201,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 												disableRipple
 												sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 											>
-												Highest Price
+												{t('dest_sort_highest')}
 											</MenuItem>
 										</Menu>
 									</div>
@@ -204,7 +212,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 								{properties?.length === 0 ? (
 									<div className={'no-data'}>
 										<img src="/img/icons/icoAlert.svg" alt="" />
-										<p>No Properties found!</p>
+										<p>{t('dest_no_results')}</p>
 									</div>
 								) : (
 									properties.map((property: Property) => {
@@ -230,7 +238,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 								{properties.length !== 0 && (
 									<Stack className="total-result">
 										<Typography>
-											Total {total ?? 0} propert{total > 1 ? 'ies' : 'y'} available
+											{t(total > 1 ? 'dest_total_many' : 'dest_total_one', { count: total ?? 0 })}
 										</Typography>
 									</Stack>
 								)}

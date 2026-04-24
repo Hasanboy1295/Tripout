@@ -10,6 +10,7 @@ import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import IconButton from '@mui/material/IconButton';
+import { useTranslation } from 'next-i18next';
 
 interface PropertyCardType {
 	property: Property;
@@ -22,6 +23,7 @@ const PropertyCard = (props: PropertyCardType) => {
 	const { property, likePropertyHandler, myFavorites, recentlyVisited } = props;
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
+	const { t } = useTranslation('common');
 	const imagePath: string = property?.propertyImages[0]
 		? `${REACT_APP_API_URL}/${property?.propertyImages[0]}`
 		: '/img/banner/header1.svg';
@@ -86,10 +88,10 @@ const PropertyCard = (props: PropertyCardType) => {
 							<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
 								<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5z" fill="#e8a54b"/>
 							</svg>
-							<span>{property?.propertyRooms} Days</span>
+							<span>{property?.propertyRooms} {t('dest_card_days')}</span>
 						</div>
 						<div className="price">
-							<span className="label">Start From </span>
+							<span className="label">{t('dest_card_start_from')} </span>
 							<span className="amount">${formatterStr(property?.propertyPrice)}</span>
 						</div>
 					</Stack>

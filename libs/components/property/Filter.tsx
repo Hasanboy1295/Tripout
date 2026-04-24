@@ -14,6 +14,7 @@ import { PropertiesInquiry } from '../../types/property/property.input';
 import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import SearchIcon from '@mui/icons-material/Search';
+import { useTranslation } from 'next-i18next';
 
 interface FilterType {
 	searchFilter: PropertiesInquiry;
@@ -21,36 +22,11 @@ interface FilterType {
 	initialInput: PropertiesInquiry;
 }
 
-// Tour type labels for travel theme
-const tourTypeLabels: Record<string, string> = {
-	CITY: 'City & Culture',
-	BATCH: 'Beach & Sunset',
-	LUXRY: 'Luxury & Romance',
-};
-
-
-
-// Destination labels
-const destinationLabels: Record<string, string> = {
-	UZBEKISTAN: 'Tashkent, Samarkhand',
-	BANGKOK: 'Bangkok, Thailand',
-	PARIS: 'Paris, France',
-	COSTA_RICA: 'Costa Rica, America',
-	SINGAPORE: 'Singapore, Asia',
-	DUBAI: 'Dubai, United Arab Emirates',
-	TOKYO: 'Tokyo, Japan',
-	KOREA: 'Seoul, Korea',
-	LONDON: 'London, England',
-	BALI: 'Bali, Indonesia',
-	TURKEY: 'Istanbul, Turkey',
-};
-
-
-
 const Filter = (props: FilterType) => {
 	const { searchFilter, setSearchFilter, initialInput } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { t } = useTranslation('common');
 	const [propertyLocation] = useState<PropertyLocation[]>(Object.values(PropertyLocation));
 	const [propertyType] = useState<PropertyType[]>(Object.values(PropertyType));
 	const [searchText, setSearchText] = useState<string>('');
@@ -212,18 +188,18 @@ const Filter = (props: FilterType) => {
 				{/* Reset All Filters Button */}
 				<Stack direction="row" justifyContent="flex-end" sx={{ mb: 1 }}>
 					<Button variant="outlined" size="small" color="warning" onClick={handleResetFilters}>
-						Reset All Filters
+						{t('filter_reset_all')}
 					</Button>
 				</Stack>
 				{/* Search Destination */}
 				<Stack className={'filter-section search-section'}>
-					<Typography className={'section-title'}>Search Destination</Typography>
+					<Typography className={'section-title'}>{t('filter_search_destination')}</Typography>
 					<Stack className={'search-box'}>
 						<OutlinedInput
 							value={searchText}
 							type={'text'}
 							className={'search-input'}
-							placeholder={'Search Here...'}
+							placeholder={t('filter_search_placeholder')}
 							onChange={(e: any) => setSearchText(e.target.value)}
 							onKeyDown={(event: any) => {
 								if (event.key == 'Enter') {
@@ -256,7 +232,7 @@ const Filter = (props: FilterType) => {
 
 				{/* Tour Type */}
 				<Stack className={'filter-section'}>
-					<Typography className={'section-title'}>Tour Type</Typography>
+					<Typography className={'section-title'}>{t('filter_tour_type')}</Typography>
 					<Stack className={'checkbox-list'}>
 						{propertyType.map((type: string) => (
 							<Stack className={'checkbox-row'} key={type}>
@@ -275,7 +251,7 @@ const Filter = (props: FilterType) => {
 									/>
 									<label htmlFor={`type-${type}`} style={{ cursor: 'pointer' }}>
 										<Typography className="checkbox-label">
-											{tourTypeLabels[type] || type}
+											{t(`tour_type_${type}`, { defaultValue: type })}
 										</Typography>
 									</label>
 								</Stack>
@@ -286,7 +262,7 @@ const Filter = (props: FilterType) => {
 
 				{/* Filter by Price */}
 				<Stack className={'filter-section'}>
-					<Typography className={'section-title'}>Filter by Price</Typography>
+					<Typography className={'section-title'}>{t('filter_filter_by_price')}</Typography>
 					<Stack className={'price-slider-box'}>
 						<Slider
 							value={priceRange}
@@ -322,7 +298,7 @@ const Filter = (props: FilterType) => {
 
 				{/* Popular Destination */}
 				<Stack className={'filter-section'}>
-					<Typography className={'section-title'}>Popular Destination</Typography>
+					<Typography className={'section-title'}>{t('filter_popular_destination')}</Typography>
 					<Stack
 						className={'checkbox-list destination-list'}
 						sx={{
@@ -351,7 +327,7 @@ const Filter = (props: FilterType) => {
 									/>
 									<label htmlFor={`loc-${location}`} style={{ cursor: 'pointer' }}>
 										<Typography className="checkbox-label">
-											{destinationLabels[location] || location}
+											{t(`destination_${location}`, { defaultValue: location })}
 										</Typography>
 									</label>
 								</Stack>
