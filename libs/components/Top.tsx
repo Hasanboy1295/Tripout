@@ -93,11 +93,19 @@ const Top = () => {
 
 	const langChoice = useCallback(
 		async (e: any) => {
-			// Persist scroll position across the locale-driven re-render.
+			// Locale switch triggers an SSR re-fetch of translations and a
+			// page remount, which resets scroll even with `scroll: false`.
+			// Capture scrollY first, then restore it after the new tree paints.
+			const scrollY = window.scrollY;
 			setLang(e.target.id);
 			localStorage.setItem('locale', e.target.id);
 			setAnchorEl2(null);
 			await router.push(router.asPath, router.asPath, { locale: e.target.id, scroll: false });
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => {
+					window.scrollTo({ top: scrollY, left: 0, behavior: 'auto' });
+				});
+			});
 		},
 		[router],
 	);
