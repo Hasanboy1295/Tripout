@@ -1,24 +1,18 @@
-#pc-wrap {
+#pc-wrap.admin {
   /* ========================================================================
-   * ADMIN — Glass dashboard redesign
-   *   Dark glass sidebar, frosted topbar, soft gradient canvas, pill tabs,
-   *   modern table with row glow on hover. Brand orange used as accent only.
+   * ADMIN — Horizontal top-nav dashboard
+   *   Brand mark on the left, pill nav in the center, avatar on the right,
+   *   full-width canvas below. Light + Dark via dark.scss.
    * ===================================================================== */
 
-  /* Topbar — frosted, with subtle gradient stripe at bottom */
-  .MuiAppBar-root {
-    height: 68px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    padding: 0 28px;
-    position: fixed;
-    left: auto;
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
-    background: rgba(255, 255, 255, 0.78) !important;
-    backdrop-filter: blur(14px) saturate(180%);
-    -webkit-backdrop-filter: blur(14px) saturate(180%);
+  /* Top bar */
+  .admin-topbar {
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
     border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+    color: inherit;
     &::after {
       content: '';
       position: absolute;
@@ -26,22 +20,123 @@
       height: 2px;
       background: linear-gradient(90deg, transparent 0%, rgba(245, 166, 35, 0.4) 50%, transparent 100%);
     }
-    .MuiToolbar-root .MuiIconButton-root {
-      padding: 4px;
-      .MuiAvatar-root {
-        border: 2px solid #fff;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12), 0 0 0 2px rgba(245, 166, 35, 0.35);
-      }
-    }
-    .settings-icon-admin {
-      margin-right: 15px;
-      color: #f5a623;
-      cursor: pointer;
+    .admin-toolbar {
+      max-width: 1480px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 10px 28px;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
     }
   }
 
-  /* Sidebar — deep navy with glass profile card */
-  .aside {
+  /* Brand mark */
+  .admin-brand {
+    cursor: pointer;
+    gap: 10px;
+    flex-shrink: 0;
+    user-select: none;
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%);
+      color: #ffffff;
+      font-family: $font;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      box-shadow: 0 8px 18px rgba(234, 88, 12, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+    .brand-text {
+      font-family: $font;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      color: #0f172a;
+    }
+    .brand-text > span:first-child { color: #0f172a; }
+  }
+
+  /* Center nav */
+  .admin-nav {
+    flex: 1;
+    justify-content: center;
+    gap: 6px;
+    a { text-decoration: none; }
+  }
+
+  .nav-pill {
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px 8px;
+    min-width: 86px;
+    border-radius: 14px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    gap: 4px;
+    color: #475569;
+    &:hover {
+      background: rgba(245, 166, 35, 0.08);
+      border-color: rgba(245, 166, 35, 0.22);
+      color: #ea580c;
+      transform: translateY(-1px);
+    }
+    &.active {
+      background: linear-gradient(180deg, rgba(245, 166, 35, 0.16) 0%, rgba(245, 166, 35, 0.04) 100%);
+      border-color: rgba(245, 166, 35, 0.36);
+      color: #c2410c;
+      box-shadow: 0 6px 14px rgba(245, 166, 35, 0.16);
+      .nav-pill-label { font-weight: 800; }
+    }
+    .nav-pill-icon {
+      align-items: center;
+      justify-content: center;
+      svg { font-size: 22px; }
+      .MuiBadge-badge {
+        background: linear-gradient(135deg, #f5a623 0%, #f7b731 100%);
+        color: #0f172a;
+        font-weight: 800;
+        font-size: 10px;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+        right: -2px;
+        top: 2px;
+        box-shadow: 0 2px 6px rgba(245, 166, 35, 0.4);
+      }
+    }
+    .nav-pill-label {
+      font-family: $font;
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      line-height: 1;
+    }
+  }
+
+  /* Right side — avatar */
+  .admin-topright {
+    flex-shrink: 0;
+    gap: 8px;
+    .admin-avatar-btn {
+      .MuiAvatar-root {
+        width: 40px;
+        height: 40px;
+        border: 2px solid #ffffff;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12), 0 0 0 2px rgba(245, 166, 35, 0.35);
+      }
+    }
+  }
+
+  /* Sidebar — legacy (kept hidden, replaced by horizontal top-nav) */
+  .aside { display: none !important; }
+  .aside-DISABLED {
     .MuiDrawer-paper {
       background: linear-gradient(180deg, #0b1124 0%, #111935 50%, #0f1a3a 100%) !important;
       border-right: 1px solid rgba(255, 255, 255, 0.06);
@@ -188,10 +283,11 @@
     }
   }
   #bunker {
-    width: calc(100% - 280px);
-    margin-left: auto;
-    padding: 100px 32px 40px 32px;
-    align-items: center;
+    width: 100%;
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 110px 28px 48px 28px;
+    align-items: stretch;
     background:
       radial-gradient(ellipse at top right, rgba(245, 166, 35, 0.06) 0%, transparent 50%),
       radial-gradient(ellipse at bottom left, rgba(99, 102, 241, 0.05) 0%, transparent 50%),

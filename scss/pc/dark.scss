@@ -1914,6 +1914,35 @@ body.dark-mode {
 	 * ADMIN dashboard
 	 * ====================================================================== */
 	#pc-wrap.admin {
+		background: #141927 !important;
+
+		.admin-topbar {
+			background: rgba(20, 25, 39, 0.85) !important;
+			border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+			color: #cbd5e1 !important;
+		}
+		.admin-brand .brand-text { color: #f1f5f9 !important; }
+		.nav-pill {
+			color: #94a3b8 !important;
+			&:hover {
+				background: rgba(245, 166, 35, 0.12) !important;
+				border-color: rgba(245, 166, 35, 0.3) !important;
+				color: #fbbf24 !important;
+			}
+			&.active {
+				background: linear-gradient(180deg, rgba(245, 166, 35, 0.22) 0%, rgba(245, 166, 35, 0.06) 100%) !important;
+				border-color: rgba(245, 166, 35, 0.5) !important;
+				color: #fbbf24 !important;
+				box-shadow: 0 6px 16px rgba(245, 166, 35, 0.18) !important;
+			}
+		}
+		.admin-topright .MuiAvatar-root {
+			border-color: #1b2030 !important;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(245, 166, 35, 0.5) !important;
+		}
+
+		/* Legacy sidebar fallback (already hidden, but make sure dark color matches) */
 		.MuiAppBar-root {
 			background: rgba(20, 25, 39, 0.78) !important;
 			border-bottom-color: rgba(255, 255, 255, 0.06) !important;

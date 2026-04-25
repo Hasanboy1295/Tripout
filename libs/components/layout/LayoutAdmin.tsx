@@ -1,35 +1,57 @@
 import type { ComponentType } from 'react';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import MenuList from '../admin/AdminMenuList';
+import Link from 'next/link';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { Menu, MenuItem } from '@mui/material';
-import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
+import Badge from '@mui/material/Badge';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
+import HeadsetMicOutlinedIcon from '@mui/icons-material/HeadsetMicOutlined';
+import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { getJwtToken, logOut, updateUserInfo } from '../../auth';
-import { useReactiveVar } from '@apollo/client';
+import { useReactiveVar, useQuery } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { REACT_APP_API_URL } from '../../config';
 import { MemberType } from '../../enums/member.enum';
-const drawerWidth = 280;
+import { GET_ALL_MEMBERS_BY_ADMIN } from '../../../apollo/admin/query';
+import { sweetTopSuccessAlert } from '../../sweetAlert';
+
+interface NavItem {
+	title: string;
+	icon: React.ReactNode;
+	url?: string;
+	matchKey: string;
+	soon?: boolean;
+}
 
 const withAdminLayout = (Component: ComponentType) => {
 	return (props: object) => {
 		const router = useRouter();
 		const user = useReactiveVar(userVar);
-		const [settingsState, setSettingsStateState] = useState(false);
-		const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-		const [openMenu, setOpenMenu] = useState(false);
+		const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 		const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 		const [title, setTitle] = useState('admin');
 		const [loading, setLoading] = useState(true);
+
+		/** APOLLO **/
+		const { data: membersSnapshot } = useQuery(GET_ALL_MEMBERS_BY_ADMIN, {
+			fetchPolicy: 'cache-and-network',
+			variables: { input: { page: 1, limit: 1, sort: 'createdAt', search: {} } },
+			skip: !user || user.memberType !== MemberType.ADMIN,
+			notifyOnNetworkStatusChange: false,
+		});
+		const totalMembers = membersSnapshot?.getAllMembersByAdmin?.metaCounter?.[0]?.total ?? 0;
 
 		/** LIFECYCLES **/
 		useEffect(() => {
@@ -48,37 +70,87 @@ const withAdminLayout = (Component: ComponentType) => {
 		const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
 			setAnchorElUser(event.currentTarget);
 		};
-
-		const handleCloseUserMenu = () => {
-			setAnchorElUser(null);
-		};
-
+		const handleCloseUserMenu = () => setAnchorElUser(null);
 		const logoutHandler = () => {
 			logOut();
 			router.push('/').then();
 		};
+		const comingSoon = (label: string) => sweetTopSuccessAlert(`${label} — coming soon`, 1600);
 
 		if (!user || user?.memberType !== MemberType.ADMIN) return null;
 
+		const path = router.pathname;
+		const isActive = (key: string) => {
+			if (key === 'users') return path.startsWith('/_admin/users') || path === '/_admin';
+			if (key === 'destination') return path.startsWith('/_admin/properties');
+			if (key === 'community') return path.startsWith('/_admin/community');
+			if (key === 'cs') return path.startsWith('/_admin/cs');
+			return false;
+		};
+
+		const navItems: NavItem[] = [
+			{ title: 'Users', icon: <GroupOutlinedIcon />, url: '/_admin/users', matchKey: 'users' },
+			{ title: 'Destination', icon: <PlaceOutlinedIcon />, url: '/_admin/properties', matchKey: 'destination' },
+			{ title: 'Community', icon: <ForumOutlinedIcon />, url: '/_admin/community', matchKey: 'community' },
+			{ title: 'Cs', icon: <HeadsetMicOutlinedIcon />, url: '/_admin/cs/faq', matchKey: 'cs' },
+			{ title: 'Reports', icon: <BarChartOutlinedIcon />, matchKey: 'reports', soon: true },
+			{ title: 'Settings', icon: <SettingsOutlinedIcon />, matchKey: 'settings', soon: true },
+		];
+
 		return (
 			<main id="pc-wrap" className="admin">
-				<Box component={'div'} sx={{ display: 'flex' }}>
-					<AppBar
-						position="fixed"
-						sx={{
-							width: `calc(100% - ${drawerWidth}px)`,
-							ml: `${drawerWidth}px`,
-							boxShadow: 'rgb(100 116 139 / 12%) 0px 1px 4px',
-							background: 'none',
-						}}
-					>
-						<Toolbar>
+				<AppBar position="fixed" className="admin-topbar">
+					<Toolbar disableGutters className="admin-toolbar">
+						<Link href="/_admin/users">
+							<Stack className="admin-brand" direction="row" alignItems="center">
+								<Stack className="brand-mark">T</Stack>
+								<Typography className="brand-text">TRIPOUT</Typography>
+							</Stack>
+						</Link>
+
+						<Stack className="admin-nav" direction="row">
+							{navItems.map((item) => {
+								const active = isActive(item.matchKey);
+								const content = (
+									<Stack
+										className={`nav-pill ${active ? 'active' : ''}`}
+										key={item.title}
+										onClick={() => {
+											if (item.soon) comingSoon(item.title);
+										}}
+									>
+										<Stack className="nav-pill-icon">
+											{item.title === 'Users' && totalMembers > 0 ? (
+												<Badge
+													badgeContent={totalMembers}
+													color="warning"
+													className="nav-pill-badge"
+													max={999}
+												>
+													{item.icon}
+												</Badge>
+											) : (
+												item.icon
+											)}
+										</Stack>
+										<Typography className="nav-pill-label">{item.title}</Typography>
+									</Stack>
+								);
+								return item.url && !item.soon ? (
+									<Link href={item.url} key={item.title}>
+										{content}
+									</Link>
+								) : (
+									<React.Fragment key={item.title}>{content}</React.Fragment>
+								);
+							})}
+						</Stack>
+
+						<Stack className="admin-topright" direction="row" alignItems="center">
 							<Tooltip title="Open settings">
-								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} className="admin-avatar-btn">
 									<Avatar
-										src={
-											user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'
-										}
+										src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
 									/>
 								</IconButton>
 							</Tooltip>
@@ -87,25 +159,13 @@ const withAdminLayout = (Component: ComponentType) => {
 								id="menu-appbar"
 								className={'pop-menu'}
 								anchorEl={anchorElUser}
-								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
+								anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
 								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
+								transformOrigin={{ vertical: 'top', horizontal: 'right' }}
 								open={Boolean(anchorElUser)}
 								onClose={handleCloseUserMenu}
 							>
-								<Box
-									component={'div'}
-									onClick={handleCloseUserMenu}
-									sx={{
-										width: '200px',
-									}}
-								>
+								<Box component={'div'} onClick={handleCloseUserMenu} sx={{ width: '220px' }}>
 									<Stack sx={{ px: '20px', my: '12px' }}>
 										<Typography variant={'h6'} component={'h6'} sx={{ mb: '4px' }}>
 											{user?.memberNick}
@@ -124,57 +184,13 @@ const withAdminLayout = (Component: ComponentType) => {
 									</Box>
 								</Box>
 							</Menu>
-						</Toolbar>
-					</AppBar>
+						</Stack>
+					</Toolbar>
+				</AppBar>
 
-					<Drawer
-						sx={{
-							width: drawerWidth,
-							flexShrink: 0,
-							'& .MuiDrawer-paper': {
-								width: drawerWidth,
-								boxSizing: 'border-box',
-							},
-						}}
-						variant="permanent"
-						anchor="left"
-						className="aside"
-					>
-						<Toolbar sx={{ flexDirection: 'column', alignItems: 'flexStart' }}>
-							<Stack className={'logo-box'}>
-								<img src={'/img/logo/logoText.svg'} alt={'logo'} />
-							</Stack>
-
-							<Stack
-								className="user"
-								direction={'row'}
-								alignItems={'center'}
-								sx={{
-									bgcolor: openMenu ? 'rgba(255, 255, 255, 0.04)' : 'none',
-									borderRadius: '8px',
-									px: '24px',
-									py: '11px',
-								}}
-							>
-								<Avatar
-									src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
-								/>
-								<Typography variant={'body2'} p={1} ml={1}>
-									{user?.memberNick} <br />
-									{user?.memberPhone}
-								</Typography>
-							</Stack>
-						</Toolbar>
-
-						<Divider />
-
-						<MenuList />
-					</Drawer>
-
-					<Box component={'div'} id="bunker" sx={{ flexGrow: 1 }}>
-						{/*@ts-ignore*/}
-						<Component {...props} setSnackbar={setSnackbar} setTitle={setTitle} />
-					</Box>
+				<Box component={'div'} id="bunker">
+					{/*@ts-ignore*/}
+					<Component {...props} setSnackbar={setSnackbar} setTitle={setTitle} />
 				</Box>
 			</main>
 		);
