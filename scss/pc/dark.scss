@@ -167,8 +167,20 @@ body.dark-mode {
 		border-top: 1px solid #2f3547;
 
 		.main {
+			/* Brighter, more readable hero text in dark mode. The light-mode
+			 * .highlight color (#321d02) is unreadable on dark bg, so flip
+			 * it to a warm orange accent that pops against the navy. */
+			.left .hero-section h2 {
+				color: #f4f6fb !important;
+				text-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+
+				.highlight {
+					color: #f5a623 !important;
+					text-shadow: 0 2px 14px rgba(245, 166, 35, 0.3);
+				}
+			}
 			.left h2,
-			.left .highlight { color: #e8eaf2; }
+			.left .highlight { color: #f4f6fb; }
 			.subscribe-box {
 				background: #232838;
 				border: 1px solid #2f3547;
@@ -178,8 +190,10 @@ body.dark-mode {
 			.right {
 				.section-title { color: #e8a54b !important; }
 				.links-section span,
-				.contact-section span { color: #a7b0c2; }
-				.contact-section .icon-wrapper { background: rgba(232, 165, 75, 0.12); color: #e8a54b; }
+				.contact-section span { color: #c9d1e2; }
+				.links-section span:hover,
+				.contact-section span:hover { color: #f5c585; }
+				.contact-section .icon-wrapper { background: rgba(232, 165, 75, 0.12); color: #e8a54b; border-color: rgba(232, 165, 75, 0.4); }
 			}
 		}
 		.scroll-top-btn {
@@ -468,12 +482,31 @@ body.dark-mode {
 		.blog-section {
 			background: #141927;
 			.blog-card-featured, .blog-card-side {
-				background: #232838; border: 1px solid #2f3547; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-				.post-meta span { color: #a7b0c2; }
-				.post-title { color: #e8eaf2; }
-				.post-excerpt { color: #a7b0c2; }
+				background: #232838;
+				border: 1px solid #2f3547;
+				box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+				transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+
+				&:hover {
+					border-color: rgba(232, 165, 75, 0.4);
+					box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+					transform: translateY(-2px);
+				}
+
+				.post-meta {
+					span,
+					div { color: #c9d1e2; }
+					svg { color: #f5c585; }
+				}
+				.post-title { color: #ffffff; font-weight: 700; }
+				.post-excerpt { color: #c9d1e2; line-height: 1.75; }
 				.post-divider { border-color: #2f3547; }
-				.read-more { color: #e8a54b; }
+				.read-more {
+					color: #f5a623;
+					font-weight: 700;
+					letter-spacing: 0.5px;
+					&:hover { color: #f5c585; }
+				}
 			}
 		}
 	}
