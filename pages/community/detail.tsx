@@ -317,6 +317,9 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 													src={memberImage}
 													alt=""
 													className="member-img"
+													onError={(e) => {
+														(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+													}}
 													onClick={() => goMemberPage(boardArticle?.memberData?._id)}
 												/>
 												<Typography className="member-nick" onClick={() => goMemberPage(boardArticle?.memberData?._id)}>
@@ -402,7 +405,13 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 														className="name-date"
 														onClick={() => goMemberPage(commentData?.memberData?._id as string)}
 													>
-														<img src={getCommentMemberImage(commentData?.memberData?.memberImage)} alt="" />
+														<img
+															src={getCommentMemberImage(commentData?.memberData?.memberImage)}
+															alt=""
+															onError={(e) => {
+																(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+															}}
+														/>
 														<Stack className="name-date-column">
 															<Typography className="name">{commentData?.memberData?.memberNick}</Typography>
 															<Typography className="date">

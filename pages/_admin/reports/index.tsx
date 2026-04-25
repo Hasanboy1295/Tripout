@@ -338,7 +338,13 @@ const AdminReports: NextPage = () => {
 											</Stack>
 											<Avatar
 												className="podium-avatar"
+												alt={u.memberNick || 'User'}
 												src={u.memberImage ? `${REACT_APP_API_URL}/${u.memberImage}` : '/img/profile/defaultUser.svg'}
+												imgProps={{
+													onError: (e) => {
+														(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+													},
+												}}
 											/>
 											<Typography className="podium-name">{u.memberNick}</Typography>
 											<Typography className={`podium-role role-${(u.memberType || 'USER').toLowerCase()}`}>

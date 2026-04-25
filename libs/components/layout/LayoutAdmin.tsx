@@ -242,7 +242,13 @@ const withAdminLayout = (Component: ComponentType) => {
 							<Tooltip title={t('admin_topbar_open_settings')}>
 								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} className="admin-avatar-btn">
 									<Avatar
+										alt={user?.memberNick || 'Admin'}
 										src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
+										imgProps={{
+											onError: (e) => {
+												(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+											},
+										}}
 									/>
 								</IconButton>
 							</Tooltip>

@@ -168,7 +168,16 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 											<Stack direction={'row'}>
 												<Link href={`/member?memberId=${member._id}`}>
 													<div>
-														<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
+														<Avatar
+															alt={member.memberNick || 'User'}
+															src={member_image}
+															imgProps={{
+																onError: (e) => {
+																	(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+																},
+															}}
+															sx={{ ml: '2px', mr: '10px' }}
+														/>
 													</div>
 												</Link>
 												<Link href={`/member?memberId=${member._id}`}>

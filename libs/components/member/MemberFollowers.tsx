@@ -92,7 +92,13 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 							<Stack className="follows-card-box" key={follower._id}>
 								<Stack className={'info'} onClick={() => redirectToMemberPageHandler(follower?.followerData?._id)}>
 									<Stack className="image-box">
-										<img src={imagePath} alt="" />
+										<img
+											src={imagePath}
+											alt=""
+											onError={(e) => {
+												(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+											}}
+										/>
 									</Stack>
 									<Stack className="information-box">
 										<Typography className="name">{follower?.followerData?.memberNick}</Typography>

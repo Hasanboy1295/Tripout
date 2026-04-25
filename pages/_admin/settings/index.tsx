@@ -186,7 +186,13 @@ const AdminSettings: NextPage = () => {
 					<Stack className="account-row" direction="row" alignItems="center">
 						<Avatar
 							className="account-avatar"
+							alt={user?.memberNick || 'Admin'}
 							src={user?.memberImage ? `${REACT_APP_API_URL}/${user.memberImage}` : '/img/profile/defaultUser.svg'}
+							imgProps={{
+								onError: (e) => {
+									(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+								},
+							}}
 						/>
 						<Stack className="account-meta">
 							<Typography className="account-name">{user?.memberNick}</Typography>

@@ -23,7 +23,13 @@ const ReviewCard = (props: ReviewCardProps) => {
 			<Box component={'div'} className={'review-card'}>
 				<div className={'info'}>
 					<div className={'left'}>
-						<img src={imagePath} alt="" />
+						<img
+							src={imagePath}
+							alt=""
+							onError={(e) => {
+								(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+							}}
+						/>
 						<div>
 							<strong>{comment.memberData?.memberNick}</strong>
 							<span>
