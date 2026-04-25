@@ -1,0 +1,234 @@
+/* =========================================================================
+ *  MOBILE PROPERTY LIST + DETAIL
+ * ========================================================================= */
+#mobile-wrap {
+  /* ───── PROPERTY LIST ───── */
+  #property-list-page,
+  .property-list-page {
+    width: 100%;
+    padding: 4px 14px 24px;
+
+    .container {
+      width: 100%;
+      padding: 0 !important;
+    }
+
+    .property-page {
+      flex-direction: column !important;
+      gap: 16px;
+    }
+
+    /* Filter sidebar collapses to a top, scrollable strip of chips/accordions */
+    .filter-config {
+      width: 100% !important;
+      padding: 14px !important;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+
+      .filter-main {
+        gap: 12px !important;
+        flex-direction: column !important;
+      }
+      .title { font-size: 15px !important; font-weight: 600 !important; }
+      .input-box, .input-wrap {
+        width: 100% !important;
+        padding: 10px 12px !important;
+        border-radius: 12px !important;
+        font-size: 13px !important;
+      }
+    }
+
+    .main-config { width: 100% !important; }
+
+    /* Toolbar: total + sort */
+    .toolbar {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 10px !important;
+      padding: 10px 0 !important;
+      .total-result {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+      }
+      .sorting-box {
+        justify-content: space-between !important;
+        gap: 10px !important;
+      }
+      .view-toggles { display: none !important; }
+    }
+
+    /* List/grid renders cards in single column */
+    .list-config,
+    .listings,
+    .card-wrap {
+      grid-template-columns: 1fr !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+
+    /* Generic property card override */
+    .property-card,
+    .card-wrap > div,
+    .vertical-card {
+      width: 100% !important;
+      max-width: 100% !important;
+      border-radius: 16px !important;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+      .card-img,
+      img {
+        width: 100% !important;
+        height: 220px !important;
+        object-fit: cover;
+      }
+      .info,
+      .description {
+        padding: 14px 16px 16px !important;
+      }
+      .title, .name, .property-title {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        line-height: 1.3 !important;
+      }
+      .desc { font-size: 12.5px !important; }
+      .price, .amount {
+        font-size: 16px !important;
+        font-weight: 700 !important;
+      }
+    }
+
+    .pagination-config,
+    .pagination,
+    .pagination-box {
+      justify-content: center;
+      margin-top: 22px !important;
+      .MuiPagination-ul li button { font-size: 13px !important; }
+    }
+  }
+
+  /* ───── PROPERTY DETAIL ───── */
+  #property-detail-page,
+  .property-detail-page {
+    width: 100%;
+    padding: 4px 14px 24px;
+
+    .container {
+      width: 100%;
+      padding: 0 !important;
+      gap: 16px;
+    }
+
+    .property-info,
+    .property-detail-config,
+    .detail-content,
+    .wrap-main {
+      flex-direction: column !important;
+      gap: 18px !important;
+    }
+
+    /* image gallery */
+    .detail-images-row,
+    .gallery-thumb {
+      grid-template-columns: 1fr !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      img {
+        width: 100% !important;
+        height: 240px !important;
+        object-fit: cover;
+        border-radius: 14px !important;
+      }
+    }
+
+    /* title block */
+    .property-title,
+    h1 {
+      font-size: 22px !important;
+      line-height: 1.22 !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.3px;
+    }
+    h2 { font-size: 20px !important; }
+    h3 { font-size: 16px !important; }
+
+    .property-desc-config {
+      padding: 16px !important;
+      border-radius: 14px !important;
+    }
+
+    /* meta badges row scrolls horizontally */
+    .trip-info-badges,
+    .badge-content {
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      .badge,
+      .stat-pill {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+        border-radius: 999px !important;
+      }
+    }
+
+    /* itinerary/timeline */
+    .itinerary-section,
+    .itinerary-timeline {
+      .timeline-item {
+        flex-direction: column !important;
+        gap: 8px !important;
+        padding: 14px !important;
+      }
+      .timeline-content { padding: 0 !important; }
+      .day-title { font-size: 15px !important; }
+      .day-desc { font-size: 13px !important; }
+    }
+
+    /* sidebar panels (price card, ask agent, etc.) */
+    .ask-info,
+    .leave-review-config,
+    .review-wrap,
+    .submit-review,
+    .reviews-config {
+      width: 100% !important;
+      padding: 16px !important;
+      border-radius: 16px !important;
+    }
+
+    .review-list,
+    .reviews-config .review-list {
+      gap: 14px !important;
+    }
+    .review-box {
+      padding: 14px !important;
+      border-radius: 14px !important;
+      .review-header {
+        flex-direction: row !important;
+        align-items: center;
+        gap: 10px;
+      }
+      .author-img, img { width: 40px !important; height: 40px !important; }
+      .author-name, .author { font-size: 13.5px !important; font-weight: 600; }
+      .date { font-size: 12px !important; }
+      .review-title { font-size: 14px !important; font-weight: 600; }
+      .desc-text, .text { font-size: 13px !important; line-height: 1.55 !important; }
+    }
+
+    .leave-comment textarea {
+      width: 100% !important;
+      min-height: 120px !important;
+      padding: 12px !important;
+      border-radius: 12px !important;
+      font-size: 13.5px !important;
+    }
+
+    .button-box,
+    .submit-btn,
+    .send-message {
+      width: 100% !important;
+      padding: 13px 18px !important;
+      font-size: 13.5px !important;
+      border-radius: 12px !important;
+    }
+  }
+}

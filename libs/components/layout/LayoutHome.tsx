@@ -53,6 +53,51 @@ const withLayoutMain = (Component: any) => {
 							   <Top />
 						   </Stack>
 
+						   <Stack className={'mobile-hero'}>
+							   <div
+								   className={'mobile-hero-bg'}
+								   style={{ backgroundImage: `url(${heroSlides[currentSlide]})` }}
+							   >
+								   <div className={'mobile-hero-overlay'} />
+							   </div>
+							   <div className={'mobile-hero-content'}>
+								   <span className={'mobile-eyebrow'}>
+									   <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+										   <path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="#e8a54b"/>
+									   </svg>
+									   {t('its_time_to_travel')}
+								   </span>
+								   <h1 className={'mobile-hero-title'}>{t('home_title')}</h1>
+								   <p className={'mobile-hero-desc'}>{t('home_desc')}</p>
+								   <div className={'mobile-hero-cta'}>
+									   <Button className={'mobile-explore-btn'} onClick={() => {}}>
+										   {t('explore_more')}
+										   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+											   <path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+										   </svg>
+									   </Button>
+									   <div className={'mobile-play-btn'}>
+										   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+											   <path d="M8 5V19L19 12L8 5Z" fill="#e8a54b"/>
+										   </svg>
+									   </div>
+								   </div>
+								   <div className={'mobile-hero-dots'}>
+									   {heroSlides.map((_, idx) => (
+										   <span
+											   key={idx}
+											   className={idx === currentSlide ? 'active' : ''}
+											   onClick={() => setCurrentSlide(idx)}
+										   />
+									   ))}
+								   </div>
+							   </div>
+						   </Stack>
+
+						   <Stack className={'mobile-search'}>
+							   <HeaderFilter />
+						   </Stack>
+
 						   <Stack id={'main'}>
 							   <Component {...props} />
 						   </Stack>

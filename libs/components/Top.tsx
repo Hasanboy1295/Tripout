@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { getJwtToken, logOut, updateUserInfo } from '../auth';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, Drawer, IconButton } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
@@ -11,6 +11,8 @@ import Menu, { MenuProps } from '@mui/material/Menu';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
@@ -54,6 +56,9 @@ const Top = () => {
 	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
 	const logoutOpen = Boolean(logoutAnchor);
 	const userAvatar = resolveUserAvatar(user?.memberImage);
+	const [mobileDrawer, setMobileDrawer] = useState<boolean>(false);
+	const [mobileLangAnchor, setMobileLangAnchor] = useState<null | HTMLElement>(null);
+	const mobileLangOpen = Boolean(mobileLangAnchor);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -185,23 +190,164 @@ const Top = () => {
 	}, []);
 
 	if (device == 'mobile') {
+		const closeDrawer = () => setMobileDrawer(false);
+		const navItems = [
+			{ href: '/', label: t('Home') },
+			{ href: '/property', label: t('Destinations') },
+			{ href: '/agent', label: t('Agents') },
+			{ href: '/community?articleCategory=FREE', label: t('Community') },
+			{ href: '/about', label: t('About Us') },
+			{ href: '/cs', label: t('CS') },
+			{ href: '/mypage', label: t('My Page') },
+		];
+		const isActive = (href: string) => {
+			const path = href.split('?')[0];
+			if (path === '/') return router.pathname === '/';
+			return router.pathname === path || router.pathname.startsWith(path + '/');
+		};
+		const mobileLangChoice = async (e: any) => {
+			const scrollY = window.scrollY;
+			const id = e.currentTarget.id;
+			setLang(id);
+			localStorage.setItem('locale', id);
+			setMobileLangAnchor(null);
+			await router.push(router.asPath, router.asPath, { locale: id, scroll: false });
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => {
+					window.scrollTo({ top: scrollY, left: 0, behavior: 'auto' });
+				});
+			});
+		};
 		return (
-			<Stack className={'top'}>
-				<Link href={'/'}>
-					<div>{t('Home')}</div>
-				</Link>
-				<Link href={'/property'}>
-					<div>{t('Properties')}</div>
-				</Link>
-				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
-				</Link>
-				<Link href={'/community?articleCategory=FREE'}>
-					<div> {t('Community')} </div>
-				</Link>
-				<Link href={'/cs'}>
-					<div> {t('CS')} </div>
-				</Link>
+			<Stack className={`mobile-top ${colorChange ? 'scrolled' : ''}`}>
+				<Stack className={'mobile-top-inner'}>
+					<Link href={'/'} className={'mobile-logo'}>
+						<img src="/img/logo/logo.svg" alt="Tripout" />
+						<span>Tripout</span>
+					</Link>
+					<div className={'mobile-actions'}>
+						<IconButton
+							className={'mobile-lang-btn'}
+							onClick={(e) => setMobileLangAnchor(e.currentTarget)}
+							size={'small'}
+						>
+							{lang ? (
+								<img src={`/img/flag/lang${lang}.png`} alt={'flag'} />
+							) : (
+								<img src={`/img/flag/langen.png`} alt={'flag'} />
+							)}
+						</IconButton>
+						<StyledMenu
+							anchorEl={mobileLangAnchor}
+							open={mobileLangOpen}
+							onClose={() => setMobileLangAnchor(null)}
+						>
+							<MenuItem disableRipple onClick={mobileLangChoice} id="en">
+								<img className="img-flag" src={'/img/flag/langen.png'} alt={'English'} />
+								English
+							</MenuItem>
+							<MenuItem disableRipple onClick={mobileLangChoice} id="kr">
+								<img className="img-flag" src={'/img/flag/langkr.png'} alt={'Korean'} />
+								Korean
+							</MenuItem>
+							<MenuItem disableRipple onClick={mobileLangChoice} id="ru">
+								<img className="img-flag" src={'/img/flag/langru.png'} alt={'Russian'} />
+								Russian
+							</MenuItem>
+						</StyledMenu>
+
+						<IconButton
+							className={'mobile-theme-btn'}
+							onClick={themeChangeHandler}
+							size={'small'}
+						>
+							{themeMode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
+						</IconButton>
+
+						{user?._id ? (
+							<div className={'mobile-avatar'} onClick={() => setMobileDrawer(true)}>
+								<img
+									src={userAvatar}
+									onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+										event.currentTarget.src = DEFAULT_USER_AVATAR;
+									}}
+									alt=""
+								/>
+							</div>
+						) : null}
+
+						<IconButton
+							className={'mobile-menu-btn'}
+							onClick={() => setMobileDrawer(true)}
+							size={'small'}
+						>
+							<MenuRoundedIcon />
+						</IconButton>
+					</div>
+				</Stack>
+
+				<Drawer
+					anchor={'right'}
+					open={mobileDrawer}
+					onClose={closeDrawer}
+					classes={{ paper: 'mobile-drawer-paper' }}
+				>
+					<Stack className={'mobile-drawer'}>
+						<Stack className={'drawer-head'}>
+							<Link href={'/'} onClick={closeDrawer} className={'drawer-logo'}>
+								<img src="/img/logo/logo.svg" alt="Tripout" />
+								<span>Tripout</span>
+							</Link>
+							<IconButton onClick={closeDrawer} size={'small'} className={'drawer-close'}>
+								<CloseRoundedIcon />
+							</IconButton>
+						</Stack>
+
+						{user?._id ? (
+							<Stack className={'drawer-user'}>
+								<img
+									src={userAvatar}
+									onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+										event.currentTarget.src = DEFAULT_USER_AVATAR;
+									}}
+									alt=""
+								/>
+								<div>
+									<strong>{user?.memberNick || user?.memberFullName || 'Traveler'}</strong>
+									<span>{user?.memberPhone}</span>
+								</div>
+							</Stack>
+						) : (
+							<Link href={'/account/join'} onClick={closeDrawer} className={'drawer-cta'}>
+								<LockOutlinedIcon />
+								<span>{t('login_signup_cta')}</span>
+							</Link>
+						)}
+
+						<Stack className={'drawer-nav'}>
+							{navItems.map((item) => (
+								<Link
+									key={item.href}
+									href={item.href}
+									onClick={closeDrawer}
+									className={isActive(item.href) ? 'active' : ''}
+								>
+									<span>{item.label}</span>
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+										<path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+									</svg>
+								</Link>
+							))}
+						</Stack>
+
+						{user?._id ? (
+							<div className={'drawer-logout'} onClick={() => { closeDrawer(); logOut(); }}>
+								<Logout />
+								<span>{t('logout')}</span>
+							</div>
+						) : null}
+					</Stack>
+				</Drawer>
 			</Stack>
 		);
 	} else {

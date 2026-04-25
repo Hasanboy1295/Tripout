@@ -1,0 +1,110 @@
+/* =========================================================================
+ *  MOBILE MEMBER PROFILE (PUBLIC)
+ * ========================================================================= */
+#mobile-wrap {
+  #member-page,
+  .member-page {
+    .member-info,
+    .member-head,
+    .image-info {
+      width: 100% !important;
+      padding: 18px !important;
+      border-radius: 18px !important;
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+      flex-direction: column !important;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+
+      img.member-image,
+      img.profile,
+      .member-image img {
+        width: 110px !important;
+        height: 110px !important;
+        border-radius: 50% !important;
+        object-fit: cover;
+        border: 3px solid #fff5e7;
+      }
+
+      .name, strong {
+        font-size: 22px !important;
+        font-weight: 700 !important;
+      }
+      .desc, .role { font-size: 13.5px !important; color: #717171; }
+
+      .stats,
+      .name-phone-listings {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center;
+        gap: 10px !important;
+        > div, .stat-pill {
+          padding: 9px 14px !important;
+          border-radius: 999px !important;
+          font-size: 12.5px !important;
+        }
+      }
+
+      .contact-btn,
+      .send-message,
+      .follow-btn {
+        width: 100% !important;
+        padding: 13px 18px !important;
+        font-size: 14px !important;
+        border-radius: 12px !important;
+      }
+    }
+
+    /* tabs (followers / following / properties / articles) */
+    .member-tabs,
+    .tab,
+    .switch-btn {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      gap: 8px !important;
+      padding: 14px 0 !important;
+      &::-webkit-scrollbar { display: none; }
+      scrollbar-width: none;
+    }
+
+    .member-articles,
+    .member-properties,
+    .member-follows {
+      .list-config {
+        grid-template-columns: 1fr !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+      }
+    }
+
+    .follow-card,
+    .followers-list > div {
+      padding: 14px !important;
+      border-radius: 14px !important;
+      background: #fff;
+      flex-direction: row !important;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+      img.member-image,
+      img {
+        width: 52px !important;
+        height: 52px !important;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .info { flex: 1; min-width: 0; }
+      .name { font-size: 14.5px !important; font-weight: 600 !important; }
+      .desc { font-size: 12.5px !important; color: #717171; }
+      .follow-btn {
+        padding: 8px 14px !important;
+        font-size: 12.5px !important;
+        border-radius: 999px !important;
+        white-space: nowrap;
+      }
+    }
+  }
+}
