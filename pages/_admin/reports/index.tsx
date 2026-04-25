@@ -9,6 +9,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import withAdminLayout from '../../../libs/components/layout/LayoutAdmin';
 import { GET_ALL_MEMBERS_BY_ADMIN, GET_ALL_PROPERTIES_BY_ADMIN } from '../../../apollo/admin/query';
 import { Member } from '../../../libs/types/member/member';
@@ -298,10 +299,19 @@ const AdminReports: NextPage = () => {
 			</Stack>
 
 			{/* Top users */}
-			<Stack className="report-card report-card--list" sx={{ mb: 4 }}>
-				<Stack className="card-head" direction="row">
-					<Typography className="card-title">{t('admin_reports_top_users_title')}</Typography>
-					<Typography className="card-sub">{t('admin_reports_top_users_sub')}</Typography>
+			<Stack className="report-card report-card--list report-card--leaderboard" sx={{ mb: 4 }}>
+				<Stack className="leaderboard-head" direction="row">
+					<Stack className="leaderboard-head-icon">
+						<EmojiEventsOutlinedIcon />
+					</Stack>
+					<Stack className="leaderboard-head-text">
+						<Typography className="leaderboard-title">{t('admin_reports_top_users_title')}</Typography>
+						<Typography className="leaderboard-sub">{t('admin_reports_top_users_sub')}</Typography>
+					</Stack>
+					<Stack className="leaderboard-head-count">
+						<Typography className="lh-count-num">{topUsers.length}</Typography>
+						<Typography className="lh-count-lbl">TOP</Typography>
+					</Stack>
 				</Stack>
 				<Stack className="leaderboard">
 					{topUsers.length === 0 && !loading && (
@@ -314,26 +324,36 @@ const AdminReports: NextPage = () => {
 							(topUsers[0]?.memberPoints || 0) + (topUsers[0]?.memberViews || 0),
 						);
 						const pct = (score / max) * 100;
+						const rank = i + 1;
+						const medalClass = rank === 1 ? 'is-gold' : rank === 2 ? 'is-silver' : rank === 3 ? 'is-bronze' : '';
 						return (
-							<Stack key={u._id} className="board-row" direction="row">
-								<Typography className="board-rank">#{i + 1}</Typography>
+							<Stack key={u._id} className={`board-row ${medalClass}`} direction="row">
+								<Stack className={`board-rank ${medalClass}`}>
+									{rank <= 3 ? <EmojiEventsOutlinedIcon /> : null}
+									<Typography className="board-rank-num" component="span">{rank}</Typography>
+								</Stack>
 								<Avatar
 									className="board-avatar"
 									src={u.memberImage ? `${REACT_APP_API_URL}/${u.memberImage}` : '/img/profile/defaultUser.svg'}
 								/>
 								<Stack className="board-meta">
-									<Typography className="board-name">{u.memberNick}</Typography>
-									<Typography className="board-sub">
-										{u.memberType} · {u.memberPhone}
-									</Typography>
+									<Stack className="board-meta-top" direction="row" alignItems="center">
+										<Typography className="board-name">{u.memberNick}</Typography>
+										<Typography className={`board-role role-${(u.memberType || 'USER').toLowerCase()}`} component="span">
+											{u.memberType}
+										</Typography>
+									</Stack>
+									<Typography className="board-sub">{u.memberPhone}</Typography>
 									<LinearProgress className="board-bar" variant="determinate" value={pct} />
 								</Stack>
 								<Stack className="board-stats">
-									<Stack direction="row" className="stat">
-										<StarBorderIcon fontSize="inherit" /> {u.memberPoints || 0}
+									<Stack direction="row" className="stat stat-points">
+										<StarBorderIcon fontSize="inherit" />
+										<Typography component="span" className="stat-value">{u.memberPoints || 0}</Typography>
 									</Stack>
-									<Stack direction="row" className="stat">
-										<VisibilityOutlinedIcon fontSize="inherit" /> {u.memberViews || 0}
+									<Stack direction="row" className="stat stat-views">
+										<VisibilityOutlinedIcon fontSize="inherit" />
+										<Typography component="span" className="stat-value">{u.memberViews || 0}</Typography>
 									</Stack>
 								</Stack>
 							</Stack>
