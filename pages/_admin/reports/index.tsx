@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import type { NextPage } from 'next';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 import { useQuery } from '@apollo/client';
 import { Box, Stack, Typography, Avatar, LinearProgress } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
@@ -107,6 +108,7 @@ const Sparkline: React.FC<{ values: number[]; max?: number; height?: number }> =
 };
 
 const AdminReports: NextPage = () => {
+	const { t } = useTranslation('common');
 	const { data: membersData, loading: membersLoading } = useQuery(GET_ALL_MEMBERS_BY_ADMIN, {
 		fetchPolicy: 'cache-and-network',
 		variables: { input: { page: 1, limit: 500, sort: 'createdAt', search: {} } },
@@ -200,32 +202,32 @@ const AdminReports: NextPage = () => {
 	return (
 		<Box component="div" className="content reports-page">
 			<Typography variant="h2" className="tit" sx={{ mb: '24px' }}>
-				Reports
+				{t('admin_reports_title')}
 			</Typography>
 
 			{/* USER REPORTS section */}
-			<Typography className="reports-section-title">📊 User reports</Typography>
+			<Typography className="reports-section-title">📊 {t('admin_reports_section_users')}</Typography>
 
 			<Stack className="kpi-row" direction="row">
 				<Stack className="kpi-card kpi--total">
-					<Typography className="kpi-label">NEW TODAY</Typography>
+					<Typography className="kpi-label">{t('admin_reports_kpi_new_today')}</Typography>
 					<Typography className="kpi-value">{kpis.newToday}</Typography>
-					<Typography className="kpi-delta"><TrendingUpIcon fontSize="inherit" /> daily</Typography>
+					<Typography className="kpi-delta"><TrendingUpIcon fontSize="inherit" /> {t('admin_reports_kpi_daily')}</Typography>
 				</Stack>
 				<Stack className="kpi-card kpi--active">
-					<Typography className="kpi-label">LAST 7 DAYS</Typography>
+					<Typography className="kpi-label">{t('admin_reports_kpi_new_week')}</Typography>
 					<Typography className="kpi-value">{kpis.newWeek}</Typography>
-					<Typography className="kpi-delta"><TrendingUpIcon fontSize="inherit" /> weekly</Typography>
+					<Typography className="kpi-delta"><TrendingUpIcon fontSize="inherit" /> {t('admin_reports_kpi_weekly')}</Typography>
 				</Stack>
 				<Stack className="kpi-card kpi--privileged">
-					<Typography className="kpi-label">LAST 30 DAYS</Typography>
+					<Typography className="kpi-label">{t('admin_reports_kpi_new_month')}</Typography>
 					<Typography className="kpi-value">{kpis.newMonth}</Typography>
-					<Typography className="kpi-delta"><TrendingUpIcon fontSize="inherit" /> monthly</Typography>
+					<Typography className="kpi-delta"><TrendingUpIcon fontSize="inherit" /> {t('admin_reports_kpi_monthly')}</Typography>
 				</Stack>
 				<Stack className="kpi-card kpi--blocked">
-					<Typography className="kpi-label">TOTAL MEMBERS</Typography>
+					<Typography className="kpi-label">{t('admin_reports_kpi_total')}</Typography>
 					<Typography className="kpi-value">{kpis.total}</Typography>
-					<Typography className="kpi-delta"><TrendingUpIcon fontSize="inherit" /> all-time</Typography>
+					<Typography className="kpi-delta"><TrendingUpIcon fontSize="inherit" /> {t('admin_reports_kpi_all_time')}</Typography>
 				</Stack>
 			</Stack>
 
@@ -233,8 +235,8 @@ const AdminReports: NextPage = () => {
 				{/* Trend card */}
 				<Stack className="report-card report-card--trend">
 					<Stack className="card-head" direction="row">
-						<Typography className="card-title">Registrations · last 14 days</Typography>
-						<Typography className="card-sub">{trend.values.reduce((s, x) => s + x, 0)} total</Typography>
+						<Typography className="card-title">{t('admin_reports_trend_title')}</Typography>
+						<Typography className="card-sub">{t('admin_reports_trend_total', { count: trend.values.reduce((s, x) => s + x, 0) })}</Typography>
 					</Stack>
 					<Sparkline values={trend.values} />
 					<Stack className="trend-axis" direction="row">
@@ -247,28 +249,28 @@ const AdminReports: NextPage = () => {
 				{/* Active vs inactive donut */}
 				<Stack className="report-card report-card--ratio">
 					<Stack className="card-head" direction="row">
-						<Typography className="card-title">Active vs inactive</Typography>
+						<Typography className="card-title">{t('admin_reports_ratio_title')}</Typography>
 					</Stack>
 					<Stack className="ratio-body" direction="row">
 						<Donut
 							slices={[
-								{ label: 'Active', value: kpis.active, color: '#10b981' },
-								{ label: 'Inactive', value: kpis.inactive, color: '#cbd5e1' },
+								{ label: t('admin_reports_ratio_active'), value: kpis.active, color: '#10b981' },
+								{ label: t('admin_reports_ratio_inactive'), value: kpis.inactive, color: '#cbd5e1' },
 							]}
 						/>
 						<Stack className="ratio-legend">
 							<Stack className="legend-row" direction="row">
 								<span className="legend-dot" style={{ background: '#10b981' }} />
-								<Typography className="legend-label">Active</Typography>
+								<Typography className="legend-label">{t('admin_reports_ratio_active')}</Typography>
 								<Typography className="legend-value">{kpis.active}</Typography>
 							</Stack>
 							<Stack className="legend-row" direction="row">
 								<span className="legend-dot" style={{ background: '#cbd5e1' }} />
-								<Typography className="legend-label">Inactive</Typography>
+								<Typography className="legend-label">{t('admin_reports_ratio_inactive')}</Typography>
 								<Typography className="legend-value">{kpis.inactive}</Typography>
 							</Stack>
 							<Typography className="legend-hint">
-								{kpis.total > 0 ? Math.round((kpis.active / kpis.total) * 100) : 0}% currently active
+								{t('admin_reports_ratio_hint', { pct: kpis.total > 0 ? Math.round((kpis.active / kpis.total) * 100) : 0 })}
 							</Typography>
 						</Stack>
 					</Stack>
@@ -277,7 +279,7 @@ const AdminReports: NextPage = () => {
 				{/* Type distribution */}
 				<Stack className="report-card report-card--types">
 					<Stack className="card-head" direction="row">
-						<Typography className="card-title">User type distribution</Typography>
+						<Typography className="card-title">{t('admin_reports_types_title')}</Typography>
 					</Stack>
 					<Stack className="ratio-body" direction="row">
 						<Donut slices={typeSlices} />
@@ -297,12 +299,12 @@ const AdminReports: NextPage = () => {
 			{/* Top users */}
 			<Stack className="report-card report-card--list" sx={{ mb: 4 }}>
 				<Stack className="card-head" direction="row">
-					<Typography className="card-title">Top 10 most active users</Typography>
-					<Typography className="card-sub">By points + profile views</Typography>
+					<Typography className="card-title">{t('admin_reports_top_users_title')}</Typography>
+					<Typography className="card-sub">{t('admin_reports_top_users_sub')}</Typography>
 				</Stack>
 				<Stack className="leaderboard">
 					{topUsers.length === 0 && !loading && (
-						<Typography className="empty">No data yet.</Typography>
+						<Typography className="empty">{t('admin_reports_no_data')}</Typography>
 					)}
 					{topUsers.map((u, i) => {
 						const score = (u.memberPoints || 0) + (u.memberViews || 0);
@@ -340,12 +342,12 @@ const AdminReports: NextPage = () => {
 			</Stack>
 
 			{/* DESTINATION REPORTS */}
-			<Typography className="reports-section-title">🗺️ Destination reports</Typography>
+			<Typography className="reports-section-title">🗺️ {t('admin_reports_section_destinations')}</Typography>
 
 			<Stack className="reports-grid" direction="row">
 				<Stack className="report-card report-card--list">
 					<Stack className="card-head" direction="row">
-						<Typography className="card-title">Most viewed</Typography>
+						<Typography className="card-title">{t('admin_reports_most_viewed')}</Typography>
 						<VisibilityOutlinedIcon className="card-head-icon" />
 					</Stack>
 					<Stack className="bar-list">
@@ -365,13 +367,13 @@ const AdminReports: NextPage = () => {
 								</Link>
 							);
 						})}
-						{topByViews.length === 0 && !loading && <Typography className="empty">No data yet.</Typography>}
+						{topByViews.length === 0 && !loading && <Typography className="empty">{t('admin_reports_no_data')}</Typography>}
 					</Stack>
 				</Stack>
 
 				<Stack className="report-card report-card--list">
 					<Stack className="card-head" direction="row">
-						<Typography className="card-title">Most loved</Typography>
+						<Typography className="card-title">{t('admin_reports_most_loved')}</Typography>
 						<FavoriteBorderIcon className="card-head-icon" />
 					</Stack>
 					<Stack className="bar-list">
@@ -391,13 +393,13 @@ const AdminReports: NextPage = () => {
 								</Link>
 							);
 						})}
-						{topByLikes.length === 0 && !loading && <Typography className="empty">No data yet.</Typography>}
+						{topByLikes.length === 0 && !loading && <Typography className="empty">{t('admin_reports_no_data')}</Typography>}
 					</Stack>
 				</Stack>
 
 				<Stack className="report-card report-card--list">
 					<Stack className="card-head" direction="row">
-						<Typography className="card-title">Top by score</Typography>
+						<Typography className="card-title">{t('admin_reports_top_score')}</Typography>
 						<StarBorderIcon className="card-head-icon" />
 					</Stack>
 					<Stack className="bar-list">
@@ -418,7 +420,7 @@ const AdminReports: NextPage = () => {
 								</Link>
 							);
 						})}
-						{topByRank.length === 0 && !loading && <Typography className="empty">No data yet.</Typography>}
+						{topByRank.length === 0 && !loading && <Typography className="empty">{t('admin_reports_no_data')}</Typography>}
 					</Stack>
 				</Stack>
 			</Stack>

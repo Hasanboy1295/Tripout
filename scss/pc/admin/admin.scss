@@ -120,10 +120,40 @@
     }
   }
 
-  /* Right side — theme toggle + avatar */
+  /* Right side — language + theme + avatar */
   .admin-topright {
     flex-shrink: 0;
     gap: 10px;
+    .admin-lang-btn {
+      height: 42px;
+      padding: 0 12px;
+      border-radius: 12px;
+      background: #ffffff;
+      color: #1e293b;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.05);
+      transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+      &:hover {
+        background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+        color: #ea580c;
+        border-color: rgba(245, 166, 35, 0.4);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(245, 166, 35, 0.22);
+      }
+      .admin-lang-btn-inner {
+        gap: 8px;
+      }
+      .admin-lang-flag {
+        font-size: 18px;
+        line-height: 1;
+      }
+      .admin-lang-code {
+        font-family: $font;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+      }
+    }
     .admin-theme-btn {
       width: 42px;
       height: 42px;
@@ -1019,5 +1049,83 @@
         font-weight: 600;
       }
     }
+  }
+}
+
+/* Admin language dropdown — rendered in a portal at <body>, so style globally */
+.admin-lang-menu .MuiPaper-root {
+  margin-top: 6px;
+  min-width: 200px;
+  border-radius: 14px;
+  border: 1px solid #ecedf2;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+  padding: 6px;
+}
+
+.admin-lang-menu .admin-lang-item {
+  border-radius: 10px;
+  padding: 10px 12px;
+  gap: 12px;
+  display: flex;
+  align-items: center;
+  transition: background 0.15s;
+
+  &:hover {
+    background: #fff8ec;
+  }
+
+  &.is-active {
+    background: linear-gradient(135deg, #fff6e3 0%, #ffe7bd 100%);
+  }
+
+  .admin-lang-item-flag {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .admin-lang-item-meta {
+    flex: 1;
+    gap: 2px;
+  }
+
+  .admin-lang-item-label {
+    font-family: $font;
+    font-size: 13px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: 0.4px;
+  }
+
+  .admin-lang-item-native {
+    font-family: $font;
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  .admin-lang-item-check {
+    color: #f5a623;
+  }
+}
+
+body.dark-mode .admin-lang-menu .MuiPaper-root {
+  background: #111827;
+  border-color: #1f2937;
+}
+
+body.dark-mode .admin-lang-menu .admin-lang-item {
+  &:hover {
+    background: rgba(245, 166, 35, 0.1);
+  }
+
+  &.is-active {
+    background: linear-gradient(135deg, rgba(245, 166, 35, 0.22) 0%, rgba(245, 166, 35, 0.08) 100%);
+  }
+
+  .admin-lang-item-label {
+    color: #f1f5f9;
+  }
+
+  .admin-lang-item-native {
+    color: #94a3b8;
   }
 }

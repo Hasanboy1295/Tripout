@@ -28,7 +28,7 @@ interface LangOption {
 const LANGS: LangOption[] = [
 	{ code: 'en', label: 'EN', native: 'English', flag: '🇬🇧' },
 	{ code: 'kr', label: 'KO', native: '한국어', flag: '🇰🇷' },
-	{ code: 'uz', label: 'UZ', native: "O'zbekcha", flag: '🇺🇿' },
+	{ code: 'ru', label: 'RU', native: 'Русский', flag: '🇷🇺' },
 ];
 
 const AdminSettings: NextPage = () => {
@@ -41,7 +41,7 @@ const AdminSettings: NextPage = () => {
 	const [pushNotif, setPushNotif] = useState<boolean>(false);
 
 	useEffect(() => {
-		const stored = (typeof window !== 'undefined' && localStorage.getItem('locale')) || router.locale || 'en';
+		const stored = router.locale || (typeof window !== 'undefined' && localStorage.getItem('locale')) || 'en';
 		setActiveLocale(stored);
 	}, [router.locale]);
 
@@ -81,9 +81,9 @@ const AdminSettings: NextPage = () => {
 	return (
 		<Box component="div" className="content settings-page">
 			<Typography variant="h2" className="tit" sx={{ mb: '6px' }}>
-				Settings
+				{t('admin_settings_title')}
 			</Typography>
-			<Typography className="settings-sub">Manage your preferences — language, theme, notifications and account.</Typography>
+			<Typography className="settings-sub">{t('admin_settings_sub')}</Typography>
 
 			<Stack className="settings-grid" direction="row">
 				{/* LANGUAGE CARD */}
@@ -91,8 +91,8 @@ const AdminSettings: NextPage = () => {
 					<Stack className="settings-card-head" direction="row" alignItems="center">
 						<Stack className="settings-card-icon"><LanguageOutlinedIcon /></Stack>
 						<Stack>
-							<Typography className="settings-card-title">Language</Typography>
-							<Typography className="settings-card-sub">Choose how the dashboard speaks to you.</Typography>
+							<Typography className="settings-card-title">{t('admin_settings_lang_title')}</Typography>
+							<Typography className="settings-card-sub">{t('admin_settings_lang_sub')}</Typography>
 						</Stack>
 					</Stack>
 					<Stack className="lang-list">
@@ -123,8 +123,8 @@ const AdminSettings: NextPage = () => {
 					<Stack className="settings-card-head" direction="row" alignItems="center">
 						<Stack className="settings-card-icon"><PaletteOutlinedIcon /></Stack>
 						<Stack>
-							<Typography className="settings-card-title">Appearance</Typography>
-							<Typography className="settings-card-sub">Switch between light and dark mode.</Typography>
+							<Typography className="settings-card-title">{t('admin_settings_theme_title')}</Typography>
+							<Typography className="settings-card-sub">{t('admin_settings_theme_sub')}</Typography>
 						</Stack>
 					</Stack>
 					<Stack className="theme-row" direction="row">
@@ -133,16 +133,16 @@ const AdminSettings: NextPage = () => {
 							onClick={() => handleThemeChange('light')}
 						>
 							<Stack className="theme-tile-icon"><LightModeOutlinedIcon /></Stack>
-							<Typography className="theme-tile-label">Light</Typography>
-							<Typography className="theme-tile-sub">Bright and clean</Typography>
+							<Typography className="theme-tile-label">{t('admin_settings_theme_light')}</Typography>
+							<Typography className="theme-tile-sub">{t('admin_settings_theme_light_sub')}</Typography>
 						</Stack>
 						<Stack
 							className={`theme-tile ${themeMode === 'dark' ? 'is-active' : ''}`}
 							onClick={() => handleThemeChange('dark')}
 						>
 							<Stack className="theme-tile-icon"><DarkModeOutlinedIcon /></Stack>
-							<Typography className="theme-tile-label">Dark</Typography>
-							<Typography className="theme-tile-sub">Easier on the eyes</Typography>
+							<Typography className="theme-tile-label">{t('admin_settings_theme_dark')}</Typography>
+							<Typography className="theme-tile-sub">{t('admin_settings_theme_dark_sub')}</Typography>
 						</Stack>
 					</Stack>
 				</Stack>
@@ -152,22 +152,22 @@ const AdminSettings: NextPage = () => {
 					<Stack className="settings-card-head" direction="row" alignItems="center">
 						<Stack className="settings-card-icon"><NotificationsNoneOutlinedIcon /></Stack>
 						<Stack>
-							<Typography className="settings-card-title">Notifications</Typography>
-							<Typography className="settings-card-sub">Pick what lands in your inbox.</Typography>
+							<Typography className="settings-card-title">{t('admin_settings_notif_title')}</Typography>
+							<Typography className="settings-card-sub">{t('admin_settings_notif_sub')}</Typography>
 						</Stack>
 					</Stack>
 					<Stack className="notif-row" direction="row">
 						<Stack>
-							<Typography className="notif-label">Email alerts</Typography>
-							<Typography className="notif-sub">New users, reports, flagged content</Typography>
+							<Typography className="notif-label">{t('admin_settings_notif_email')}</Typography>
+							<Typography className="notif-sub">{t('admin_settings_notif_email_sub')}</Typography>
 						</Stack>
 						<Switch checked={emailNotif} onChange={(e) => setEmailNotif(e.target.checked)} />
 					</Stack>
 					<Divider className="notif-divider" />
 					<Stack className="notif-row" direction="row">
 						<Stack>
-							<Typography className="notif-label">Push notifications</Typography>
-							<Typography className="notif-sub">Real-time browser alerts</Typography>
+							<Typography className="notif-label">{t('admin_settings_notif_push')}</Typography>
+							<Typography className="notif-sub">{t('admin_settings_notif_push_sub')}</Typography>
 						</Stack>
 						<Switch checked={pushNotif} onChange={(e) => setPushNotif(e.target.checked)} />
 					</Stack>
@@ -178,8 +178,8 @@ const AdminSettings: NextPage = () => {
 					<Stack className="settings-card-head" direction="row" alignItems="center">
 						<Stack className="settings-card-icon"><PersonOutlineOutlinedIcon /></Stack>
 						<Stack>
-							<Typography className="settings-card-title">Account</Typography>
-							<Typography className="settings-card-sub">Signed in as administrator.</Typography>
+							<Typography className="settings-card-title">{t('admin_settings_account_title')}</Typography>
+							<Typography className="settings-card-sub">{t('admin_settings_account_sub')}</Typography>
 						</Stack>
 					</Stack>
 					<Stack className="account-row" direction="row" alignItems="center">
@@ -199,7 +199,7 @@ const AdminSettings: NextPage = () => {
 						startIcon={<LogoutOutlinedIcon />}
 						onClick={handleLogout}
 					>
-						Log out
+						{t('admin_settings_logout')}
 					</Button>
 				</Stack>
 			</Stack>
