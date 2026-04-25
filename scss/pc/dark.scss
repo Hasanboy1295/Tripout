@@ -522,17 +522,72 @@ body.dark-mode {
 		background: linear-gradient(180deg, #141927 0%, #161b2a 45%, #171c2c 100%);
 
 		.property-page {
-			/* Sidebar filter */
+			/* Sidebar filter — each section is its own card now */
 			.filter-config .filter-main {
-				background: linear-gradient(180deg, #232838 0%, #1f2434 100%);
-				border: 1px solid #2f3547;
-				border-radius: 16px;
-				padding: 20px;
-				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+				background: transparent;
+				border: none;
+				padding: 0;
+				box-shadow: none;
+
+				.filter-head {
+					.filter-head-title { color: #f1e9dc; }
+					.filter-reset-btn {
+						background: #1f2434;
+						border-color: #2f3547;
+						color: #f5a623;
+						box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+						&:hover {
+							border-color: #e8a54b;
+							background: rgba(232, 165, 75, 0.12);
+							color: #f5c585;
+						}
+					}
+				}
 
 				.filter-section {
-					background: transparent;
-					border-radius: 12px;
+					background: linear-gradient(180deg, #232838 0%, #1f2434 100%);
+					border: 1px solid #2f3547;
+					border-radius: 16px;
+					box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+
+					&:hover {
+						border-color: rgba(232, 165, 75, 0.4);
+						box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+					}
+
+					.section-head .section-icon {
+						background: linear-gradient(135deg, rgba(245, 166, 35, 0.18) 0%, rgba(232, 165, 75, 0.1) 100%);
+						color: #f5a623;
+					}
+
+					.chip-list .filter-chip {
+						background: #1b2030;
+						border-color: #2f3547;
+						color: #c9d1e2;
+
+						&:hover {
+							border-color: #e8a54b;
+							background: rgba(232, 165, 75, 0.12);
+							color: #f5c585;
+						}
+
+						&.is-active {
+							background: linear-gradient(135deg, #f5a623 0%, #e8a54b 100%);
+							color: #141927;
+							border-color: transparent;
+							box-shadow: 0 6px 14px rgba(232, 165, 75, 0.32);
+						}
+					}
+
+					.price-slider-box .price-labels .price-pill {
+						background: rgba(232, 165, 75, 0.14);
+						border-color: rgba(232, 165, 75, 0.35);
+						color: #f5c585;
+					}
+
+					.checkbox-list .checkbox-row:hover {
+						background: rgba(232, 165, 75, 0.08);
+					}
 
 					.section-title {
 						color: #f1e9dc;
