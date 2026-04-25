@@ -277,6 +277,72 @@
 				grid-template-columns: 1fr;
 			}
 		}
+
+		@media (max-width: 768px) {
+			.settings-sub {
+				font-size: 13px;
+				margin-bottom: 18px;
+			}
+
+			.settings-grid {
+				gap: 14px;
+			}
+
+			.settings-card {
+				padding: 18px 18px;
+				border-radius: 16px;
+				gap: 14px;
+			}
+
+			.settings-card-head {
+				gap: 12px;
+				.settings-card-icon {
+					width: 36px;
+					height: 36px;
+					border-radius: 10px;
+					svg { font-size: 18px; }
+				}
+				.settings-card-title { font-size: 14.5px; }
+				.settings-card-sub { font-size: 11.5px; }
+			}
+
+			.lang-list .lang-row {
+				padding: 10px 12px;
+				gap: 12px;
+				.lang-flag { font-size: 22px; }
+				.lang-label { font-size: 13px; }
+				.lang-native { font-size: 11.5px; }
+			}
+
+			.theme-row {
+				gap: 10px;
+				.theme-tile { padding: 14px 12px; }
+			}
+
+			.account-row {
+				.account-avatar { width: 50px; height: 50px; }
+				.account-name { font-size: 14px; }
+				.account-phone { font-size: 11.5px; }
+			}
+		}
+
+		@media (max-width: 480px) {
+			.settings-card {
+				padding: 16px 14px;
+			}
+
+			/* Theme tiles stack vertically on tiny screens */
+			.theme-row {
+				flex-direction: column !important;
+				gap: 10px;
+			}
+
+			.notif-row {
+				gap: 10px;
+				.notif-label { font-size: 13px; }
+				.notif-sub { font-size: 11px; }
+			}
+		}
 	}
 }
 
