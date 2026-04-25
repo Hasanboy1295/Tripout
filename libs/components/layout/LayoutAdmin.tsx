@@ -16,7 +16,6 @@ import Badge from '@mui/material/Badge';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
-import HeadsetMicOutlinedIcon from '@mui/icons-material/HeadsetMicOutlined';
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
@@ -95,28 +94,27 @@ const withAdminLayout = (Component: ComponentType) => {
 
 		const path = router.pathname;
 		const isActive = (key: string) => {
-			if (key === 'users') return path.startsWith('/_admin/users') || path === '/_admin';
+			if (key === 'reports') return path.startsWith('/_admin/reports') || path === '/_admin';
+			if (key === 'users') return path.startsWith('/_admin/users');
 			if (key === 'destination') return path.startsWith('/_admin/properties');
 			if (key === 'community') return path.startsWith('/_admin/community');
-			if (key === 'cs') return path.startsWith('/_admin/cs');
-			if (key === 'reports') return path.startsWith('/_admin/reports');
+			if (key === 'settings') return path.startsWith('/_admin/settings');
 			return false;
 		};
 
 		const navItems: NavItem[] = [
+			{ title: 'Reports', icon: <BarChartOutlinedIcon />, url: '/_admin/reports', matchKey: 'reports' },
 			{ title: 'Users', icon: <GroupOutlinedIcon />, url: '/_admin/users', matchKey: 'users' },
 			{ title: 'Destination', icon: <PlaceOutlinedIcon />, url: '/_admin/properties', matchKey: 'destination' },
 			{ title: 'Community', icon: <ForumOutlinedIcon />, url: '/_admin/community', matchKey: 'community' },
-			{ title: 'Cs', icon: <HeadsetMicOutlinedIcon />, url: '/_admin/cs/faq', matchKey: 'cs' },
-			{ title: 'Reports', icon: <BarChartOutlinedIcon />, url: '/_admin/reports', matchKey: 'reports' },
-			{ title: 'Settings', icon: <SettingsOutlinedIcon />, matchKey: 'settings', soon: true },
+			{ title: 'Settings', icon: <SettingsOutlinedIcon />, url: '/_admin/settings', matchKey: 'settings' },
 		];
 
 		return (
 			<main id="pc-wrap" className="admin">
 				<AppBar position="fixed" className="admin-topbar">
 					<Toolbar disableGutters className="admin-toolbar">
-						<Link href="/_admin/users">
+						<Link href="/_admin/reports">
 							<Stack className="admin-brand" direction="row" alignItems="center">
 								<Stack className="brand-mark">T</Stack>
 								<Typography className="brand-text">TRIPOUT</Typography>
