@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useQuery } from '@apollo/client';
-import { Box, Stack, Typography, Avatar, LinearProgress } from '@mui/material';
+import { Box, Stack, Typography, Avatar } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -298,8 +298,8 @@ const AdminReports: NextPage = () => {
 				</Stack>
 			</Stack>
 
-			{/* Top users */}
-			<Stack className="report-card report-card--list report-card--leaderboard" sx={{ mb: 4 }}>
+			{/* Top users — podium + compact list */}
+			<Stack className="report-card report-card--leaderboard" sx={{ mb: 4 }}>
 				<Stack className="leaderboard-head" direction="row">
 					<Stack className="leaderboard-head-icon">
 						<EmojiEventsOutlinedIcon />
@@ -313,53 +313,90 @@ const AdminReports: NextPage = () => {
 						<Typography className="lh-count-lbl">TOP</Typography>
 					</Stack>
 				</Stack>
-				<Stack className="leaderboard">
-					{topUsers.length === 0 && !loading && (
-						<Typography className="empty">{t('admin_reports_no_data')}</Typography>
-					)}
-					{topUsers.map((u, i) => {
-						const score = (u.memberPoints || 0) + (u.memberViews || 0);
-						const max = Math.max(
-							1,
-							(topUsers[0]?.memberPoints || 0) + (topUsers[0]?.memberViews || 0),
-						);
-						const pct = (score / max) * 100;
-						const rank = i + 1;
-						const medalClass = rank === 1 ? 'is-gold' : rank === 2 ? 'is-silver' : rank === 3 ? 'is-bronze' : '';
-						return (
-							<Stack key={u._id} className={`board-row ${medalClass}`} direction="row">
-								<Stack className={`board-rank ${medalClass}`}>
-									{rank <= 3 ? <EmojiEventsOutlinedIcon /> : null}
-									<Typography className="board-rank-num" component="span">{rank}</Typography>
-								</Stack>
-								<Avatar
-									className="board-avatar"
-									src={u.memberImage ? `${REACT_APP_API_URL}/${u.memberImage}` : '/img/profile/defaultUser.svg'}
-								/>
-								<Stack className="board-meta">
-									<Stack className="board-meta-top" direction="row" alignItems="center">
-										<Typography className="board-name">{u.memberNick}</Typography>
-										<Typography className={`board-role role-${(u.memberType || 'USER').toLowerCase()}`} component="span">
-											{u.memberType}
-										</Typography>
-									</Stack>
-									<Typography className="board-sub">{u.memberPhone}</Typography>
-									<LinearProgress className="board-bar" variant="determinate" value={pct} />
-								</Stack>
-								<Stack className="board-stats">
-									<Stack direction="row" className="stat stat-points">
-										<StarBorderIcon fontSize="inherit" />
-										<Typography component="span" className="stat-value">{u.memberPoints || 0}</Typography>
-									</Stack>
-									<Stack direction="row" className="stat stat-views">
-										<VisibilityOutlinedIcon fontSize="inherit" />
-										<Typography component="span" className="stat-value">{u.memberViews || 0}</Typography>
-									</Stack>
-								</Stack>
+
+				{topUsers.length === 0 && !loading && (
+					<Typography className="empty">{t('admin_reports_no_data')}</Typography>
+				)}
+
+				{topUsers.length > 0 && (() => {
+					const podium = topUsers.slice(0, 3);
+					const rest = topUsers.slice(3);
+					const order = [1, 0, 2]; // visual order: 2nd, 1st, 3rd
+					return (
+						<>
+							<Stack className="podium" direction="row" alignItems="flex-end">
+								{order.map((i) => {
+									const u = podium[i];
+									if (!u) return null;
+									const rank = i + 1;
+									const medalClass = rank === 1 ? 'is-gold' : rank === 2 ? 'is-silver' : 'is-bronze';
+									return (
+										<Stack key={u._id} className={`podium-card ${medalClass} place-${rank}`}>
+											<Stack className="podium-medal">
+												<EmojiEventsOutlinedIcon />
+												<Typography component="span" className="podium-rank">{rank}</Typography>
+											</Stack>
+											<Avatar
+												className="podium-avatar"
+												src={u.memberImage ? `${REACT_APP_API_URL}/${u.memberImage}` : '/img/profile/defaultUser.svg'}
+											/>
+											<Typography className="podium-name">{u.memberNick}</Typography>
+											<Typography className={`podium-role role-${(u.memberType || 'USER').toLowerCase()}`}>
+												{u.memberType}
+											</Typography>
+											<Stack className="podium-stats" direction="row">
+												<Stack direction="row" className="podium-stat">
+													<StarBorderIcon fontSize="inherit" />
+													<span>{u.memberPoints || 0}</span>
+												</Stack>
+												<Stack direction="row" className="podium-stat">
+													<VisibilityOutlinedIcon fontSize="inherit" />
+													<span>{u.memberViews || 0}</span>
+												</Stack>
+											</Stack>
+										</Stack>
+									);
+								})}
 							</Stack>
-						);
-					})}
-				</Stack>
+
+							{rest.length > 0 && (
+								<Stack className="leaderboard-list">
+									{rest.map((u, idx) => {
+										const rank = idx + 4;
+										return (
+											<Stack key={u._id} className="lb-row" direction="row" alignItems="center">
+												<Typography className="lb-rank">{rank}</Typography>
+												<Avatar
+													className="lb-avatar"
+													src={u.memberImage ? `${REACT_APP_API_URL}/${u.memberImage}` : '/img/profile/defaultUser.svg'}
+												/>
+												<Stack className="lb-meta">
+													<Stack className="lb-meta-top" direction="row" alignItems="center">
+														<Typography className="lb-name">{u.memberNick}</Typography>
+														<Typography className={`lb-role role-${(u.memberType || 'USER').toLowerCase()}`}>
+															{u.memberType}
+														</Typography>
+													</Stack>
+													<Typography className="lb-phone">{u.memberPhone}</Typography>
+												</Stack>
+												<Stack className="lb-stats" direction="row">
+													<Stack direction="row" className="lb-stat lb-stat-points">
+														<StarBorderIcon fontSize="inherit" />
+														<span>{u.memberPoints || 0}</span>
+													</Stack>
+													<Stack direction="row" className="lb-stat lb-stat-views">
+														<VisibilityOutlinedIcon fontSize="inherit" />
+														<span>{u.memberViews || 0}</span>
+													</Stack>
+												</Stack>
+											</Stack>
+										);
+									})}
+								</Stack>
+							)}
+						</>
+					);
+				})()}
 			</Stack>
 
 			{/* DESTINATION REPORTS */}
