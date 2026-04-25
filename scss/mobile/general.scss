@@ -43,11 +43,6 @@
   /* sweetalert / modal width safety */
   .swal2-popup { width: calc(100vw - 32px) !important; max-width: 380px; }
 
-  /* hide PC-only widgets that may render unconditionally */
-  .Chat,
-  .chat-frame,
-  .chatting { display: none !important; }
-
   /* default heading rhythm */
   h1, h2, h3, h4 { margin-top: 0; }
   p { margin: 0 0 12px; }
