@@ -49,6 +49,12 @@ const MyMenu = () => {
 						<img
 							src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
 							alt={'member-photo'}
+							onError={(e) => {
+								const img = e.currentTarget;
+								if (img.dataset.fallback) return;
+								img.dataset.fallback = '1';
+								img.src = '/img/profile/defaultUser.svg';
+							}}
 						/>
 					</Box>
 					<Stack className={'user-info'}>
