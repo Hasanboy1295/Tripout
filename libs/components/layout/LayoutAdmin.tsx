@@ -99,6 +99,7 @@ const withAdminLayout = (Component: ComponentType) => {
 			if (key === 'destination') return path.startsWith('/_admin/properties');
 			if (key === 'community') return path.startsWith('/_admin/community');
 			if (key === 'cs') return path.startsWith('/_admin/cs');
+			if (key === 'reports') return path.startsWith('/_admin/reports');
 			return false;
 		};
 
@@ -107,7 +108,7 @@ const withAdminLayout = (Component: ComponentType) => {
 			{ title: 'Destination', icon: <PlaceOutlinedIcon />, url: '/_admin/properties', matchKey: 'destination' },
 			{ title: 'Community', icon: <ForumOutlinedIcon />, url: '/_admin/community', matchKey: 'community' },
 			{ title: 'Cs', icon: <HeadsetMicOutlinedIcon />, url: '/_admin/cs/faq', matchKey: 'cs' },
-			{ title: 'Reports', icon: <BarChartOutlinedIcon />, matchKey: 'reports', soon: true },
+			{ title: 'Reports', icon: <BarChartOutlinedIcon />, url: '/_admin/reports', matchKey: 'reports' },
 			{ title: 'Settings', icon: <SettingsOutlinedIcon />, matchKey: 'settings', soon: true },
 		];
 
