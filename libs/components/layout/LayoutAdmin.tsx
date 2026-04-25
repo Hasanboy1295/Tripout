@@ -19,9 +19,12 @@ import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import HeadsetMicOutlinedIcon from '@mui/icons-material/HeadsetMicOutlined';
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import { getJwtToken, logOut, updateUserInfo } from '../../auth';
 import { useReactiveVar, useQuery } from '@apollo/client';
-import { userVar } from '../../../apollo/store';
+import { userVar, themeVar } from '../../../apollo/store';
+import cookies from 'js-cookie';
 import { REACT_APP_API_URL } from '../../config';
 import { MemberType } from '../../enums/member.enum';
 import { GET_ALL_MEMBERS_BY_ADMIN } from '../../../apollo/admin/query';
@@ -39,6 +42,7 @@ const withAdminLayout = (Component: ComponentType) => {
 	return (props: object) => {
 		const router = useRouter();
 		const user = useReactiveVar(userVar);
+		const themeMode = useReactiveVar(themeVar);
 		const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 		const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 		const [title, setTitle] = useState('admin');
@@ -76,6 +80,16 @@ const withAdminLayout = (Component: ComponentType) => {
 			router.push('/').then();
 		};
 		const comingSoon = (label: string) => sweetTopSuccessAlert(`${label} — coming soon`, 1600);
+
+		const themeToggleHandler = () => {
+			const next = themeMode === 'dark' ? 'light' : 'dark';
+			themeVar(next);
+			if (typeof document !== 'undefined') {
+				if (next === 'dark') document.body.classList.add('dark-mode');
+				else document.body.classList.remove('dark-mode');
+			}
+			cookies.set('themeMode', next, { expires: 365 });
+		};
 
 		if (!user || user?.memberType !== MemberType.ADMIN) return null;
 
@@ -147,6 +161,15 @@ const withAdminLayout = (Component: ComponentType) => {
 						</Stack>
 
 						<Stack className="admin-topright" direction="row" alignItems="center">
+							<Tooltip title={themeMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}>
+								<IconButton
+									onClick={themeToggleHandler}
+									className={`admin-theme-btn ${themeMode === 'dark' ? 'is-dark' : 'is-light'}`}
+									aria-label="Toggle theme"
+								>
+									{themeMode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
+								</IconButton>
+							</Tooltip>
 							<Tooltip title="Open settings">
 								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} className="admin-avatar-btn">
 									<Avatar

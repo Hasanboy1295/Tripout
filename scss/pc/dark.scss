@@ -1937,9 +1937,23 @@ body.dark-mode {
 				box-shadow: 0 6px 16px rgba(245, 166, 35, 0.18) !important;
 			}
 		}
-		.admin-topright .MuiAvatar-root {
-			border-color: #1b2030 !important;
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(245, 166, 35, 0.5) !important;
+		.admin-topright {
+			.admin-theme-btn {
+				background: #1b2030 !important;
+				color: #fbbf24 !important;
+				border-color: #2f3547 !important;
+				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+				&:hover {
+					background: linear-gradient(135deg, #232838 0%, #2f3547 100%) !important;
+					border-color: rgba(245, 166, 35, 0.5) !important;
+					color: #fde68a !important;
+					box-shadow: 0 8px 20px rgba(245, 166, 35, 0.28) !important;
+				}
+			}
+			.MuiAvatar-root {
+				border-color: #1b2030 !important;
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(245, 166, 35, 0.5) !important;
+			}
 		}
 
 		/* Legacy sidebar fallback (already hidden, but make sure dark color matches) */

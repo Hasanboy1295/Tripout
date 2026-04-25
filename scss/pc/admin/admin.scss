@@ -120,10 +120,28 @@
     }
   }
 
-  /* Right side — avatar */
+  /* Right side — theme toggle + avatar */
   .admin-topright {
     flex-shrink: 0;
-    gap: 8px;
+    gap: 10px;
+    .admin-theme-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #ffffff;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.05);
+      transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+      &:hover {
+        background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+        color: #ea580c;
+        border-color: rgba(245, 166, 35, 0.4);
+        transform: translateY(-1px) rotate(-12deg);
+        box-shadow: 0 8px 20px rgba(245, 166, 35, 0.22);
+      }
+      svg { font-size: 22px; transition: transform 0.3s; }
+    }
     .admin-avatar-btn {
       .MuiAvatar-root {
         width: 40px;
