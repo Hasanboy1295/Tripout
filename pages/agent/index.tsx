@@ -126,10 +126,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		}
 	};
 
-	if (device === 'mobile') {
-		return <h1>AGENTS PAGE MOBILE</h1>;
-	} else {
-		return (
+	return (
 			<Stack className={'agent-list-page'}>
 				<Stack className={'container'}>
 					<Stack className={'filter'}>
@@ -208,7 +205,6 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 AgentList.defaultProps = {

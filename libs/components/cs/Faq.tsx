@@ -435,9 +435,7 @@ const Faq = () => {
 		],
 	};
 
-	if (device === 'mobile') {
-		return <div>FAQ MOBILE</div>;
-	} else {
+
 		return (
 			<Stack className={'faq-content'}>
 				<Box className={'categories'} component={'div'}>
@@ -521,7 +519,6 @@ const Faq = () => {
 				</Box>
 			</Stack>
 		);
-	}
 };
 
 export default Faq;

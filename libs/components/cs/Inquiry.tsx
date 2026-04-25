@@ -8,11 +8,8 @@ const Inquiry = () => {
 	/** LIFECYCLES **/
 	/** HANDLERS **/
 
-	if (device === 'mobile') {
-		return <div>Inquiry MOBILE</div>;
-	} else {
+
 		return <div>Inquiry PC</div>;
-	}
 };
 
 export default Inquiry;

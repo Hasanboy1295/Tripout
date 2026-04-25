@@ -1,0 +1,410 @@
+/* =============================================================================
+ * GLOBAL MOBILE RESPONSIVE OVERRIDES
+ *   Three breakpoints across the public-facing pages:
+ *     1080px — small desktop / tablet landscape
+ *      768px — tablet / large phone (most layouts collapse here)
+ *      480px — small phone (tight layout, single column, smaller text)
+ *
+ *   Strategy: keep the desktop JSX, collapse multi-column layouts to single
+ *   column, shrink hero banners, give grids breathing room, and let tables
+ *   scroll horizontally. Pulled in last so the cascade wins.
+ * ========================================================================== */
+
+@media (max-width: 1080px) {
+	#pc-wrap {
+		/* Top navbar — give it some room */
+		#top .navbar .navbar-main .container {
+			padding: 0 18px;
+		}
+
+		.header-main {
+			padding: 0 24px;
+			.hero-wrapper { height: 540px; }
+			.hero-content {
+				padding: 0 50px;
+				.hero-text .hero-title { font-size: 42px; }
+			}
+		}
+
+		.header-basic {
+			.container strong { font-size: 44px; }
+		}
+
+		/* Footer columns relax */
+		#footer .footer-container {
+			width: 100%;
+			padding: 0 28px;
+			.main {
+				.left { padding-left: 0; }
+				.right { gap: 38px; padding-top: 36px; }
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	#pc-wrap {
+		/* ────────── TOP NAVBAR ────────── */
+		#top .navbar .navbar-main {
+			height: 76px !important;
+			.container {
+				min-height: 76px;
+				padding: 0 14px;
+				.logo-box {
+					gap: 6px !important;
+					img { width: 36px !important; height: 36px !important; }
+					.logo-text { font-size: 22px !important; }
+				}
+				/* Hide the central nav links — they're not usable on mobile */
+				.router-box { display: none !important; }
+				.user-box {
+					gap: 8px;
+					.search-btn {
+						width: 40px !important;
+						height: 40px !important;
+						svg { font-size: 18px; }
+					}
+					.join-box {
+						height: 42px !important;
+						padding: 0 16px !important;
+						span { font-size: 13px !important; }
+					}
+					.login-user img {
+						width: 36px !important;
+						height: 36px !important;
+					}
+				}
+				.lan-box {
+					margin-left: 4px !important;
+					padding-left: 6px !important;
+					.btn-lang {
+						padding: 6px 6px !important;
+						img { width: 20px !important; height: 14px !important; }
+					}
+				}
+			}
+		}
+
+		/* ────────── HERO ────────── */
+		.header-main {
+			padding: 0 14px;
+			margin-top: 14px;
+			.hero-wrapper {
+				height: 460px;
+				border-radius: 18px;
+			}
+			.hero-content {
+				padding: 0 26px !important;
+				.hero-text {
+					max-width: none;
+					.hero-subtitle { font-size: 13px !important; margin-bottom: 10px; }
+					.hero-title { font-size: 30px !important; line-height: 1.18 !important; margin-bottom: 14px !important; }
+					.hero-desc { font-size: 13.5px !important; margin-bottom: 22px !important; }
+					.hero-buttons {
+						gap: 12px;
+						.explore-btn { padding: 12px 20px !important; font-size: 12px !important; }
+						.play-btn { width: 42px !important; height: 42px !important; }
+					}
+				}
+			}
+			.hero-nav { bottom: 22px !important; right: 22px !important; gap: 8px !important; }
+
+			/* Search box stacks completely */
+			.container {
+				padding: 0 6px;
+				margin-top: -38px;
+				.search-box {
+					width: 100% !important;
+					padding: 14px !important;
+					border-radius: 22px !important;
+					flex-direction: column !important;
+					.select-box {
+						flex-direction: column !important;
+						width: 100%;
+						.divider-line { display: none; }
+						.box {
+							width: 100%;
+							padding: 8px 14px !important;
+						}
+					}
+					.search-btn {
+						margin-top: 6px;
+						width: 100% !important;
+						height: 50px !important;
+						border-radius: 16px !important;
+					}
+				}
+			}
+		}
+
+		/* ────────── SECTION SPACING ────────── */
+		.home-page {
+			gap: 60px !important;
+			> section,
+			> div { padding-left: 14px !important; padding-right: 14px !important; }
+		}
+
+		/* ────────── BANNER (LayoutBasic) ────────── */
+		.header-basic {
+			height: 320px !important;
+			margin-bottom: 18px !important;
+			&.auth { height: 240px !important; }
+			.container {
+				margin-top: 124px !important;
+				padding: 0 16px !important;
+				strong { font-size: 32px !important; line-height: 1.18 !important; }
+				.header-desc { font-size: 14px !important; }
+			}
+		}
+
+		/* ────────── COMMUNITY ────────── */
+		#community-list-page,
+		#community-detail-page {
+			.container {
+				padding-top: 32px !important;
+				padding-left: 14px;
+				padding-right: 14px;
+				gap: 28px !important;
+			}
+			.main-box {
+				flex-direction: column !important;
+				gap: 16px !important;
+				.left-config {
+					width: 100% !important;
+					margin-top: 0 !important;
+					margin-bottom: 0 !important;
+					padding: 18px 16px !important;
+					.image-info img { width: 60px !important; height: 60px !important; }
+				}
+				.right-config .panel-config {
+					padding: 20px 18px !important;
+					.title-box {
+						flex-direction: column !important;
+						align-items: flex-start !important;
+						gap: 12px;
+						margin-bottom: 22px !important;
+						.left { width: 100% !important; }
+						.left .title { font-size: 22px !important; }
+						.right { width: 100px !important; align-self: flex-end; }
+					}
+					.list-box { gap: 16px !important; }
+				}
+			}
+			.article-card { padding: 20px 18px !important; }
+		}
+
+		/* ────────── PROPERTY LIST ────────── */
+		#property-list-page {
+			.container { padding: 18px 14px !important; }
+			.property-page {
+				flex-direction: column !important;
+				gap: 16px !important;
+				.filter-config {
+					width: 100% !important;
+					.filter-main { gap: 12px; }
+				}
+				.main-config { width: 100% !important; }
+			}
+			.toolbar {
+				flex-direction: column !important;
+				gap: 12px !important;
+				align-items: stretch !important;
+				.sorting-box { justify-content: space-between !important; }
+			}
+		}
+
+		/* ────────── PROPERTY DETAIL & AGENT DETAIL ────────── */
+		.property-detail-page,
+		.agent-detail-page,
+		#property-detail-page,
+		#agent-detail-page {
+			.container { padding: 16px 14px !important; }
+			.property-info,
+			.detail-content,
+			.agent-info {
+				flex-direction: column !important;
+				gap: 18px !important;
+			}
+			h1, h2 { font-size: 26px !important; line-height: 1.2 !important; }
+			h3 { font-size: 18px !important; }
+		}
+
+		/* ────────── MEMBER & MYPAGE ────────── */
+		#member-page,
+		#mypage,
+		.member-page,
+		.mypage {
+			.container { padding: 18px 14px !important; }
+			.main-box,
+			.member-box,
+			.mp-config {
+				flex-direction: column !important;
+				gap: 16px !important;
+				> aside,
+				> .left,
+				> .menu { width: 100% !important; }
+			}
+		}
+
+		/* ────────── ABOUT ────────── */
+		.about-page {
+			.hero-section .hero-content {
+				flex-direction: column !important;
+				gap: 28px !important;
+				padding: 60px 18px !important;
+				.left-content,
+				.right-content { width: 100% !important; }
+			}
+			h1, h2 { font-size: 28px !important; line-height: 1.2 !important; }
+		}
+
+		/* ────────── ACCOUNT JOIN ────────── */
+		.join-page {
+			.container .main {
+				flex-direction: column !important;
+				.left { width: 100% !important; padding: 20px 16px !important; }
+				.right { display: none !important; }
+			}
+		}
+
+		/* ────────── FOOTER ────────── */
+		#footer {
+			padding: 40px 0 0 !important;
+			.footer-container {
+				width: 100%;
+				padding: 0 18px;
+				.main {
+					flex-direction: column !important;
+					padding-bottom: 30px !important;
+					.left {
+						width: 100% !important;
+						padding-left: 0 !important;
+						padding-top: 28px !important;
+						/* Hide background travel SVG decorations on mobile */
+						> svg { display: none; }
+						.deco-icon { display: none !important; }
+						.hero-section {
+							h2 { font-size: 26px !important; line-height: 1.25 !important; }
+							.subscribe-box {
+								padding: 6px 6px 6px 20px !important;
+								max-width: none !important;
+								.subscribe-btn { padding: 10px 18px !important; font-size: 13px !important; }
+							}
+						}
+					}
+					.right {
+						flex-direction: column !important;
+						width: 100%;
+						gap: 22px !important;
+						padding-top: 14px !important;
+						.links-section,
+						.contact-section { width: 100% !important; }
+					}
+				}
+				.second {
+					flex-direction: column !important;
+					gap: 12px !important;
+					padding: 20px 16px !important;
+					text-align: center;
+					.social-icons { justify-content: center; }
+				}
+			}
+			.scroll-top-btn {
+				width: 48px !important;
+				height: 48px !important;
+				bottom: 26px !important;
+				svg { font-size: 26px !important; }
+			}
+		}
+
+		/* ────────── GENERIC LIST/GRID HEURISTICS ────────── */
+		.list-box,
+		.test-cards,
+		.services-grid,
+		.dest-grid,
+		.features-grid,
+		.detail-images-row,
+		.who-we-are,
+		.svc-testimonials .test-cards,
+		.detail-content {
+			flex-direction: column !important;
+			grid-template-columns: 1fr !important;
+			gap: 16px !important;
+		}
+
+		/* Property cards / agent cards / community cards stack one per row */
+		.property-card,
+		.community-card,
+		.agent-card,
+		.community-card-box,
+		.popular-property-card {
+			width: 100% !important;
+			max-width: 100% !important;
+		}
+
+		/* Chat widget */
+		.chatting .chat-frame {
+			width: calc(100% - 24px) !important;
+			right: 12px !important;
+			&.open { right: 12px !important; }
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	#pc-wrap {
+		/* Topbar tighter still */
+		#top .navbar .navbar-main {
+			height: 64px !important;
+			.container {
+				min-height: 64px;
+				padding: 0 10px;
+				.logo-box .logo-text { display: none !important; }
+				.user-box {
+					gap: 6px;
+					.search-btn { width: 36px !important; height: 36px !important; }
+					.join-box span { display: none; }
+					.join-box {
+						width: 42px;
+						height: 42px !important;
+						padding: 0 !important;
+						justify-content: center;
+					}
+				}
+				.lan-box {
+					.btn-lang { padding: 4px !important; }
+				}
+			}
+		}
+
+		.header-main {
+			padding: 0 10px;
+			.hero-wrapper { height: 400px; }
+			.hero-content {
+				padding: 0 18px !important;
+				.hero-text {
+					.hero-title { font-size: 26px !important; }
+					.hero-desc { font-size: 13px !important; }
+				}
+			}
+		}
+
+		.header-basic {
+			height: 280px !important;
+			.container {
+				margin-top: 110px !important;
+				strong { font-size: 26px !important; }
+				.header-desc { font-size: 13px !important; }
+			}
+		}
+
+		.home-page { gap: 44px !important; }
+
+		.about-page h1,
+		.about-page h2 { font-size: 24px !important; }
+
+		#footer .footer-container .main .left .hero-section h2 {
+			font-size: 22px !important;
+		}
+	}
+}

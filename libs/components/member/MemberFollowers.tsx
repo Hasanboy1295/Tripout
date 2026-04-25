@@ -62,9 +62,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 		setFollowInquiry({ ...followInquiry });
 	};
 
-	if (device === 'mobile') {
-		return <div>NESTAR FOLLOWS MOBILE</div>;
-	} else {
+
 		return (
 			<div id="member-follows-page">
 				<Stack className="main-title-box">
@@ -181,7 +179,6 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 				)}
 			</div>
 		);
-	}
 };
 
 MemberFollowers.defaultProps = {

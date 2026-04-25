@@ -90,9 +90,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 		router.back();
 	}
 
-	if (device === 'mobile') {
-		return <div>NESTAR PROPERTIES MOBILE</div>;
-	} else {
+
 		return (
 			<div id="my-property-page">
 				<Stack className="main-title-box">
@@ -164,7 +162,6 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 				</Stack>
 			</div>
 		);
-	}
 };
 
 MyProperties.defaultProps = {

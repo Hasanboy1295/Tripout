@@ -18,10 +18,7 @@ const About: NextPage = () => {
 	const device = useDeviceDetect();
 	const { t } = useTranslation('common');
 
-	   if (device === 'mobile') {
-		   return <div>{t('aboutus_mobile')}</div>;
-	   } else {
-		   return (
+	   return (
 			   <Stack className={'about-page'}>
 				   {/* Hero Section */}
 				   <Stack className={'hero-section'}>
@@ -205,7 +202,6 @@ const About: NextPage = () => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default withLayoutBasic(About);

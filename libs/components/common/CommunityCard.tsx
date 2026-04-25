@@ -44,9 +44,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 		else router.push(`/member?memberId=${id}`);
 	};
 
-	if (device === 'mobile') {
-		return <div>COMMUNITY CARD MOBILE</div>;
-	} else {
+
 		return (
 			<Stack
 				sx={{ width: size === 'small' ? '285px' : '317px' }}
@@ -97,7 +95,6 @@ const CommunityCard = (props: CommunityCardProps) => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default CommunityCard;

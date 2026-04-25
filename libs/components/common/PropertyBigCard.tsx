@@ -27,9 +27,7 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 		router.push(`/property/detail?id=${propertyId}`);
 	};
 
-	if (device === 'mobile') {
-		return <div>APARTMEND BIG CARD</div>;
-	} else {
+
 		return (
 			<Stack className="property-big-card-box" onClick={() => goPropertyDetatilPage(property?._id)}>
 				<Box
@@ -92,7 +90,6 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 				</Box>
 			</Stack>
 		);
-	}
 };
 
 export default PropertyBigCard;

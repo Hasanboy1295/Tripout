@@ -213,9 +213,7 @@ const Filter = (props: FilterType) => {
 		);
 	};
 
-	if (device === 'mobile') {
-		return <div>PROPERTIES FILTER</div>;
-	} else {
+
 		return (
 			<Stack className={'filter-main'}>
 				{/* Filter header — title + reset */}
@@ -415,7 +413,6 @@ const Filter = (props: FilterType) => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default Filter;

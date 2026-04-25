@@ -38,6 +38,10 @@
 /* Dark mode overrides — must come last so it wins the cascade. */
 @import '/scss/pc/dark.scss';
 
+/* Mobile responsive overrides — uses !important to win the cascade
+ * over the desktop rules above, regardless of source order. */
+@import '/scss/pc/mobile-responsive.scss';
+
 body {
 	-ms-overflow-style: none; /* for Internet Explorer, Edge */
 	scrollbar-width: none; /* for Firefox */

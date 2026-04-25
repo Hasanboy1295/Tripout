@@ -23,9 +23,8 @@ export const getStaticProps = async ({ locale }: any) => ({
 const Home: NextPage = () => {
 	const device = useDeviceDetect();
 
-	if (device === 'mobile') {
-		return (
-			<Stack className={'home-page'}>
+	return (
+		<Stack className={'home-page'}>
 			<TrendProperties />
 			<PopularProperties />
 			<Advertisement />
@@ -36,22 +35,7 @@ const Home: NextPage = () => {
 			<MarqueeTicker />
 			<BlogSection />
 		</Stack>
-		);
-	} else {
-		return (
-			<Stack className={'home-page'}>
-				<TrendProperties />
-				<PopularProperties />
-				<Advertisement />
-				<AboutUs />
-				<DestinationStory />
-				<Testimonials />
-				<FaqSection />
-				<MarqueeTicker />
-				<BlogSection />
-			</Stack>
-		);
-	}
+	);
 };
 
 export default withLayoutMain(Home);

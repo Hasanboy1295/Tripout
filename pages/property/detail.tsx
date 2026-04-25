@@ -213,10 +213,6 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			<CircularProgress size={'4rem'}/>
 		</Stack>;
 	}
-
-	if (device === 'mobile') {
-		return <div>PROPERTY DETAIL PAGE</div>;
-	} else {
 		return (
 			<div id={'property-detail-page'}>
 				{/* Banner */}
@@ -557,7 +553,6 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 				</div>
 			</div>
 		);
-	}
 };
 
 PropertyDetail.defaultProps = {

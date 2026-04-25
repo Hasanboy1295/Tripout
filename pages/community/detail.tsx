@@ -259,10 +259,6 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 	const paginationHandler = (e: T, value: number) => {
 		setSearchFilter({ ...searchFilter, page: value });
 	};
-
-	if (device === 'mobile') {
-		return <div>COMMUNITY DETAIL PAGE MOBILE</div>;
-	} else {
 		return (
 			<div id="community-detail-page">
 				<div className="container">
@@ -560,7 +556,6 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 				</Backdrop>
 			</div>
 		);
-	}
 };
 CommunityDetail.defaultProps = {
 	initialInput: {

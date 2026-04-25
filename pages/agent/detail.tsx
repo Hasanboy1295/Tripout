@@ -178,10 +178,6 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 			sweetMixinErrorAlert(err.message).then();
 		}
 	};
-
-	if (device === 'mobile') {
-		return <div>AGENT DETAIL PAGE MOBILE</div>;
-	} else {
 		return (
 			<Stack className={'agent-detail-page'}>
 				<Stack className={'container'}>
@@ -303,7 +299,6 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 AgentDetail.defaultProps = {

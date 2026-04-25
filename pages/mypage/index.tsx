@@ -168,10 +168,6 @@ const MyPage: NextPage = () => {
 				return <MyProfile />;
 		}
 	};
-
-	if (device === 'mobile') {
-		return <>MY PAGE MOBILE</>;
-	} else {
 		return (
 			<div id="my-page">
 				<div className="container">
@@ -190,7 +186,6 @@ const MyPage: NextPage = () => {
 				</div>
 			</div>
 		);
-	}
 };
 
 export default withLayoutBasic(MyPage);

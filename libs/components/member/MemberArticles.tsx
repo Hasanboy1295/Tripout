@@ -70,9 +70,7 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 		}
 	};
 
-	if (device === 'mobile') {
-		return <div>MEMBER ARTICLES MOBILE</div>;
-	} else {
+
 		return (
 			<div id="member-articles-page">
 				<Stack className="main-title-box">
@@ -116,7 +114,6 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 				)}
 			</div>
 		);
-	}
 };
 
 MemberArticles.defaultProps = {

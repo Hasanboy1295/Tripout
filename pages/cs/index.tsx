@@ -32,10 +32,6 @@ const CS: NextPage = () => {
 		);
 	};
 	const tab = router.query.tab ?? 'notice';
-
-	if (device === 'mobile') {
-		return <h1>CS PAGE MOBILE</h1>;
-	} else {
 		return (
 			<Stack className={'cs-page'}>
 				<Stack className={'container'}>
@@ -72,7 +68,6 @@ const CS: NextPage = () => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default withLayoutBasic(CS);

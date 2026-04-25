@@ -25,9 +25,7 @@ const Notice = () => {
 		},
 	];
 
-	if (device === 'mobile') {
-		return <div>NOTICE MOBILE</div>;
-	} else {
+
 		return (
 			<Stack className={'notice-content'}>
 				<span className={'title'}>{t('cs_notice_title')}</span>
@@ -49,7 +47,6 @@ const Notice = () => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default Notice;

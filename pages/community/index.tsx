@@ -116,10 +116,6 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 			setLikeLoading(false);
 		}
 	};
-
-	if (device === 'mobile') {
-		return <h1>COMMUNITY PAGE MOBILE</h1>;
-	} else {
 		return (
 			<div id="community-list-page">
 				<div className="container">
@@ -293,7 +289,6 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 				</div>
 			</div>
 		);
-	}
 };
 
 Community.defaultProps = {
