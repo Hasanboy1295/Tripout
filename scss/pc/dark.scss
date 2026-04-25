@@ -149,13 +149,20 @@ body.dark-mode {
 	/* The outer #footer wrapper had background: #ecc178 (warm yellow) set
 	 * for light mode, and it was leaking through in dark mode as bright
 	 * side bands around the dark .footer-container. Paint the whole
-	 * wrapper dark so the dark container tiles edge-to-edge. */
-	#footer {
-		background: #0f1320;
+	 * wrapper dark so the dark container tiles edge-to-edge.
+	 * Note: main.scss declares #footer under #pc-wrap (specificity 0,2,0,0),
+	 * so we must scope these under #pc-wrap here too — otherwise
+	 * body.dark-mode #footer (0,1,1,0) loses and the yellow leaks back in. */
+	#pc-wrap #footer,
+	#mobile-wrap #footer {
+		background: #0b0f1a !important;
+		border-top: 1px solid #2f3547 !important;
+		box-shadow: inset 0 1px 0 rgba(232, 165, 75, 0.08);
 	}
 
-	.footer-container {
-		background: #0f1320;
+	#pc-wrap .footer-container,
+	#mobile-wrap .footer-container {
+		background: #1b2030 !important;
 		color: #e8eaf2;
 		border-top: 1px solid #2f3547;
 
@@ -180,11 +187,17 @@ body.dark-mode {
 			&:hover { background: #f1b562; }
 		}
 		.second {
-			background: #141927;
-			border-top: 1px solid #2f3547;
-			color: #a7b0c2;
-			.brand { color: #e8a54b; }
-			.social-icons svg { color: #a7b0c2; transition: color 0.2s; &:hover { color: #e8a54b; } }
+			background: linear-gradient(90deg, #0f1320 0%, #1a1f2e 50%, #0f1320 100%) !important;
+			border-top: 1px solid rgba(232, 165, 75, 0.35) !important;
+			box-shadow: inset 0 1px 0 rgba(232, 165, 75, 0.08);
+			color: #c9d1e2 !important;
+			span { color: #c9d1e2 !important; }
+			.brand { color: #e8a54b !important; font-weight: 600; }
+			.social-icons svg {
+				color: #a7b0c2 !important;
+				transition: color 0.2s, transform 0.2s;
+				&:hover { color: #e8a54b !important; transform: translateY(-2px); }
+			}
 		}
 	}
 
@@ -1318,13 +1331,32 @@ body.dark-mode {
 			}
 		}
 
-		.help {
-			background: linear-gradient(135deg, #232838 0%, #2b3143 100%);
-			border: 1px solid #2f3547;
-			.left strong { color: #e8eaf2; }
-			.left p { color: #a7b0c2; }
-			.right .white { background: #e8a54b; color: #141927; &:hover { background: #f1b562; } }
-			.right .black { background: #141927; color: #e8eaf2; border: 1px solid #2f3547; }
+		.help .container {
+			background: linear-gradient(135deg, #1b2030 0%, #232838 60%, #2b3143 100%) !important;
+			border: 1px solid #2f3547 !important;
+			box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(232, 165, 75, 0.06);
+			.left {
+				strong { color: #e8eaf2 !important; }
+				p { color: #a7b0c2 !important; }
+			}
+			.right {
+				.white {
+					background: linear-gradient(135deg, #e8a54b 0%, #f1b562 100%) !important;
+					color: #141927 !important;
+					border: none !important;
+					box-shadow: 0 8px 20px rgba(232, 165, 75, 0.28);
+					transition: filter 0.2s, transform 0.2s;
+					&:hover { filter: brightness(1.05); transform: translateY(-1px); }
+					img { filter: brightness(0) invert(0); }
+				}
+				.black {
+					background: #0f1320 !important;
+					color: #e8eaf2 !important;
+					border: 1px solid #2f3547 !important;
+					transition: background 0.2s, border-color 0.2s;
+					&:hover { background: #141927 !important; border-color: #e8a54b !important; }
+				}
+			}
 		}
 	}
 
@@ -1570,38 +1602,72 @@ body.dark-mode {
 
 		.my-page .back-frame {
 			.left-config {
-				background: #232838; border: 1px solid #2f3547; border-radius: 12px;
+				background: transparent !important;
+				border: none !important;
+				box-shadow: none !important;
 
 				.my-menu-container {
 					.profile {
-						border-bottom: 1px solid #2f3547;
-						.profile-img img { border: 2px solid #2f3547; }
+						background: #1b2030 !important;
+						border: 1px solid #2f3547 !important;
+						box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+						.profile-img {
+							background: #1b2030 !important;
+							img { border-color: #1b2030 !important; }
+						}
 						.user-info {
-							.user-name { color: #e8eaf2; }
-							.user-phone-text { color: #a7b0c2; }
-							.view-list { color: #e8a54b; }
+							.user-name { color: #f1f5f9 !important; }
+							.user-phone-text { color: #94a3b8 !important; }
+							.view-list {
+								color: #fbbf24 !important;
+								background: linear-gradient(135deg, #0f172a 0%, #232838 100%) !important;
+								border-color: rgba(245, 166, 35, 0.5) !important;
+								box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+								&::before { color: #fbbf24 !important; }
+							}
 						}
 					}
 					.sections .section {
-						.section-title { color: #6d768f !important; letter-spacing: 1.2px; }
+						background: #1b2030 !important;
+						border: 1px solid #2f3547 !important;
+						box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28) !important;
+						.section-title { color: #6d768f !important; letter-spacing: 1.6px; }
 						.sub-section .MuiListItem-root {
 							.flex-box {
-								color: #cfd5e2;
-								.menu-icon, .com-icon { color: #a7b0c2; }
-								.sub-title { color: #cfd5e2; }
-								.chevron-icon { color: #6d768f; }
+								.menu-icon, .com-icon { background: #232838; color: #94a3b8; }
+								.com-icon { filter: brightness(0.8); }
+								.sub-title { color: #cbd5e1; }
+								.chevron-icon { color: #475569; }
 							}
-							&.focus, &:hover {
-								.flex-box { color: #e8a54b; .sub-title { color: #e8a54b; } .menu-icon { color: #e8a54b; } .chevron-icon { color: #e8a54b; } }
+							&:hover {
+								background: #232838 !important;
+								.flex-box {
+									.menu-icon, .com-icon { background: rgba(245, 166, 35, 0.18); color: #fbbf24; }
+									.sub-title { color: #f1f5f9; }
+									.chevron-icon { color: #fbbf24; }
+								}
 							}
-							&.focus { background: rgba(232, 165, 75, 0.1); border-radius: 8px; }
+							&.focus {
+								background: rgba(245, 166, 35, 0.12) !important;
+								box-shadow: inset 0 0 0 1px rgba(245, 166, 35, 0.32) !important;
+								.flex-box {
+									.menu-icon, .com-icon { background: linear-gradient(135deg, #f5a623 0%, #f7b731 100%); color: #ffffff; box-shadow: 0 6px 14px rgba(245, 166, 35, 0.45); }
+									.com-icon { filter: brightness(0) invert(1); }
+									.sub-title { color: #fbbf24; }
+									.chevron-icon { color: #f5a623; }
+								}
+							}
 						}
 					}
 				}
 			}
 
 			.main-config {
-				.coming-soon-box { background: #232838; border: 1px solid #2f3547; border-radius: 12px; .MuiTypography-root { color: #a7b0c2; } }
+				background: transparent !important;
+				border: none !important;
+				box-shadow: none !important;
+				padding: 0 !important;
+				.coming-soon-box { background: #1b2030; border: 1px solid #2f3547; border-radius: 12px; .MuiTypography-root { color: #94a3b8; } }
 			}
 		}
 
@@ -1623,24 +1689,71 @@ body.dark-mode {
 			}
 		}
 
-		/* MyProfile form */
-		.my-profile-wrap {
-			background: #232838; border: 1px solid #2f3547; border-radius: 12px;
-			.eyebrow { color: #f5c585; }
-			h2, .main-title { color: #e8eaf2; }
-			p, .sub-title { color: #a7b0c2; }
-			.profile-form {
-				.form-row label, .form-field label { color: #a7b0c2; }
-				input, textarea, .MuiInputBase-root {
-					background: #141927 !important; color: #e8eaf2 !important;
-					fieldset { border-color: #2f3547 !important; }
-					&:hover fieldset { border-color: #3e4558 !important; }
-					&.Mui-focused fieldset { border-color: #e8a54b !important; }
+		/* MyProfile form — actual JSX uses .top-box / .bottom-box inside #my-profile-page */
+		#my-profile-page {
+			.main-title-box {
+				.main-title { color: #e8eaf2 !important; }
+				.sub-title { color: #a7b0c2 !important; }
+			}
+
+			.top-box,
+			.bottom-box {
+				background: #1b2030 !important;
+				border: 1px solid #2f3547 !important;
+				box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+
+				.title { color: #e8eaf2 !important; }
+
+				.photo-box {
+					.image-big-box {
+						.image-box {
+							.delete-box {
+								background-color: #232838 !important;
+								svg { color: #e8eaf2; }
+							}
+						}
+						.upload-big-box {
+							.labeler {
+								border: 1px solid #e8a54b !important;
+								background: rgba(232, 165, 75, 0.08);
+								transition: background 0.2s;
+								&:hover { background: rgba(232, 165, 75, 0.18); }
+								p { color: #e8a54b !important; }
+							}
+							.upload-text { color: #a7b0c2 !important; }
+						}
+					}
 				}
-				.MuiButton-contained { background: #e8a54b; color: #141927; &:hover { background: #f1b562; } }
-				.profile-image-box {
-					border: 1px dashed #2f3547; background: #141927;
-					.upload-label { color: #a7b0c2; }
+
+				.small-input-box .input-box,
+				.address-box,
+				.about-me-box,
+				.old-password-box,
+				.new-password-box,
+				.confirm-password-box {
+					.title { color: #c9d1e2 !important; }
+					input,
+					.about-textarea,
+					textarea {
+						background: #141927 !important;
+						color: #e8eaf2 !important;
+						border: 1px solid #2f3547 !important;
+						&::placeholder { color: #6d768f !important; }
+						&:focus { border-color: #e8a54b !important; }
+					}
+				}
+
+				.about-me-box .update-button,
+				.update-button {
+					background: linear-gradient(135deg, #e8a54b 0%, #f1b562 100%) !important;
+					box-shadow: 0 6px 18px rgba(232, 165, 75, 0.28);
+					transition: filter 0.2s, transform 0.2s;
+					p { color: #141927 !important; font-weight: 700; }
+					&:hover { filter: brightness(1.05); transform: translateY(-1px); }
+				}
+				button:disabled {
+					background: #2b3143 !important;
+					p { color: #6d768f !important; }
 				}
 			}
 		}
@@ -1691,41 +1804,90 @@ body.dark-mode {
 	 * MEMBER PAGE (public profile view)
 	 * ====================================================================== */
 	#pc-wrap #member-page {
-		background: #141927;
+		background: #141927 !important;
 
 		.member-page .back-frame {
 			.left-config {
-				background: #232838; border: 1px solid #2f3547; border-radius: 12px;
+				background: transparent !important;
+				border: none !important;
+				box-shadow: none !important;
+
 				.profile {
-					border-bottom: 1px solid #2f3547;
-					.profile-img img { border: 2px solid #2f3547; }
+					background: #1b2030 !important;
+					border: 1px solid #2f3547 !important;
+					box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+					.profile-img {
+						background: #1b2030 !important;
+						img { border-color: #1b2030 !important; }
+					}
 					.user-info {
-						.user-name { color: #e8eaf2; }
-						.user-phone, .user-email { color: #a7b0c2; }
-						.view-list { color: #e8a54b; }
+						.user-name { color: #f1f5f9 !important; }
+						.user-phone, .user-email {
+							color: #94a3b8 !important;
+							.p-number { color: #94a3b8 !important; }
+						}
+						.view-list { color: #0f172a !important; }
 					}
 				}
 				.follow-button-box {
-					.MuiButton-contained { background: #e8a54b; color: #141927; &:hover { background: #f1b562; } }
-					.MuiButton-outlined { color: #cfd5e2; border-color: #2f3547; &:hover { background: #2b3143; border-color: #3e4558; } }
+					background: #1b2030 !important;
+					border: 1px solid #2f3547 !important;
+					box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28) !important;
+					button {
+						background: #232838 !important;
+						color: #cbd5e1 !important;
+						border-color: #2f3547 !important;
+						&:hover {
+							background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+							color: #ffffff !important;
+							border-color: transparent !important;
+						}
+					}
+					.MuiButton-contained { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important; color: #ffffff !important; &:hover { filter: brightness(1.05); } }
+					p { color: #6d768f !important; }
 				}
 				.sections .section {
-					.section-title { color: #6d768f !important; }
-					.sub-section .MuiListItem-root {
+					background: #1b2030 !important;
+					border: 1px solid #2f3547 !important;
+					box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28) !important;
+					.title { color: #6d768f !important; letter-spacing: 1.6px; }
+					.sub-section li {
 						.flex-box {
-							color: #cfd5e2;
-							.menu-icon { color: #a7b0c2; }
-							.sub-title { color: #cfd5e2; }
-							.chevron-icon { color: #6d768f; }
+							.com-icon { background: #232838; filter: brightness(0.8); }
+							.sub-title { color: #cbd5e1; }
+							.count-title { background: #232838; color: #94a3b8; }
+						}
+						&:hover {
+							background: #232838 !important;
+							.flex-box {
+								.com-icon { background: rgba(245, 166, 35, 0.18); }
+								.sub-title { color: #f1f5f9; }
+								.count-title { color: #fbbf24; }
+							}
 						}
 						&.focus {
-							background: rgba(232, 165, 75, 0.1); border-radius: 8px;
-							.flex-box { color: #e8a54b; .sub-title { color: #e8a54b; } .menu-icon { color: #e8a54b; } .chevron-icon { color: #e8a54b; } }
+							background: rgba(245, 166, 35, 0.12) !important;
+							box-shadow: inset 0 0 0 1px rgba(245, 166, 35, 0.32) !important;
+							p { color: #fbbf24 !important; }
+							.flex-box {
+								.com-icon {
+									background: linear-gradient(135deg, #f5a623 0%, #f7b731 100%) !important;
+									box-shadow: 0 6px 14px rgba(245, 166, 35, 0.45) !important;
+									filter: brightness(0) invert(1) !important;
+								}
+								.sub-title { color: #fbbf24 !important; font-weight: 700; }
+								.count-title { color: #f5a623 !important; }
+							}
 						}
 					}
 				}
 			}
-			.main-config .list-config { background: transparent; }
+			.main-config {
+				background: #1b2030 !important;
+				border: 1px solid #2f3547 !important;
+				box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32) !important;
+				.list-config { background: transparent; }
+			}
 		}
 
 		/* Followers / Followings list */
@@ -1745,6 +1907,99 @@ body.dark-mode {
 		.member-properties-config {
 			.no-data p { color: #a7b0c2; }
 			.total-result p { color: #a7b0c2; }
+		}
+	}
+
+	/* =========================================================================
+	 * ADMIN dashboard
+	 * ====================================================================== */
+	#pc-wrap.admin {
+		.MuiAppBar-root {
+			background: rgba(20, 25, 39, 0.78) !important;
+			border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.32) !important;
+		}
+
+		#bunker {
+			background:
+				radial-gradient(ellipse at top right, rgba(245, 166, 35, 0.08) 0%, transparent 50%),
+				radial-gradient(ellipse at bottom left, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+				linear-gradient(180deg, #141927 0%, #1b2030 100%) !important;
+
+			.title { color: #f1f5f9 !important; }
+
+			/* KPI stat cards */
+			.kpi-row .kpi-card {
+				background: #1b2030 !important;
+				border-color: #2f3547 !important;
+				box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32) !important;
+				&:hover { border-color: rgba(245, 166, 35, 0.4) !important; box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45) !important; }
+				.kpi-icon { background: rgba(245, 166, 35, 0.12); color: #fbbf24; }
+				&.kpi--active .kpi-icon { background: rgba(16, 185, 129, 0.14); color: #34d399; }
+				&.kpi--privileged .kpi-icon { background: rgba(124, 58, 237, 0.16); color: #a78bfa; }
+				&.kpi--blocked .kpi-icon { background: rgba(220, 38, 38, 0.16); color: #f87171; }
+				.kpi-value { color: #f1f5f9; }
+				.kpi-label { color: #94a3b8; }
+			}
+
+			/* Table card */
+			.table-wrap {
+				background: #1b2030 !important;
+				border-color: #2f3547 !important;
+				box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+			}
+			.tab-menu {
+				background: linear-gradient(180deg, #232838 0%, #1b2030 100%) !important;
+				border-bottom-color: #2f3547 !important;
+				li {
+					color: #94a3b8;
+					&:hover { background: rgba(245, 166, 35, 0.1); color: #fbbf24; }
+					&.on { color: #ffffff; background: linear-gradient(135deg, #f5a623 0%, #f7b731 100%) !important; }
+				}
+			}
+			.MuiOutlinedInput-root {
+				background: #141927 !important;
+				color: #e8eaf2 !important;
+				fieldset { border-color: #2f3547 !important; }
+				&:hover { background: #232838 !important; }
+				&.Mui-focused {
+					background: #232838 !important;
+					fieldset { border-color: #f5a623 !important; }
+				}
+				input { color: #e8eaf2 !important; }
+			}
+			thead tr {
+				background: linear-gradient(180deg, #232838 0%, #1b2030 100%) !important;
+				th { color: #94a3b8 !important; border-bottom-color: #2f3547 !important; }
+			}
+			tbody {
+				tr {
+					border-bottom-color: rgba(47, 53, 71, 0.6) !important;
+					&:hover { background: rgba(245, 166, 35, 0.05) !important; }
+					td { color: #cbd5e1 !important; }
+					td:first-child { color: #6d768f !important; }
+				}
+			}
+			.MuiAvatar-root {
+				background: linear-gradient(135deg, #f5a623 0%, #f7b731 100%) !important;
+			}
+			.MuiTablePagination-root {
+				background: linear-gradient(180deg, #1b2030 0%, #141927 100%) !important;
+				border-top-color: #2f3547 !important;
+				color: #94a3b8 !important;
+				.MuiTablePagination-selectLabel,
+				.MuiTablePagination-displayedRows { color: #94a3b8 !important; }
+				.MuiSelect-select { color: #cbd5e1 !important; }
+				.MuiIconButton-root { color: #cbd5e1 !important; &:hover { background: rgba(245, 166, 35, 0.12) !important; color: #fbbf24 !important; } }
+			}
+
+			/* Badge tweaks for dark */
+			.badge.type-admin { color: #c4b5fd; background: rgba(139, 92, 246, 0.14); box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.32); }
+			.badge.type-agent { color: #fdba74; background: rgba(249, 115, 22, 0.14); box-shadow: inset 0 0 0 1px rgba(249, 115, 22, 0.32); }
+			.badge.type-user { color: #67e8f9; background: rgba(14, 165, 233, 0.14); box-shadow: inset 0 0 0 1px rgba(14, 165, 233, 0.32); }
+			.badge.state-active { color: #6ee7b7; background: rgba(16, 185, 129, 0.14); box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.3); }
+			.badge.state-block { color: #fca5a5; background: rgba(220, 38, 38, 0.14); box-shadow: inset 0 0 0 1px rgba(220, 38, 38, 0.3); }
+			.badge.state-delete { color: #cbd5e1; background: rgba(100, 116, 139, 0.14); box-shadow: inset 0 0 0 1px rgba(100, 116, 139, 0.3); }
 		}
 	}
 }

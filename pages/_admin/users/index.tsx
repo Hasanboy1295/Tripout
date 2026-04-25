@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import type { NextPage } from 'next';
 import withAdminLayout from '../../../libs/components/layout/LayoutAdmin';
 import { MemberPanelList } from '../../../libs/components/admin/users/MemberList';
@@ -11,6 +11,10 @@ import { TabContext } from '@mui/lab';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import TablePagination from '@mui/material/TablePagination';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
+import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
+import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined';
 import { MembersInquiry } from '../../../libs/types/member/member.input';
 import { Member } from '../../../libs/types/member/member';
 import { MemberStatus, MemberType } from '../../../libs/enums/member.enum';
@@ -49,6 +53,26 @@ const AdminUsers: NextPage = ({ initialInquiry, ...props }: any) => {
 			setMembersTotal(data?.getAllMembersByAdmin?.metaCounter?.[0]?.total ?? 0);
 		},
 	});
+
+	// Pull a wide snapshot to compute KPI stats (decoupled from current filter)
+	const { data: allMembersSnapshot, refetch: refetchSnapshot } = useQuery(GET_ALL_MEMBERS_BY_ADMIN, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: { page: 1, limit: 500, sort: 'createdAt', search: {} } },
+		notifyOnNetworkStatusChange: false,
+	});
+
+	const stats = useMemo(() => {
+		const list: Member[] = allMembersSnapshot?.getAllMembersByAdmin?.list ?? [];
+		const totalAll = allMembersSnapshot?.getAllMembersByAdmin?.metaCounter?.[0]?.total ?? list.length;
+		const active = list.filter((m) => m.memberStatus === MemberStatus.ACTIVE).length;
+		const adminsAgents = list.filter(
+			(m) => m.memberType === MemberType.ADMIN || m.memberType === MemberType.AGENT,
+		).length;
+		const blockedOrDeleted = list.filter(
+			(m) => m.memberStatus === MemberStatus.BLOCK || m.memberStatus === MemberStatus.DELETE,
+		).length;
+		return { totalAll, active, adminsAgents, blockedOrDeleted };
+	}, [allMembersSnapshot]);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -167,6 +191,30 @@ const AdminUsers: NextPage = ({ initialInquiry, ...props }: any) => {
 			<Typography variant={'h2'} className={'tit'} sx={{ mb: '24px' }}>
 				Member List
 			</Typography>
+
+			<Stack className={'kpi-row'} direction={'row'}>
+				<Stack className={'kpi-card kpi--total'}>
+					<Stack className={'kpi-icon'}><PeopleAltOutlinedIcon /></Stack>
+					<Typography className={'kpi-value'}>{stats.totalAll}</Typography>
+					<Typography className={'kpi-label'}>Total Members</Typography>
+				</Stack>
+				<Stack className={'kpi-card kpi--active'}>
+					<Stack className={'kpi-icon'}><VerifiedOutlinedIcon /></Stack>
+					<Typography className={'kpi-value'}>{stats.active}</Typography>
+					<Typography className={'kpi-label'}>Active Users</Typography>
+				</Stack>
+				<Stack className={'kpi-card kpi--privileged'}>
+					<Stack className={'kpi-icon'}><ShieldOutlinedIcon /></Stack>
+					<Typography className={'kpi-value'}>{stats.adminsAgents}</Typography>
+					<Typography className={'kpi-label'}>Admins &amp; Agents</Typography>
+				</Stack>
+				<Stack className={'kpi-card kpi--blocked'}>
+					<Stack className={'kpi-icon'}><BlockOutlinedIcon /></Stack>
+					<Typography className={'kpi-value'}>{stats.blockedOrDeleted}</Typography>
+					<Typography className={'kpi-label'}>Blocked / Deleted</Typography>
+				</Stack>
+			</Stack>
+
 			<Box component={'div'} className={'table-wrap'}>
 				<Box component={'div'} sx={{ width: '100%', typography: 'body1' }}>
 					<TabContext value={value}>
