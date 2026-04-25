@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useReactiveVar } from '@apollo/client';
 import cookies from 'js-cookie';
 import { Box, Stack, Typography, Switch, Avatar, Button, Divider } from '@mui/material';
@@ -206,5 +207,11 @@ const AdminSettings: NextPage = () => {
 		</Box>
 	);
 };
+
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await serverSideTranslations(locale ?? 'en', ['common'])),
+	},
+});
 
 export default withAdminLayout(AdminSettings);

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useQuery } from '@apollo/client';
 import { Box, Stack, Typography, Avatar, LinearProgress } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
@@ -427,5 +428,11 @@ const AdminReports: NextPage = () => {
 		</Box>
 	);
 };
+
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await serverSideTranslations(locale ?? 'en', ['common'])),
+	},
+});
 
 export default withAdminLayout(AdminReports);
