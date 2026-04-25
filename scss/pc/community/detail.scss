@@ -310,32 +310,62 @@
 									display: inline-flex;
 									align-items: center;
 									gap: 8px;
-									height: 42px;
-									padding: 0 22px;
-									border-radius: 10px;
-									background: linear-gradient(90deg, #ef775f 0%, #e85b46 100%);
-									color: #ffffff;
+									height: 44px;
+									padding: 0 24px;
+									border-radius: 12px;
+									/* Unliked — neutral outlined chip */
+									background: #ffffff;
+									color: #475569;
+									border: 1.5px solid #e2e8f0;
 									font-family: $font;
 									font-size: 13px;
 									font-weight: 700;
 									letter-spacing: 0.3px;
 									text-transform: none;
-									box-shadow: 0 10px 22px rgba(232, 91, 70, 0.32);
-									transition: transform 0.2s, box-shadow 0.2s;
+									box-shadow: 0 4px 10px rgba(15, 23, 42, 0.06);
+									transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, color 0.2s, background 0.2s;
+
+									svg {
+										font-size: 18px;
+										color: #94a3b8;
+										transition: color 0.2s, transform 0.2s;
+									}
+
+									span {
+										font-size: 13px;
+										font-weight: 800;
+										color: #1a2238;
+									}
 
 									&:hover {
 										transform: translateY(-1px);
-										background: linear-gradient(90deg, #f08a74 0%, #eb6a56 100%);
-										box-shadow: 0 14px 28px rgba(232, 91, 70, 0.4);
+										border-color: #ef775f;
+										background: #fff5f1;
+										box-shadow: 0 8px 18px rgba(232, 91, 70, 0.16);
+
+										svg { color: #ef775f; }
+										span { color: #ef775f; }
 									}
 
+									/* Liked — saturated orange-red gradient */
 									&.is-liked {
-										background: linear-gradient(90deg, #f59e0b 0%, #ea580c 100%);
-										box-shadow: 0 10px 22px rgba(234, 88, 12, 0.32);
-									}
+										background: linear-gradient(90deg, #ef775f 0%, #e85b46 100%);
+										border-color: transparent;
+										color: #ffffff;
+										box-shadow: 0 12px 26px rgba(232, 91, 70, 0.36);
 
-									svg { font-size: 18px; }
-									span { font-size: 13px; font-weight: 800; }
+										svg {
+											color: #ffffff;
+											transform: scale(1.08);
+										}
+
+										span { color: #ffffff; }
+
+										&:hover {
+											background: linear-gradient(90deg, #f08a74 0%, #eb6a56 100%);
+											box-shadow: 0 14px 30px rgba(232, 91, 70, 0.45);
+										}
+									}
 								}
 							}
 						}
