@@ -7,10 +7,10 @@ import { onError } from '@apollo/client/link/error';
 import { getJwtToken } from '../libs/auth';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import { sweetErrorAlert } from '../libs/sweetAlert';
+
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 function getHeaders() {
-	//bu yerda token ni olyapmiz va
 	const headers = {} as HeadersInit;
 	const token = getJwtToken();
 	// @ts-ignore
@@ -22,37 +22,35 @@ const tokenRefreshLink = new TokenRefreshLink({
 	accessTokenField: 'accessToken',
 	isTokenValidOrUndefined: () => {
 		return true;
-	}, // @ts-ignore
+	},
+	// @ts-ignore
 	fetchAccessToken: () => {
-		// execute refresh token
 		return null;
 	},
-}); //REFRESH TOKEN BILAN AUTH NI QURISH KERAK
+});
 
 function createIsomorphicLink() {
-	// va shu yerga token ni tiqib qoyyapmiz
 	if (typeof window !== 'undefined') {
-		//bu yerda authentication link hosil bolgan
 		const authLink = new ApolloLink((operation, forward) => {
 			operation.setContext(({ headers = {} }) => ({
 				headers: {
-					...headers, // bu yerda token ni headers ni ichib tiqib qoyyapmiz BEARER TOKEN
+					...headers,
 					...getHeaders(),
 				},
 			}));
 			console.warn('requesting.. ', operation);
 			return forward(operation);
-		}); // buni qilishimizdan asosiy maqsad backend timizga kim req qilayotkanini tushuntirish
-
-		// @ts-ignore
-		const link = new createUploadLink({
-			uri: process.env.REACT_APP_API_GRAPHQL_URL, //bu yerda graphql link ki hosil bolgan
 		});
 
-		/* WEBSOCKET SUBSCRIPTION LINK */
+		// ✅ Brauzer uchun NEXT_PUBLIC_ prefiksi
+		// @ts-ignore
+		const link = new createUploadLink({
+			uri: process.env.NEXT_PUBLIC_API_GRAPHQL_URL,
+		});
+
+		// ✅ Brauzer uchun NEXT_PUBLIC_ prefiksi
 		const wsLink = new WebSocketLink({
-			//bu yerda esa websocket bilan ulanish uchun link hosil bolgan
-			uri: process.env.REACT_APP_API_WS ?? 'ws://localhost:3007/graphql',
+			uri: process.env.NEXT_PUBLIC_API_WS ?? 'ws://localhost:3030/graphql',
 			options: {
 				reconnect: false,
 				timeout: 30000,
@@ -63,7 +61,6 @@ function createIsomorphicLink() {
 		});
 
 		const errorLink = onError(({ graphQLErrors, networkError, response }) => {
-			//bu yerda error bolgan holatdagi narsalarni handle qilish uchun hosil bolgan
 			if (graphQLErrors) {
 				graphQLErrors.map(({ message, locations, path, extensions }) => {
 					console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
@@ -81,60 +78,31 @@ function createIsomorphicLink() {
 				const definition = getMainDefinition(query);
 				return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
 			},
-			wsLink, //hammasi yegilib shu yerga joylashyapti
+			wsLink,
 			authLink.concat(link),
 		);
 
-		return from([errorLink, tokenRefreshLink, splitLink]); //hamda uni return qilib yubordik
+		return from([errorLink, tokenRefreshLink, splitLink]);
 	}
 }
 
 function createApolloClient() {
-	// createApolloClient  bu appolloClientni quradi
 	return new ApolloClient({
 		ssrMode: typeof window === 'undefined',
 		link: createIsomorphicLink(),
-		cache: new InMemoryCache(), //bu yerda cache ni ajratadi
+		cache: new InMemoryCache(),
 		resolvers: {},
 	});
 }
 
 export function initializeApollo(initialState = null) {
-	// agarda apolloClient bolsa ozini berib yuboradi yoq bosa createApolloClient ni ishga tushuradi
 	const _apolloClient = apolloClient ?? createApolloClient();
 	if (initialState) _apolloClient.cache.restore(initialState);
 	if (typeof window === 'undefined') return _apolloClient;
 	if (!apolloClient) apolloClient = _apolloClient;
-
 	return _apolloClient;
 }
 
 export function useApollo(initialState: any) {
-	// useApollo bizga initializeApollo ni ishga tushurib beradi
 	return useMemo(() => initializeApollo(initialState), [initialState]);
-} // useMemo bu (useState) bilan bir xil narsa faqat bu keyingi malumot kelguncha valueni cashelaydi
-
-/**
-import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
-
-// No Subscription required for develop process
-
-const httpLink = createHttpLink({
-  uri: "http://localhost:3007/graphql",
-});
-
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
-});
-
-export default client;
-*/
-
-//TOKEN LAR BILAN AUTH QURAYOTKANDA HICHQACHON ACCESS TOKEN NI OZI BILAN AUTH QURILMAYDI
-//ACCESS TOKEN VS REFRESH TOKEN
-
-//biz serverga 3 xil yol bian req jonatishimiz mumkun
-// 1. react query (98%) useMutation() & useQuery() (TSX)
-// 2. apollo client obj (1%) (TS FILE)
-// 3. axios (1%) (FILE rasm)
+}

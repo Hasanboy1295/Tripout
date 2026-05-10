@@ -216,7 +216,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 		// Pick the first tool call that yielded the strongest signal for the suggestion list.
 		const primary = toolResults.find((r) => r.props.length > 0) || toolResults[0];
-		const suggestions: SuggestionPayload[] = primary.props.slice(0, 4).map((p) => ({
+		const suggestions: SuggestionPayload[] = primary.props.slice(0, 4).map((p: { _id: any; propertyTitle: any; propertyLocation: any; propertyType: any; propertyImages: any[]; propertyPrice: any; propertyAddress: any; }) => ({
 			_id: p._id,
 			title: p.propertyTitle,
 			location: p.propertyLocation,
@@ -237,7 +237,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 					tool_call_id: tc.id,
 					content: JSON.stringify({
 						count: props.length,
-						items: props.slice(0, 4).map((p) => ({
+						items: props.slice(0, 4).map((p: { _id: any; propertyTitle: any; propertyLocation: any; propertyType: any; propertyPrice: any; }) => ({
 							id: p._id,
 							title: p.propertyTitle,
 							location: p.propertyLocation,

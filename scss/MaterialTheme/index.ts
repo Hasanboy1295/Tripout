@@ -2,12 +2,15 @@ import { common } from '@mui/material/colors';
 import shadow from './shadow';
 import typography from './typography';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyTheme = any;
+
 /**
  * LIGHT THEME (DEFAULT)
  */
-export const light = {
+export const light: AnyTheme = {
 	palette: {
-		type: 'light',
+		mode: 'light', // ✅ 'type' → 'mode'
 		background: {
 			default: '#f4f6f8',
 			paper: common.white,
@@ -42,7 +45,6 @@ export const light = {
 					h6: 'h6',
 					subtitle1: 'p',
 					subtitle2: 'p',
-					subtitle3: 'p',
 					body1: 'p',
 					body2: 'p',
 				},
@@ -60,23 +62,6 @@ export const light = {
 			styleOverrides: {
 				root: {
 					borderColor: '#eee',
-				},
-			},
-		},
-		MuiBox: {
-			styleOverrides: {
-				root: {
-					padding: '0',
-				},
-			},
-			makeStyles: {
-				root: {
-					padding: 0,
-				},
-			},
-			sx: {
-				'&.MuiBox-root': {
-					component: 'div',
 				},
 			},
 		},
@@ -115,9 +100,6 @@ export const light = {
 					minWidth: 'auto',
 					lineHeight: '1.2',
 					boxShadow: 'none',
-					ButtonText: {
-						color: '#212121',
-					},
 				},
 			},
 		},
@@ -143,9 +125,6 @@ export const light = {
 		MuiListItem: {
 			styleOverrides: {
 				root: {
-					MuiSelect: {
-						backgroundColor: '#fafafa',
-					},
 					padding: '0',
 				},
 			},
@@ -168,15 +147,13 @@ export const light = {
 			styleOverrides: {
 				root: {},
 				select: {
-					textAlign: 'left',
+					textAlign: 'left' as const, // ✅ asosiy fix
 				},
 			},
 		},
 		MuiInputBase: {
 			styleOverrides: {
-				root: {
-					input: {},
-				},
+				root: {},
 			},
 		},
 		MuiOutlinedInput: {
@@ -185,7 +162,6 @@ export const light = {
 					height: '48px',
 					width: '100%',
 					backgroundColor: '#fff',
-					input: {},
 				},
 				notchedOutline: {
 					padding: '8px',
@@ -264,18 +240,11 @@ export const light = {
 					background: '#fff',
 					color: '#212121',
 				},
-				hover: {
-					background: '#fff',
-				},
 			},
 		},
 		MuiPaper: {
 			styleOverrides: {
-				root: {
-					MuiMenu: {
-						boxShadow: 'rgb(145 158 171 / 24%) 0px 0px 2px 0px, rgb(145 158 171 / 24%) -20px 20px 40px -4px',
-					},
-				},
+				root: {},
 			},
 		},
 		MuiMenuItem: {
@@ -308,7 +277,7 @@ export const light = {
 /**
  * DARK THEME
  */
-export const dark = {
+export const dark: AnyTheme = {
 	palette: {
 		mode: 'dark',
 		background: {
@@ -345,7 +314,6 @@ export const dark = {
 					h6: 'h6',
 					subtitle1: 'p',
 					subtitle2: 'p',
-					subtitle3: 'p',
 					body1: 'p',
 					body2: 'p',
 				},
@@ -363,23 +331,6 @@ export const dark = {
 			styleOverrides: {
 				root: {
 					borderColor: '#333',
-				},
-			},
-		},
-		MuiBox: {
-			styleOverrides: {
-				root: {
-					padding: '0',
-				},
-			},
-			makeStyles: {
-				root: {
-					padding: 0,
-				},
-			},
-			sx: {
-				'&.MuiBox-root': {
-					component: 'div',
 				},
 			},
 		},
@@ -418,9 +369,6 @@ export const dark = {
 					minWidth: 'auto',
 					lineHeight: '1.2',
 					boxShadow: 'none',
-					ButtonText: {
-						color: '#fff',
-					},
 				},
 			},
 		},
@@ -448,9 +396,6 @@ export const dark = {
 		MuiListItem: {
 			styleOverrides: {
 				root: {
-					MuiSelect: {
-						backgroundColor: '#333',
-					},
 					padding: '0',
 				},
 			},
@@ -473,15 +418,13 @@ export const dark = {
 			styleOverrides: {
 				root: {},
 				select: {
-					textAlign: 'left',
+					textAlign: 'left' as const, // ✅ asosiy fix
 				},
 			},
 		},
 		MuiInputBase: {
 			styleOverrides: {
-				root: {
-					input: {},
-				},
+				root: {},
 			},
 		},
 		MuiOutlinedInput: {
@@ -490,7 +433,6 @@ export const dark = {
 					height: '48px',
 					width: '100%',
 					backgroundColor: '#333',
-					input: {},
 				},
 				notchedOutline: {
 					padding: '8px',
@@ -569,9 +511,6 @@ export const dark = {
 					background: '#333',
 					color: '#fff',
 				},
-				hover: {
-					background: '#444',
-				},
 			},
 		},
 		MuiPaper: {
@@ -579,9 +518,6 @@ export const dark = {
 				root: {
 					backgroundColor: '#1e1e1e',
 					backgroundImage: 'none',
-					MuiMenu: {
-						boxShadow: 'rgb(0 0 0 / 24%) 0px 0px 2px 0px, rgb(0 0 0 / 24%) -20px 20px 40px -4px',
-					},
 				},
 			},
 		},

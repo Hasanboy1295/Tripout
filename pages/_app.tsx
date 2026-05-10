@@ -20,6 +20,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 	const themeMode = useReactiveVar(themeVar);
 	const [theme, setTheme] = useState(createTheme(light));
 
+
 	useEffect(() => {
 		const savedTheme = localStorage.getItem('themeMode');
 		if (savedTheme === 'dark') {

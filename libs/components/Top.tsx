@@ -85,7 +85,14 @@ const Top = () => {
 		if (jwt) updateUserInfo(jwt);
 	}, []);
 
-
+	// ✅ YANGI: Scroll pozitsiyani tiklash
+	useEffect(() => {
+		const savedScroll = sessionStorage.getItem('scrollPos');
+		if (savedScroll) {
+			window.scrollTo({ top: parseInt(savedScroll), behavior: 'auto' });
+			sessionStorage.removeItem('scrollPos');
+		}
+	}, [router.locale]);
 
 	/** HANDLERS **/
 	const langClick = (e: any) => {
@@ -96,21 +103,16 @@ const Top = () => {
 		setAnchorEl2(null);
 	};
 
+	// ✅ YANGI: sessionStorage ishlatiladi
 	const langChoice = useCallback(
 		async (e: any) => {
-			// Locale switch triggers an SSR re-fetch of translations and a
-			// page remount, which resets scroll even with `scroll: false`.
-			// Capture scrollY first, then restore it after the new tree paints.
 			const scrollY = window.scrollY;
+			sessionStorage.setItem('scrollPos', String(scrollY));
+
 			setLang(e.target.id);
 			localStorage.setItem('locale', e.target.id);
 			setAnchorEl2(null);
 			await router.push(router.asPath, router.asPath, { locale: e.target.id, scroll: false });
-			requestAnimationFrame(() => {
-				requestAnimationFrame(() => {
-					window.scrollTo({ top: scrollY, left: 0, behavior: 'auto' });
-				});
-			});
 		},
 		[router],
 	);
@@ -205,19 +207,19 @@ const Top = () => {
 			if (path === '/') return router.pathname === '/';
 			return router.pathname === path || router.pathname.startsWith(path + '/');
 		};
+
+		// ✅ YANGI: sessionStorage ishlatiladi
 		const mobileLangChoice = async (e: any) => {
 			const scrollY = window.scrollY;
+			sessionStorage.setItem('scrollPos', String(scrollY));
+
 			const id = e.currentTarget.id;
 			setLang(id);
 			localStorage.setItem('locale', id);
 			setMobileLangAnchor(null);
 			await router.push(router.asPath, router.asPath, { locale: id, scroll: false });
-			requestAnimationFrame(() => {
-				requestAnimationFrame(() => {
-					window.scrollTo({ top: scrollY, left: 0, behavior: 'auto' });
-				});
-			});
 		};
+
 		return (
 			<Stack className={`mobile-top ${colorChange ? 'scrolled' : ''}`}>
 				<Stack className={'mobile-top-inner'}>
@@ -365,11 +367,11 @@ const Top = () => {
 							<Link href={'/'}>
 								<div className={router.pathname === '/' ? 'active' : ''}>{t('Home')}</div>
 							</Link>
-						
-                            <Link href={'/property'}>
+
+							<Link href={'/property'}>
 								<div className={isDestinationRoute ? 'active' : ''}>{t('Destinations')}</div>
 							</Link>
-							
+
 							<div className={`nav-dropdown ${router.pathname.startsWith('/service') ? 'active' : ''}`}>
 								<div className={'nav-dropdown-trigger'}>
 									{t('Services')}
@@ -384,7 +386,7 @@ const Top = () => {
 									</Link>
 								</div>
 							</div>
-						
+
 							<Link href={'/agent'}>
 								<div className={isAgentRoute ? 'active' : ''}>{t('Agents')}</div>
 							</Link>
@@ -392,11 +394,9 @@ const Top = () => {
 								<div className={isMyPageRoute ? 'active' : ''}>{t('My Page')}</div>
 							</Link>
 
-								<Link href={'/about'}>
+							<Link href={'/about'}>
 								<div className={isAboutRoute ? 'active' : ''}>{t('About Us')}</div>
 							</Link>
-
-
 						</Box>
 						<Box component={'div'} className={'user-box'}>
 							<div className={'search-btn'}>
@@ -457,35 +457,35 @@ const Top = () => {
 
 								<StyledMenu anchorEl={anchorEl2} open={drop} onClose={langClose} sx={{ position: 'absolute' }}>
 									<MenuItem disableRipple onClick={langChoice} id="en">
-										<img
-											className="img-flag"
-											src={'/img/flag/langen.png'}
-											id="en"
-											alt={'English'}
-										/>
+										<img className="img-flag" src={'/img/flag/langen.png'} id="en" alt={'English'} />
 										English
 									</MenuItem>
 									<MenuItem disableRipple onClick={langChoice} id="kr">
-										<img
-											className="img-flag"
-											src={'/img/flag/langkr.png'}
-											id="kr"
-											alt={'Korean'}
-										/>
+										<img className="img-flag" src={'/img/flag/langkr.png'} id="kr" alt={'Korean'} />
 										Korean
 									</MenuItem>
 									<MenuItem disableRipple onClick={langChoice} id="ru">
-										<img
-											className="img-flag"
-											src={'/img/flag/langru.png'}
-											id="ru"
-											alt={'Russian'}
-										/>
+										<img className="img-flag" src={'/img/flag/langru.png'} id="ru" alt={'Russian'} />
 										Russian
 									</MenuItem>
 								</StyledMenu>
 
-								<Box component={'div'} className={'theme-toggle-box'} onClick={themeChangeHandler} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', ml: 1, p: 1, borderRadius: '50%', flexShrink: 0, color: themeMode === 'dark' ? '#fff' : '#222', '&:hover': { background: themeMode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' } }}>
+								<Box
+									component={'div'}
+									className={'theme-toggle-box'}
+									onClick={themeChangeHandler}
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+										cursor: 'pointer',
+										ml: 1,
+										p: 1,
+										borderRadius: '50%',
+										flexShrink: 0,
+										color: themeMode === 'dark' ? '#fff' : '#222',
+										'&:hover': { background: themeMode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' },
+									}}
+								>
 									{themeMode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
 								</Box>
 							</div>
