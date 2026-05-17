@@ -10,6 +10,7 @@ import { ApolloProvider, useReactiveVar } from '@apollo/client';
 import { useApollo } from '../apollo/client';
 import { appWithTranslation } from 'next-i18next';
 import { themeVar } from '../apollo/store';
+import nextI18NextConfig from '../next-i18next.config';
 import '../scss/app.scss';
 import '../scss/pc/main.scss';
 import '../scss/mobile/main.scss';
@@ -68,4 +69,4 @@ const App = ({ Component, pageProps }: AppProps) => {
 	);
 };
 
-export default appWithTranslation(App);
+export default appWithTranslation(App, nextI18NextConfig);

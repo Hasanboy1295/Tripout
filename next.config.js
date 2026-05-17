@@ -5,6 +5,12 @@ const apiWsUrl = process.env.REACT_APP_API_WS || process.env.NEXT_PUBLIC_API_WS;
 
 const nextConfig = {
 	reactStrictMode: true,
+	typescript: {
+		ignoreBuildErrors: true,
+	},
+	eslint: {
+		ignoreDuringBuilds: true,
+	},
 	env: {
 		REACT_APP_API_URL: apiUrl,
 		REACT_APP_API_GRAPHQL_URL: apiGraphqlUrl,

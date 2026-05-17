@@ -40,7 +40,7 @@ services:
     networks:
       - client-network
       - monorepo-network
-    command: bash -c "yarn && yarn run build && yarn run start"
+    command: bash -c "yarn  && yarn run start"
 
 networks:
   client-network:

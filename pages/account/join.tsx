@@ -142,7 +142,6 @@ const handlePhoneLoginVerify = async () => {
 	}
 };
 
-console.log('+input: ', input);
 return (
 <Stack className={'join-page'}>
 <Stack className={'container'}>

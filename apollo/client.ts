@@ -30,60 +30,60 @@ const tokenRefreshLink = new TokenRefreshLink({
 });
 
 function createIsomorphicLink() {
-	if (typeof window !== 'undefined') {
-		const authLink = new ApolloLink((operation, forward) => {
-			operation.setContext(({ headers = {} }) => ({
-				headers: {
-					...headers,
-					...getHeaders(),
-				},
-			}));
-			console.warn('requesting.. ', operation);
-			return forward(operation);
-		});
+	const graphqlUri = process.env.NEXT_PUBLIC_API_GRAPHQL_URL ?? 'http://localhost:3030/graphql';
 
-		// ✅ Brauzer uchun NEXT_PUBLIC_ prefiksi
-		// @ts-ignore
-		const link = new createUploadLink({
-			uri: process.env.NEXT_PUBLIC_API_GRAPHQL_URL,
-		});
-
-		// ✅ Brauzer uchun NEXT_PUBLIC_ prefiksi
-		const wsLink = new WebSocketLink({
-			uri: process.env.NEXT_PUBLIC_API_WS ?? 'ws://localhost:3030/graphql',
-			options: {
-				reconnect: false,
-				timeout: 30000,
-				connectionParams: () => {
-					return { headers: getHeaders() };
-				},
+	const authLink = new ApolloLink((operation, forward) => {
+		operation.setContext(({ headers = {} }) => ({
+			headers: {
+				...headers,
+				...getHeaders(),
 			},
-		});
+		}));
+		return forward(operation);
+	});
 
-		const errorLink = onError(({ graphQLErrors, networkError, response }) => {
-			if (graphQLErrors) {
-				graphQLErrors.map(({ message, locations, path, extensions }) => {
-					console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
-					if (!message.includes('input')) sweetErrorAlert(message);
-				});
-			}
-			if (networkError) console.log(`[Network error]: ${networkError}`);
-			// @ts-ignore
-			if (networkError?.statusCode === 401) {
-			}
-		});
+	// @ts-ignore
+	const httpLink = new createUploadLink({
+		uri: graphqlUri,
+	});
 
-		const splitLink = split(
-			({ query }) => {
-				const definition = getMainDefinition(query);
-				return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
-			},
-			wsLink,
-			authLink.concat(link),
-		);
+	const errorLink = onError(({ graphQLErrors, networkError }) => {
+		if (graphQLErrors) {
+			graphQLErrors.forEach(({ message, locations, path }) => {
+				console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+				if (typeof window !== 'undefined' && !message.includes('input')) {
+					sweetErrorAlert(message);
+				}
+			});
+		}
+		if (networkError) console.log(`[Network error]: ${networkError}`);
+	});
 
-		return from([errorLink, tokenRefreshLink, splitLink]);
+	if (typeof window === 'undefined') {
+		return from([errorLink, tokenRefreshLink, authLink.concat(httpLink)]);
 	}
+
+	const wsLink = new WebSocketLink({
+		uri: process.env.NEXT_PUBLIC_API_WS ?? 'ws://localhost:3030/graphql',
+		options: {
+			reconnect: false,
+			timeout: 30000,
+			connectionParams: () => {
+				return { headers: getHeaders() };
+			},
+		},
+	});
+
+	const splitLink = split(
+		({ query }) => {
+			const definition = getMainDefinition(query);
+			return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+		},
+		wsLink,
+		authLink.concat(httpLink),
+	);
+
+	return from([errorLink, tokenRefreshLink, splitLink]);
 }
 
 function createApolloClient() {
