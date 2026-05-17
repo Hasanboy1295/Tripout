@@ -1,81 +1,330 @@
+/* =============================================================================
+ * Write Article — premium editor layout
+ *   Hero header · Category & Title cards · Editor card · Floating CTA
+ *   Light + Dark modes.
+ * ========================================================================== */
+
 #pc-wrap {
 	#write-article-page {
 		width: 100%;
 		height: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 22px;
+
+		/* ── Hero header (matches profile card ocean gradient) ─── */
 		.main-title-box {
 			width: auto;
 			height: auto;
 			flex-direction: row;
 			justify-content: space-between;
+			align-items: center;
+			padding: 26px 30px;
+			border-radius: 22px;
+			background:
+				radial-gradient(circle at 15% 50%, rgba(20, 184, 166, 0.32) 0%, transparent 55%),
+				radial-gradient(circle at 85% 50%, rgba(245, 166, 35, 0.28) 0%, transparent 55%),
+				linear-gradient(135deg, #1e40af 0%, #0891b2 45%, #14b8a6 100%);
+			color: #ffffff;
+			box-shadow: 0 18px 48px rgba(8, 145, 178, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+			position: relative;
+			overflow: hidden;
+
+			&::before {
+				content: '✍️';
+				position: absolute;
+				top: -10px;
+				right: 30px;
+				font-size: 110px;
+				opacity: 0.22;
+				pointer-events: none;
+				transform: rotate(-8deg);
+			}
+			&::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				width: 240px;
+				background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 65%);
+				pointer-events: none;
+			}
+
 			.right-box {
-				width: 315px;
+				width: auto;
+				position: relative;
+				z-index: 1;
+				padding-left: 18px;
+				&::before {
+					content: '';
+					position: absolute;
+					left: 0;
+					top: 6px;
+					bottom: 8px;
+					width: 4px;
+					border-radius: 4px;
+					background: linear-gradient(180deg, #fbbf24 0%, #f5a623 100%);
+					box-shadow: 0 0 14px rgba(245, 166, 35, 0.6);
+				}
 				.main-title {
-					color: #181a20;
+					color: #ffffff;
 					font-family: $font;
 					font-size: 30px;
 					font-style: normal;
-					font-weight: 600;
-					line-height: normal;
-					letter-spacing: 0.6px;
+					font-weight: 800;
+					line-height: 1.15;
+					letter-spacing: -0.5px;
 					text-transform: capitalize;
 				}
 				.sub-title {
-					color: #181a20;
+					color: #cbd5e1;
 					font-family: $font;
 					font-size: 14px;
 					font-style: normal;
-					font-weight: 400;
-					line-height: 26px;
+					font-weight: 500;
+					line-height: 22px;
+					margin-top: 6px;
 				}
 			}
 		}
-		
+
+		/* ── Editor canvas card (the outer Stack from Teditor.tsx) ── */
+		& > .MuiStack-root:not(.main-title-box) {
+			background: #ffffff;
+			border: 1px solid #ecedf2;
+			border-radius: 22px;
+			box-shadow: 0 12px 32px rgba(15, 23, 42, 0.05);
+			overflow: hidden;
+			padding-bottom: 24px;
+		}
+
+		/* Inner row: Category + Title (only inside the Teditor stack, not the hero) */
+		& > .MuiStack-root:not(.main-title-box) > .MuiStack-root[direction='row'] {
+			margin: 0 !important;
+			padding: 26px 28px;
+			background: linear-gradient(180deg, #fafbff 0%, #ffffff 100%);
+			border-bottom: 1px solid #ecedf2;
+			gap: 22px;
+
+			.form_row,
+			& > .MuiBox-root {
+				width: 100% !important;
+				flex: 1;
+				.MuiTypography-h3 {
+					color: #475569 !important;
+					font-family: $font;
+					font-size: 11.5px !important;
+					font-weight: 700 !important;
+					letter-spacing: 1.2px;
+					text-transform: uppercase;
+					margin: 0 0 10px 0 !important;
+				}
+				.MuiFormControl-root {
+					background: #fafbff !important;
+					border-radius: 12px !important;
+					.MuiOutlinedInput-root {
+						background: transparent;
+						border-radius: 12px;
+						font-family: $font;
+						font-size: 14px;
+						font-weight: 500;
+						transition: background 0.2s, box-shadow 0.2s;
+						fieldset { border-color: #e2e6ee !important; border-width: 1.5px; }
+						&:hover {
+							background: #ffffff !important;
+							fieldset { border-color: #cbd5e1 !important; }
+						}
+						&.Mui-focused {
+							background: #ffffff !important;
+							fieldset { border-color: #f5a623 !important; border-width: 1.5px !important; }
+							box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.12);
+						}
+						.MuiSelect-select { padding: 14px 16px; color: #0f172a; }
+					}
+				}
+				.MuiTextField-root {
+					width: 100% !important;
+					background: #fafbff !important;
+					border-radius: 12px !important;
+					.MuiOutlinedInput-root {
+						background: transparent;
+						border-radius: 12px;
+						font-size: 14px;
+						transition: background 0.2s, box-shadow 0.2s;
+						fieldset { border-color: #e2e6ee !important; border-width: 1.5px; }
+						&:hover { background: #fff !important; fieldset { border-color: #cbd5e1 !important; } }
+						&.Mui-focused {
+							background: #fff !important;
+							fieldset { border-color: #f5a623 !important; }
+							box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.12);
+						}
+						input { padding: 14px 16px; color: #0f172a; font-weight: 500; }
+					}
+					.MuiInputLabel-root {
+						color: #94a3b8;
+						font-size: 13.5px;
+						&.Mui-focused { color: #f5a623; }
+					}
+				}
+			}
+		}
+
+		/* Toast UI Editor wrapper */
+		.toastui-editor-defaultUI {
+			margin: 8px 28px 0;
+			border: 1.5px solid #e2e6ee !important;
+			border-radius: 14px !important;
+			overflow: hidden;
+			box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+		}
+		.toastui-editor-main .ProseMirror,
+		.toastui-editor-main .toastui-editor-contents {
+			padding: 18px 22px !important;
+			min-height: 480px;
+		}
+		.toastui-editor-toolbar {
+			background: linear-gradient(180deg, #fafbff 0%, #f4f6fb 100%) !important;
+			border-bottom: 1px solid #e2e6ee !important;
+			.toastui-editor-defaultUI-toolbar {
+				background: transparent !important;
+				padding: 8px 12px;
+				button {
+					padding: 6px !important;
+					border-radius: 8px !important;
+					transition: background 0.2s;
+					&:hover { background: rgba(245, 166, 35, 0.12) !important; }
+					&.active { background: linear-gradient(135deg, #f5a623 0%, #f7b731 100%) !important; color: #fff !important; }
+				}
+			}
+		}
+		.toastui-editor-main {
+			background: #ffffff;
+			.toastui-editor {
+				font-family: $font !important;
+			}
+		}
+		.toastui-editor-md-tab-container,
+		.toastui-editor-mode-switch {
+			background: linear-gradient(180deg, #f4f6fb 0%, #fafbff 100%) !important;
+			border-top: 1px solid #e2e6ee !important;
+		}
+
+		/* Register button row (only inside editor Stack) */
+		& > .MuiStack-root:not(.main-title-box) > .MuiStack-root[direction='row']:last-child {
+			background: transparent !important;
+			border: none !important;
+			padding: 24px 28px 8px !important;
+			justify-content: center !important;
+
+			.MuiButton-root {
+				background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%) !important;
+				color: #ffffff !important;
+				width: 280px !important;
+				height: 52px !important;
+				margin: 0 !important;
+				border-radius: 14px !important;
+				font-weight: 800 !important;
+				font-size: 14.5px !important;
+				letter-spacing: 0.5px !important;
+				text-transform: none !important;
+				box-shadow: 0 14px 32px rgba(234, 88, 12, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+				transition: transform 0.2s, box-shadow 0.2s, filter 0.2s !important;
+				&:hover {
+					transform: translateY(-2px);
+					box-shadow: 0 18px 40px rgba(234, 88, 12, 0.5) !important;
+					filter: brightness(1.05);
+				}
+			}
+		}
+
 		.right-wrap {
 			width: 100%;
 			height: auto;
 			.cont_bd {
 				padding: 30px 0px;
-				.form_hd > div {
-					margin-bottom: 16px;
-				}
-			}
-			.flex-space {
-				.btn-next {
-					background: #87cdf9;
-					color: #000000;
-				}
-			}
-			.select {
-				width: 214px;
-				height: 40px;
-				font-size: 14px;
-			}
-			.input-tit {
-				font-size: 14px;
-				padding: 0 16px;
-				margin-top: 16px;
-				border: 1px solid #eee;
-				border-radius: 4px;
-			}
-			.btn-flex { margin-top: 40px; }
-		}
-		.css-guvl2y-MuiButtonBase-root-MuiButton-root {
-			background: #87cdf9;
-			svg {
-				fill: #000000;
+				.form_hd > div { margin-bottom: 16px; }
 			}
 		}
+
 		.toastui-editor-popup-body { padding: 20px; }
 		.youtube-input {
 			padding: 8px 16px;
 			border: 1px solid #ddd;
+			border-radius: 8px;
 		}
 		.youtube-div {
-			display:flex;
+			display: flex;
 			flex-direction: column;
 		}
-		.toastui-editor-defaultUI button {
-			padding: 4px;
+	}
+}
+
+/* =============================================================================
+ * DARK MODE
+ * ========================================================================== */
+body.dark-mode {
+	#pc-wrap #my-page #write-article-page {
+		/* hero stays the same ocean gradient in both modes — no override */
+
+		& > .MuiStack-root:not(.main-title-box) {
+			background: #1b2030 !important;
+			border-color: #2f3547 !important;
+			box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4) !important;
+		}
+
+		& > .MuiStack-root:not(.main-title-box) > .MuiStack-root[direction='row'] {
+			background: #1b2030 !important;
+			border-bottom-color: #2f3547 !important;
+			.MuiTypography-h3 { color: #94a3b8 !important; }
+			.MuiFormControl-root,
+			.MuiTextField-root {
+				background: #141927 !important;
+				.MuiOutlinedInput-root {
+					fieldset { border-color: #2f3547 !important; }
+					&:hover { background: #232838 !important; fieldset { border-color: #3e4558 !important; } }
+					&.Mui-focused {
+						background: #232838 !important;
+						fieldset { border-color: #f5a623 !important; }
+						box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.18) !important;
+					}
+					input, .MuiSelect-select { color: #e8eaf2 !important; }
+				}
+				.MuiInputLabel-root { color: #6d768f !important; }
+			}
+		}
+
+		.toastui-editor-defaultUI {
+			border-color: #2f3547 !important;
+			background: #141927;
+		}
+		.toastui-editor-toolbar {
+			background: #1b2030 !important;
+			border-bottom-color: #2f3547 !important;
+			.toastui-editor-defaultUI-toolbar {
+				button {
+					color: #cbd5e1;
+					&:hover { background: rgba(245, 166, 35, 0.18) !important; color: #fbbf24 !important; }
+					svg { fill: #cbd5e1; }
+				}
+			}
+		}
+		.toastui-editor-main {
+			background: #141927;
+			.toastui-editor-contents,
+			.toastui-editor-md-container,
+			.toastui-editor-ww-container,
+			.ProseMirror {
+				background: #141927 !important;
+				color: #e8eaf2 !important;
+			}
+		}
+		.toastui-editor-md-tab-container,
+		.toastui-editor-mode-switch {
+			background: #1b2030 !important;
+			border-top-color: #2f3547 !important;
+			color: #cbd5e1 !important;
+			button { color: #cbd5e1 !important; }
 		}
 	}
 }

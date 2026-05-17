@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import { useTranslation } from 'next-i18next';
 
 const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters elevation={0} square {...props} />)(
 	({ theme }) => ({
@@ -33,6 +34,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 const Faq = () => {
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { t } = useTranslation('common');
 	const [category, setCategory] = useState<string>('property');
 	const [expanded, setExpanded] = useState<string | false>('panel1');
 
@@ -433,9 +435,7 @@ const Faq = () => {
 		],
 	};
 
-	if (device === 'mobile') {
-		return <div>FAQ MOBILE</div>;
-	} else {
+
 		return (
 			<Stack className={'faq-content'}>
 				<Box className={'categories'} component={'div'}>
@@ -445,7 +445,7 @@ const Faq = () => {
 							changeCategoryHandler('property');
 						}}
 					>
-						Property
+						{t('cs_faq_cat_property')}
 					</div>
 					<div
 						className={category === 'payment' ? 'active' : ''}
@@ -453,7 +453,7 @@ const Faq = () => {
 							changeCategoryHandler('payment');
 						}}
 					>
-						Payment
+						{t('cs_faq_cat_payment')}
 					</div>
 					<div
 						className={category === 'buyers' ? 'active' : ''}
@@ -461,7 +461,7 @@ const Faq = () => {
 							changeCategoryHandler('buyers');
 						}}
 					>
-						Foy Buyers
+						{t('cs_faq_cat_buyers')}
 					</div>
 					<div
 						className={category === 'agents' ? 'active' : ''}
@@ -469,7 +469,7 @@ const Faq = () => {
 							changeCategoryHandler('agents');
 						}}
 					>
-						For Agents
+						{t('cs_faq_cat_agents')}
 					</div>
 					<div
 						className={category === 'membership' ? 'active' : ''}
@@ -477,7 +477,7 @@ const Faq = () => {
 							changeCategoryHandler('membership');
 						}}
 					>
-						Membership
+						{t('cs_faq_cat_membership')}
 					</div>
 					<div
 						className={category === 'community' ? 'active' : ''}
@@ -485,7 +485,7 @@ const Faq = () => {
 							changeCategoryHandler('community');
 						}}
 					>
-						Community
+						{t('cs_faq_cat_community')}
 					</div>
 					<div
 						className={category === 'other' ? 'active' : ''}
@@ -493,7 +493,7 @@ const Faq = () => {
 							changeCategoryHandler('other');
 						}}
 					>
-						Other
+						{t('cs_faq_cat_other')}
 					</div>
 				</Box>
 				<Box className={'wrap'} component={'div'}>
@@ -519,7 +519,6 @@ const Faq = () => {
 				</Box>
 			</Stack>
 		);
-	}
 };
 
 export default Faq;

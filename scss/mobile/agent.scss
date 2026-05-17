@@ -1,0 +1,143 @@
+/* =========================================================================
+ *  MOBILE AGENT LIST + DETAIL
+ * ========================================================================= */
+#mobile-wrap {
+  /* ───── AGENT LIST ───── */
+  #agent-list-page,
+  .agent-list-page {
+    width: 100%;
+    padding: 4px 14px 24px;
+
+    .container {
+      width: 100%;
+      padding: 0 !important;
+    }
+
+    .filter-config {
+      width: 100% !important;
+      padding: 14px !important;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+    }
+
+    .toolbar {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 10px !important;
+      padding: 10px 0 !important;
+    }
+
+    .list-config,
+    .agent-home-list {
+      grid-template-columns: 1fr 1fr !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      gap: 12px !important;
+    }
+
+    .agent-card,
+    .agent-home-list > div {
+      width: 100% !important;
+      max-width: 100% !important;
+      flex: 1 1 calc(50% - 6px) !important;
+      min-width: 0;
+      background: #fff;
+      border-radius: 14px !important;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+
+      .card-img, img.agent-img, > img {
+        width: 100% !important;
+        height: 180px !important;
+        object-fit: cover;
+      }
+      .info, .description {
+        padding: 12px !important;
+      }
+      .name, .title {
+        font-size: 14.5px !important;
+        font-weight: 600 !important;
+        line-height: 1.25 !important;
+      }
+      .desc, .role { font-size: 12px !important; }
+      .listings, .views {
+        font-size: 11.5px !important;
+        margin-top: 4px;
+      }
+    }
+  }
+
+  /* ───── AGENT DETAIL ───── */
+  #agent-detail-page,
+  .agent-detail-page {
+    width: 100%;
+    padding: 4px 14px 24px;
+
+    .container { width: 100%; padding: 0 !important; }
+
+    .agent-info {
+      flex-direction: column !important;
+      gap: 16px;
+      padding: 18px !important;
+      border-radius: 18px !important;
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+
+      .left-side, .right-side, .left-config {
+        width: 100% !important;
+      }
+
+      .member-image, .agent-img, img.profile {
+        width: 110px !important;
+        height: 110px !important;
+        border-radius: 50% !important;
+        object-fit: cover;
+        border: 3px solid #fff5e7;
+        margin: 0 auto;
+      }
+
+      .name {
+        text-align: center;
+        font-size: 22px !important;
+        font-weight: 700 !important;
+      }
+      .agent-info .description, .desc-text {
+        text-align: center;
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+      }
+
+      .name-phone-listings,
+      .stat-pill,
+      .badge-content {
+        flex-wrap: wrap !important;
+        justify-content: center;
+        gap: 10px !important;
+        > div, > span {
+          padding: 10px 14px !important;
+          border-radius: 999px !important;
+          font-size: 12.5px !important;
+        }
+      }
+    }
+
+    .agent-home-list,
+    .listings {
+      grid-template-columns: 1fr !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+
+    h2, h3 {
+      font-size: 20px !important;
+      line-height: 1.22 !important;
+    }
+
+    .reviews-config {
+      width: 100% !important;
+      padding: 16px !important;
+      border-radius: 16px !important;
+    }
+  }
+}

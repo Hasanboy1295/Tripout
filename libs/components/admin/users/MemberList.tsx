@@ -168,7 +168,16 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 											<Stack direction={'row'}>
 												<Link href={`/member?memberId=${member._id}`}>
 													<div>
-														<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
+														<Avatar
+															alt={member.memberNick || 'User'}
+															src={member_image}
+															imgProps={{
+																onError: (e) => {
+																	(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+																},
+															}}
+															sx={{ ml: '2px', mr: '10px' }}
+														/>
 													</div>
 												</Link>
 												<Link href={`/member?memberId=${member._id}`}>
@@ -181,7 +190,10 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 										<TableCell align="left">{member.memberPhone}</TableCell>
 
 										<TableCell align="center">
-											<Button onClick={(e: any) => menuIconClickHandler(e, index)} className={'badge success'}>
+											<Button
+												onClick={(e: any) => menuIconClickHandler(e, index)}
+												className={`badge type-${(member.memberType || '').toLowerCase()}`}
+											>
 												{member.memberType}
 											</Button>
 
@@ -214,7 +226,10 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 										<TableCell align="center">{member.memberWarnings}</TableCell>
 										<TableCell align="center">{member.memberBlocks}</TableCell>
 										<TableCell align="center">
-											<Button onClick={(e: any) => menuIconClickHandler(e, member._id)} className={'badge success'}>
+											<Button
+												onClick={(e: any) => menuIconClickHandler(e, member._id)}
+												className={`badge state-${(member.memberStatus || '').toLowerCase()}`}
+											>
 												{member.memberStatus}
 											</Button>
 

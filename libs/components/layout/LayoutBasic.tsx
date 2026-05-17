@@ -109,17 +109,38 @@ const withLayoutBasic = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>Tripout</title>
+						<meta name={'title'} content={`Tripout`} />
 					</Head>
 					<Stack id="mobile-wrap">
 						<Stack id={'top'}>
 							<Top />
 						</Stack>
 
+						<Stack
+							className={`mobile-banner ${authHeader ? 'auth' : ''}`}
+							style={{
+								backgroundImage: `url(${memoizedValues.bgImage})`,
+							}}
+						>
+							<div className={'mobile-banner-overlay'} />
+							<Stack className={'mobile-banner-inner'}>
+								<span className={'mobile-eyebrow'}>{t('plan_your_next_journey')}</span>
+								<strong>{t(memoizedValues.title)}</strong>
+								<span className={'mobile-banner-desc'}>{t(memoizedValues.desc)}</span>
+								<span className={'mobile-breadcrumb'}>
+									<span>{t('Home')}</span>
+									<span className={'sep'}>/</span>
+									<span className={'current'}>{t(memoizedValues.breadcrumbCurrent || memoizedValues.title)}</span>
+								</span>
+							</Stack>
+						</Stack>
+
 						<Stack id={'main'}>
 							<Component {...props} />
 						</Stack>
+
+						<Chat />
 
 						<Stack id={'footer'}>
 							<Footer />
@@ -131,8 +152,8 @@ const withLayoutBasic = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>Tripout</title>
+						<meta name={'title'} content={`Tripout`} />
 					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>

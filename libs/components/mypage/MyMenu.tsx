@@ -19,10 +19,12 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { REACT_APP_API_URL } from '../../config';
 import { logOut } from '../../auth';
 import { sweetConfirmAlert, sweetMixinErrorAlert } from '../../sweetAlert';
+import { useTranslation } from 'next-i18next';
 
 const MyMenu = () => {
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { t } = useTranslation('common');
 	const pathname = router.query.category ?? 'myProfile';
 	const category: any = router.query?.category ?? 'myProfile';
 	const user = useReactiveVar(userVar);
@@ -30,15 +32,13 @@ const MyMenu = () => {
 	/** HANDLERS **/
 	const logoutHandler = async () => {
 		try {
-			if (await sweetConfirmAlert('Do you want to logout?')) logOut();
+			if (await sweetConfirmAlert(t('mp_logout_confirm'))) logOut();
 		} catch (err: any) {
 			console.log('ERROR, logoutHandler:', err.message);
 		}
 	};
 
-	if (device === 'mobile') {
-		return <div>MY MENU</div>;
-	} else {
+
 		return (
 			<Stack width={'100%'} padding={'30px 24px'} className="my-menu-container">
 				{/* Profile Card */}
@@ -47,6 +47,12 @@ const MyMenu = () => {
 						<img
 							src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
 							alt={'member-photo'}
+							onError={(e) => {
+								const img = e.currentTarget;
+								if (img.dataset.fallback) return;
+								img.dataset.fallback = '1';
+								img.src = '/img/profile/defaultUser.svg';
+							}}
 						/>
 					</Box>
 					<Stack className={'user-info'}>
@@ -66,7 +72,7 @@ const MyMenu = () => {
 					{/* WORKSPACE Section */}
 					<Stack className={'section'}>
 						<Typography className="section-title" variant={'h5'}>
-							WORKSPACE
+							{t('mp_workspace')}
 						</Typography>
 						<List className={'sub-section'}>
 							<ListItem className={pathname === 'myProfile' ? 'focus' : ''}>
@@ -80,7 +86,7 @@ const MyMenu = () => {
 									<div className={'flex-box'}>
 										<PersonIcon className="menu-icon" />
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											My Profile
+											{t('mp_my_profile')}
 										</Typography>
 										<ChevronRightIcon className="chevron-icon" />
 									</div>
@@ -97,7 +103,7 @@ const MyMenu = () => {
 									<div className={'flex-box'}>
 										<FavoriteIcon className="menu-icon" />
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											My Favorites
+											{t('mp_my_favorites')}
 										</Typography>
 										<ChevronRightIcon className="chevron-icon" />
 									</div>
@@ -114,7 +120,7 @@ const MyMenu = () => {
 									<div className={'flex-box'}>
 										<HistoryIcon className="menu-icon" />
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											Recently Visited
+											{t('mp_recently_visited')}
 										</Typography>
 										<ChevronRightIcon className="chevron-icon" />
 									</div>
@@ -137,7 +143,7 @@ const MyMenu = () => {
 													<img className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} />
 												)}
 												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													Add Property
+													{t('mp_add_property')}
 												</Typography>
 												<ChevronRightIcon className="chevron-icon" />
 											</div>
@@ -158,7 +164,7 @@ const MyMenu = () => {
 													<img className={'com-icon'} src={'/img/icons/home.svg'} alt={'com-icon'} />
 												)}
 												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													My Properties
+													{t('mp_my_properties')}
 												</Typography>
 												<ChevronRightIcon className="chevron-icon" />
 											</div>
@@ -172,7 +178,7 @@ const MyMenu = () => {
 					{/* CONNECTIONS Section */}
 					<Stack className={'section'} sx={{ marginTop: '10px' }}>
 						<Typography className="section-title" variant={'h5'}>
-							CONNECTIONS
+							{t('mp_connections')}
 						</Typography>
 						<List className={'sub-section'}>
 							<ListItem className={pathname === 'followers' ? 'focus' : ''}>
@@ -186,7 +192,7 @@ const MyMenu = () => {
 									<div className={'flex-box'}>
 										<PeopleIcon className="menu-icon" />
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											My Followers
+											{t('mp_my_followers')}
 										</Typography>
 										<ChevronRightIcon className="chevron-icon" />
 									</div>
@@ -203,7 +209,7 @@ const MyMenu = () => {
 									<div className={'flex-box'}>
 										<PersonAddIcon className="menu-icon" />
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											My Following
+											{t('mp_my_following')}
 										</Typography>
 										<ChevronRightIcon className="chevron-icon" />
 									</div>
@@ -227,7 +233,7 @@ const MyMenu = () => {
 					{/* COMMUNITY Section */}
 					<Stack className={'section'} sx={{ marginTop: '10px' }}>
 						<Typography className="section-title" variant={'h5'}>
-							COMMUNITY
+							{t('mp_community')}
 						</Typography>
 						<List className={'sub-section'}>
 							<ListItem className={pathname === 'myArticles' ? 'focus' : ''}>
@@ -241,7 +247,7 @@ const MyMenu = () => {
 									<div className={'flex-box'}>
 										<ArticleIcon className="menu-icon" />
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											Blog Post
+											{t('mp_blog_post')}
 										</Typography>
 										<ChevronRightIcon className="chevron-icon" />
 									</div>
@@ -258,7 +264,7 @@ const MyMenu = () => {
 									<div className={'flex-box'}>
 										<EditNoteIcon className="menu-icon" />
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											Write Blog Post
+											{t('mp_write_blog_post')}
 										</Typography>
 										<ChevronRightIcon className="chevron-icon" />
 									</div>
@@ -269,7 +275,6 @@ const MyMenu = () => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default MyMenu;

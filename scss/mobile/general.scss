@@ -1,0 +1,109 @@
+/* =========================================================================
+ *  MOBILE GENERAL — body, scrolling, typography, MUI overrides, helpers
+ * ========================================================================= */
+#mobile-wrap {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background: #ffffff;
+  color: #181a20;
+  font-family: $font;
+
+  * { box-sizing: border-box; }
+
+  /* main content area gets some breathing room beneath sticky top */
+  > #main {
+    flex: 1;
+    width: 100%;
+    padding-top: 4px;
+  }
+
+  img { max-width: 100%; }
+
+  /* MUI Pagination tweaks */
+  .MuiPagination-root {
+    .MuiPaginationItem-root {
+      font-size: 13px;
+      min-width: 32px;
+      height: 32px;
+      margin: 0 2px;
+    }
+  }
+
+  /* generic table → horizontal scroll wrap */
+  table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* sweetalert / modal width safety */
+  .swal2-popup { width: calc(100vw - 32px) !important; max-width: 380px; }
+
+  /* default heading rhythm */
+  h1, h2, h3, h4 { margin-top: 0; }
+  p { margin: 0 0 12px; }
+
+  /* universal full-width buttons in card footers */
+  .button-box {
+    width: 100% !important;
+  }
+}
+
+/* dark-mode tweaks for mobile */
+body.dark-mode #mobile-wrap {
+  background: #141518;
+  color: #f5f5f7;
+
+  #top, .mobile-top { background: #1a1c1f; border-bottom-color: rgba(255, 255, 255, 0.06); }
+  .mobile-top .mobile-logo span { color: #f5f5f7; }
+  .mobile-top .mobile-actions .mobile-menu-btn { background: #e8a54b; }
+
+  .mobile-search,
+  .home-page .top-properties .top-card-box,
+  .home-page .popular-properties .popular-card-box,
+  .home-page .trend-properties .trend-card-box,
+  .home-page .top-agents .top-agent-card,
+  .property-card, .agent-card, .article-card,
+  .panel-config, .left-config, .right-config,
+  .ask-info, .review-box, .reviews-config,
+  .image-info, .my-page .main-config,
+  .member-info, .agent-info,
+  .join-page .main .left {
+    background: #1f2125 !important;
+    color: #f5f5f7 !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  .home-page .popular-properties { background: #16181b; }
+  .home-page .top-agents { background: #16181b; }
+  .home-page .testimonials { background: #1d1612; }
+
+  .info .title, .name, strong, h1, h2, h3, h4 { color: #f5f5f7 !important; }
+  .desc, p, span, .desc-text { color: #b9bcc2 !important; }
+
+  #footer { background: #16181b; }
+  #footer .footer-container .second { background: #1f2125; border-top-color: rgba(255, 255, 255, 0.06); }
+  #footer .links-column .section-title,
+  #footer .contact-section .section-title { color: #f5f5f7; }
+  #footer .links-column span,
+  #footer .contact-section .contact-item span { color: #b9bcc2; }
+}
+
+body.dark-mode .mobile-drawer-paper { background: #1a1c1f !important; }
+body.dark-mode .mobile-drawer {
+  .drawer-head { border-bottom-color: rgba(255, 255, 255, 0.06); }
+  .drawer-head .drawer-logo span,
+  .drawer-user div strong { color: #f5f5f7; }
+  .drawer-user { background: linear-gradient(135deg, #2a221a 0%, #221b14 100%); }
+  .drawer-nav a {
+    color: #f5f5f7;
+    &:hover { background: #25272b; }
+    &.active { background: #2a221a; color: #e8a54b; }
+  }
+  .drawer-logout { border-color: rgba(255, 255, 255, 0.06); }
+}

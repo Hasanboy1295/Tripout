@@ -2,12 +2,15 @@ import { common } from '@mui/material/colors';
 import shadow from './shadow';
 import typography from './typography';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyTheme = any;
+
 /**
  * LIGHT THEME (DEFAULT)
  */
-export const light = {
+export const light: AnyTheme = {
 	palette: {
-		type: 'light',
+		mode: 'light', // ✅ 'type' → 'mode'
 		background: {
 			default: '#f4f6f8',
 			paper: common.white,
@@ -42,7 +45,6 @@ export const light = {
 					h6: 'h6',
 					subtitle1: 'p',
 					subtitle2: 'p',
-					subtitle3: 'p',
 					body1: 'p',
 					body2: 'p',
 				},
@@ -60,23 +62,6 @@ export const light = {
 			styleOverrides: {
 				root: {
 					borderColor: '#eee',
-				},
-			},
-		},
-		MuiBox: {
-			styleOverrides: {
-				root: {
-					padding: '0',
-				},
-			},
-			makeStyles: {
-				root: {
-					padding: 0,
-				},
-			},
-			sx: {
-				'&.MuiBox-root': {
-					component: 'div',
 				},
 			},
 		},
@@ -115,9 +100,6 @@ export const light = {
 					minWidth: 'auto',
 					lineHeight: '1.2',
 					boxShadow: 'none',
-					ButtonText: {
-						color: '#212121',
-					},
 				},
 			},
 		},
@@ -143,9 +125,6 @@ export const light = {
 		MuiListItem: {
 			styleOverrides: {
 				root: {
-					MuiSelect: {
-						backgroundColor: '#fafafa',
-					},
 					padding: '0',
 				},
 			},
@@ -168,15 +147,13 @@ export const light = {
 			styleOverrides: {
 				root: {},
 				select: {
-					textAlign: 'left',
+					textAlign: 'left' as const, // ✅ asosiy fix
 				},
 			},
 		},
 		MuiInputBase: {
 			styleOverrides: {
-				root: {
-					input: {},
-				},
+				root: {},
 			},
 		},
 		MuiOutlinedInput: {
@@ -185,7 +162,6 @@ export const light = {
 					height: '48px',
 					width: '100%',
 					backgroundColor: '#fff',
-					input: {},
 				},
 				notchedOutline: {
 					padding: '8px',
@@ -264,18 +240,11 @@ export const light = {
 					background: '#fff',
 					color: '#212121',
 				},
-				hover: {
-					background: '#fff',
-				},
 			},
 		},
 		MuiPaper: {
 			styleOverrides: {
-				root: {
-					MuiMenu: {
-						boxShadow: 'rgb(145 158 171 / 24%) 0px 0px 2px 0px, rgb(145 158 171 / 24%) -20px 20px 40px -4px',
-					},
-				},
+				root: {},
 			},
 		},
 		MuiMenuItem: {
@@ -297,6 +266,280 @@ export const light = {
 				root: {
 					border: '1px solid #ddd',
 					color: '#212121',
+				},
+			},
+		},
+	},
+	shadow,
+	typography,
+};
+
+/**
+ * DARK THEME
+ */
+export const dark: AnyTheme = {
+	palette: {
+		mode: 'dark',
+		background: {
+			default: '#121212',
+			paper: '#1e1e1e',
+		},
+		primary: {
+			contrastText: '#ffffff',
+			main: '#f5a623',
+		},
+		secondary: {
+			main: '#1646C1',
+		},
+		text: {
+			primary: '#ffffff',
+			secondary: '#b0bec5',
+			dark: common.white,
+		},
+	},
+	components: {
+		MuiTypography: {
+			styleOverrides: {
+				root: {
+					letterSpacing: '0',
+				},
+			},
+			defaultProps: {
+				variantMapping: {
+					h1: 'h1',
+					h2: 'h2',
+					h3: 'h3',
+					h4: 'h4',
+					h5: 'h5',
+					h6: 'h6',
+					subtitle1: 'p',
+					subtitle2: 'p',
+					body1: 'p',
+					body2: 'p',
+				},
+			},
+		},
+		MuiLink: {
+			styleOverrides: {
+				root: {
+					color: '#b0bec5',
+					textDecoration: 'none',
+				},
+			},
+		},
+		MuiDivider: {
+			styleOverrides: {
+				root: {
+					borderColor: '#333',
+				},
+			},
+		},
+		MuiContainer: {
+			styleOverrides: {
+				root: {
+					maxWidth: 'inherit',
+					padding: '0',
+					'@media (min-width: 600px)': {
+						paddingLeft: 0,
+						paddingRight: 0,
+					},
+				},
+			},
+		},
+		MuiCssBaseline: {
+			styleOverrides: {
+				html: { height: '100%' },
+				body: { background: '#121212', color: '#fff', height: '100%', minHeight: '100%' },
+				p: {
+					margin: '0',
+				},
+			},
+		},
+		MuiAvatar: {
+			styleOverrides: {
+				root: {
+					marginLeft: '0',
+				},
+			},
+		},
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					color: '#fff',
+					minWidth: 'auto',
+					lineHeight: '1.2',
+					boxShadow: 'none',
+				},
+			},
+		},
+		MuiIconButton: {
+			styleOverrides: {
+				root: {
+					color: '#fff',
+				},
+			},
+		},
+		MuiListItemButton: {
+			styleOverrides: {
+				root: {
+					padding: '0',
+				},
+			},
+		},
+		MuiList: {
+			styleOverrides: {
+				root: {
+					padding: '0',
+				},
+			},
+		},
+		MuiListItem: {
+			styleOverrides: {
+				root: {
+					padding: '0',
+				},
+			},
+		},
+		MuiFormControl: {
+			styleOverrides: {
+				root: {
+					width: '100%',
+				},
+			},
+		},
+		MuiFormControlLabel: {
+			styleOverrides: {
+				root: {
+					marginRight: '0',
+				},
+			},
+		},
+		MuiSelect: {
+			styleOverrides: {
+				root: {},
+				select: {
+					textAlign: 'left' as const, // ✅ asosiy fix
+				},
+			},
+		},
+		MuiInputBase: {
+			styleOverrides: {
+				root: {},
+			},
+		},
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+					height: '48px',
+					width: '100%',
+					backgroundColor: '#333',
+				},
+				notchedOutline: {
+					padding: '8px',
+					top: '-9px',
+					border: '1px solid #555',
+				},
+			},
+		},
+		MuiFormHelperText: {
+			styleOverrides: {
+				root: {
+					margin: '5px 0 0 2px',
+					lineHeight: '1.2',
+				},
+			},
+		},
+		MuiStepper: {
+			styleOverrides: {
+				root: {
+					alignItems: 'center',
+				},
+			},
+		},
+		MuiTabPanel: {
+			styleOverrides: {
+				root: {
+					padding: '0',
+				},
+			},
+		},
+		MuiSvgIcon: {
+			styleOverrides: {
+				root: {},
+			},
+		},
+		MuiStepIcon: {
+			styleOverrides: {
+				root: {
+					color: '#333',
+					borderRadius: '50%',
+					border: '1px solid #555',
+				},
+				text: {
+					fill: '#999',
+				},
+			},
+		},
+		MuiStepConnector: {
+			styleOverrides: {
+				line: {
+					borderColor: '#555',
+				},
+			},
+		},
+		MuiStepLabel: {
+			styleOverrides: {
+				label: {
+					fontSize: '14px',
+				},
+			},
+		},
+		MuiCheckbox: {
+			styleOverrides: {
+				root: {
+					'&.Mui-checked': {
+						color: '#fff',
+					},
+				},
+			},
+		},
+		MuiFab: {
+			styleOverrides: {
+				root: {
+					width: '40px',
+					height: '40px',
+					background: '#333',
+					color: '#fff',
+				},
+			},
+		},
+		MuiPaper: {
+			styleOverrides: {
+				root: {
+					backgroundColor: '#1e1e1e',
+					backgroundImage: 'none',
+				},
+			},
+		},
+		MuiMenuItem: {
+			styleOverrides: {
+				root: {
+					padding: '6px 8px',
+				},
+			},
+		},
+		MuiAlert: {
+			styleOverrides: {
+				root: {
+					boxShadow: 'none',
+				},
+			},
+		},
+		MuiChip: {
+			styleOverrides: {
+				root: {
+					border: '1px solid #555',
+					color: '#fff',
 				},
 			},
 		},

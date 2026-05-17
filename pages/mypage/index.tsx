@@ -20,6 +20,7 @@ import { userVar } from '../../apollo/store';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { Messages } from '../../libs/config';
+import { useTranslation } from 'next-i18next';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -30,6 +31,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 const MyPage: NextPage = () => {
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { t } = useTranslation('common');
 	const category: any = router.query?.category;
 	const user = useReactiveVar(userVar);
 
@@ -65,7 +67,7 @@ const MyPage: NextPage = () => {
 				},
 			});
 
-			await sweetTopSmallSuccessAlert('Followed!', 800);
+			await sweetTopSmallSuccessAlert(t('mp_followed'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
@@ -83,7 +85,7 @@ const MyPage: NextPage = () => {
 				},
 			});
 
-			await sweetTopSmallSuccessAlert('Unfollowed!', 800);
+			await sweetTopSmallSuccessAlert(t('mp_unfollowed'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
@@ -100,7 +102,7 @@ const MyPage: NextPage = () => {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert('Success!', 800);
+			await sweetTopSmallSuccessAlert(t('mp_success'), 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			console.log('ERROR, likeMemberHandler:', err.message);
@@ -154,7 +156,7 @@ const MyPage: NextPage = () => {
 				return (
 					<Stack className="coming-soon-box" alignItems="center" justifyContent="center" sx={{ minHeight: 300 }}>
 						<Typography variant="h5" color="textSecondary">
-							My Orders - Coming Soon
+							{t('mp_orders_coming_soon')}
 						</Typography>
 					</Stack>
 				);
@@ -166,10 +168,6 @@ const MyPage: NextPage = () => {
 				return <MyProfile />;
 		}
 	};
-
-	if (device === 'mobile') {
-		return <>MY PAGE MOBILE</>;
-	} else {
 		return (
 			<div id="my-page">
 				<div className="container">
@@ -188,7 +186,6 @@ const MyPage: NextPage = () => {
 				</div>
 			</div>
 		);
-	}
 };
 
 export default withLayoutBasic(MyPage);

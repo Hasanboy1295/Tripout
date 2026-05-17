@@ -61,22 +61,8 @@ const stats = [
 ];
 
 const testimonials = [
-	{
-		name: 'Sarah Thompson',
-		role: 'Tourists',
-		location: 'Thailand, Asia',
-		stars: 5,
-		image: '/img/testimonials/person1.jpg',
-		text: 'Our recent trip was absolutely unforgettable! Every detail was meticulously planned, from our stunning accommodations to the incredible local experiences. The guides were friendly and knowledgeable, making us feel immersed in the culture. We discovered hidden gems that we never would have found on our own. I can\'t wait to book our next adventure with this amazing team.',
-	},
-	{
-		name: 'Michael Lee',
-		role: 'Tourists',
-		location: 'Bali, Indonesia',
-		stars: 5,
-		image: '/img/testimonials/person2.jpg',
-		text: 'This travel experience surpassed all our expectations! The itinerary struck the perfect balance between adventure and relaxation, allowing us to truly enjoy every moment. The accommodations were top-notch, and the local cuisine was a highlight. The team\'s expertise and attention to detail made us feel like VIPs throughout the trip.',
-	},
+	{ index: 1, stars: 5, image: '/img/testimonials/person1.jpg' },
+	{ index: 2, stars: 5, image: '/img/testimonials/person2.jpg' },
 ];
 
 const ServicePage: NextPage = () => {
@@ -87,11 +73,13 @@ const ServicePage: NextPage = () => {
 		   <div className={'service-banner'}>
 			   <img src="/img/banner/hero-travel-1.jpg" alt={t('services_title')} />
 			   <div className={'banner-overlay'}>
+				   <span className={'eyebrow'}>{t('services_eyebrow')}</span>
 				   <h1>{t('services_title')}</h1>
+				   <p className={'lead'}>{t('services_lead')}</p>
 				   <div className={'breadcrumb'}>
 					   <Link href={'/'}>{t('Home')}</Link>
-					   <span>{'>'}</span>
-					   <span>{t('services_breadcrumb')}</span>
+					   <span className={'sep'}>/</span>
+					   <span className={'current'}>{t('services_breadcrumb')}</span>
 				   </div>
 			   </div>
 		   </div>
@@ -228,15 +216,9 @@ const ServicePage: NextPage = () => {
 					<div className={'dest-card tall'}>
 						<img src="/img/destinations/santorini.jpg" alt="Santorini" />
 					</div>
-					<div className={'dest-card tall featured'}>
+					<Link href={'/property'} className={'dest-card tall featured'}>
 						<img src="/img/destinations/turkey.jpg" alt={t('services_dest_featured_img_alt')} />
-						<div className={'dest-overlay'}>
-							<div className={'link-circle'}>
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="#fff" strokeWidth="2" fill="none"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#fff" strokeWidth="2" fill="none"/></svg>
-							</div>
-							<span>{t('services_dest_featured_text')}</span>
-						</div>
-					</div>
+					</Link>
 					<div className={'dest-card'}>
 						<img src="/img/destinations/greece.jpg" alt="Greece" />
 					</div>
@@ -265,24 +247,24 @@ const ServicePage: NextPage = () => {
 					<h2>{t('services_testimonial_title')}</h2>
 				</div>
 				<div className={'test-cards'}>
-					{testimonials.map((t, i) => (
-						<div key={i} className={'test-card'}>
+					{testimonials.map((tm) => (
+						<div key={tm.index} className={'test-card'}>
 							<div className={'test-card-top'}>
-								<img src={t.image} alt={t.name} className={'test-avatar'} />
+								<img src={tm.image} alt={t(`svc_testimonial_name_${tm.index}`)} className={'test-avatar'} />
 								<div className={'test-info'}>
-												<h4>{t.name}</h4>
-												<span>{t.role}</span>
+												<h4>{t(`svc_testimonial_name_${tm.index}`)}</h4>
+												<span>{t(`svc_testimonial_role_${tm.index}`)}</span>
 								</div>
 								<div className={'test-location'}>
 									<svg width="12" height="12" viewBox="0 0 24 24" fill="#e8a54b"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3" fill="#fff"/></svg>
-									{t.location}
+									{t(`svc_testimonial_location_${tm.index}`)}
 								</div>
 							</div>
 							<div className={'test-stars'}>
-								{Array.from({ length: t.stars }).map((_, j) => <span key={j}>★</span>)}
+								{Array.from({ length: tm.stars }).map((_, j) => <span key={j}>★</span>)}
 							</div>
 							<hr />
-												<p>{t.text}</p>
+												<p>{t(`svc_testimonial_text_${tm.index}`)}</p>
 						</div>
 					))}
 				</div>

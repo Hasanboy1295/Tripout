@@ -9,6 +9,9 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { useTranslation } from 'next-i18next';
+
+const DEFAULT_USER_AVATAR = '/img/profile/defaultUser.svg';
 
 interface ReviewProps {
 	comment: Comment;
@@ -19,22 +22,28 @@ const Review = (props: ReviewProps) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
-	const imagePath: string = comment?.memberData?.memberImage
-		? `${REACT_APP_API_URL}/${comment?.memberData?.memberImage}`
-		: '/img/profile/defaultUser.svg';
+	const { t } = useTranslation('common');
+	const memberImage = comment?.memberData?.memberImage;
+	const avatarSrc = memberImage ? `${REACT_APP_API_URL}/${memberImage}` : DEFAULT_USER_AVATAR;
+	const commentViews = comment?.commentViews ?? 0;
 
 	/** HANDLERS **/
 	const goMemberPage = (id: string) => {
 		if (id === user?._id) router.push('/mypage');
 		else router.push(`/member?memberId=${id}`);
 	};
-	if (device === 'mobile') {
-		return <div>REVIEW</div>;
-	} else {
+
 		return (
 			<Stack className={'review-config'}>
 				<Stack className={'review-mb-info'}>
-					<img src={imagePath} alt="" className={'img-box'} />
+					<img
+						src={avatarSrc}
+						alt=""
+						className={'img-box'}
+						onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+							event.currentTarget.src = DEFAULT_USER_AVATAR;
+						}}
+					/>
 					<Stack className={'review-right'}>
 						<Stack className={'name-date-row'}>
 							<Typography className={'name'} onClick={() => goMemberPage(comment?.memberData?._id as string)}>
@@ -49,7 +58,9 @@ const Review = (props: ReviewProps) => {
 						</Stack>
 						<Stack className={'views-row'}>
 							<RemoveRedEyeIcon />
-							<Typography className={'view-count'}>{comment?.memberData?.memberViews ?? 0} views</Typography>
+							<Typography className={'view-count'}>
+								{commentViews.toLocaleString()} {commentViews === 1 ? t('detail_view') : t('detail_views')}
+							</Typography>
 						</Stack>
 						<Stack className={'desc-box'}>
 							<Typography className={'description'}>{comment.commentContent}</Typography>
@@ -58,7 +69,6 @@ const Review = (props: ReviewProps) => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default Review;

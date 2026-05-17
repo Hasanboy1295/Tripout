@@ -16,14 +16,18 @@ const ReviewCard = (props: ReviewCardProps) => {
 		? `${REACT_APP_API_URL}/${comment?.memberData?.memberImage}`
 		: '/img/profile/defaultUser.svg';
 
-	if (device === 'mobile') {
-		return <div>REVIEW CARD</div>;
-	} else {
+
 		return (
 			<Box component={'div'} className={'review-card'}>
 				<div className={'info'}>
 					<div className={'left'}>
-						<img src={imagePath} alt="" />
+						<img
+							src={imagePath}
+							alt=""
+							onError={(e) => {
+								(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+							}}
+						/>
 						<div>
 							<strong>{comment.memberData?.memberNick}</strong>
 							<span>
@@ -53,7 +57,6 @@ const ReviewCard = (props: ReviewCardProps) => {
 				)}
 			</Box>
 		);
-	}
 };
 
 export default ReviewCard;

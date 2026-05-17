@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { getJwtToken, logOut, updateUserInfo } from '../auth';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, Drawer, IconButton } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
@@ -11,13 +11,17 @@ import Menu, { MenuProps } from '@mui/material/Menu';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import { useReactiveVar } from '@apollo/client';
-import { userVar } from '../../apollo/store';
+import { userVar, themeVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import { REACT_APP_API_URL } from '../config';
 
 const DEFAULT_USER_AVATAR = '/img/profile/defaultUser.svg';
@@ -41,6 +45,7 @@ const Top = () => {
 	const isAgentRoute = router.pathname.startsWith('/agent');
 	const isMyPageRoute = router.pathname.startsWith('/mypage');
 	const isAboutRoute = router.pathname.startsWith('/about');
+	const themeMode = useReactiveVar(themeVar);
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
 	const [lang, setLang] = useState<string | null>('en');
 	const drop = Boolean(anchorEl2);
@@ -51,6 +56,9 @@ const Top = () => {
 	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
 	const logoutOpen = Boolean(logoutAnchor);
 	const userAvatar = resolveUserAvatar(user?.memberImage);
+	const [mobileDrawer, setMobileDrawer] = useState<boolean>(false);
+	const [mobileLangAnchor, setMobileLangAnchor] = useState<null | HTMLElement>(null);
+	const mobileLangOpen = Boolean(mobileLangAnchor);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -77,6 +85,15 @@ const Top = () => {
 		if (jwt) updateUserInfo(jwt);
 	}, []);
 
+	// ✅ YANGI: Scroll pozitsiyani tiklash
+	useEffect(() => {
+		const savedScroll = sessionStorage.getItem('scrollPos');
+		if (savedScroll) {
+			window.scrollTo({ top: parseInt(savedScroll), behavior: 'auto' });
+			sessionStorage.removeItem('scrollPos');
+		}
+	}, [router.locale]);
+
 	/** HANDLERS **/
 	const langClick = (e: any) => {
 		setAnchorEl2(e.currentTarget);
@@ -86,12 +103,16 @@ const Top = () => {
 		setAnchorEl2(null);
 	};
 
+	// ✅ YANGI: sessionStorage ishlatiladi
 	const langChoice = useCallback(
 		async (e: any) => {
+			const scrollY = window.scrollY;
+			sessionStorage.setItem('scrollPos', String(scrollY));
+
 			setLang(e.target.id);
 			localStorage.setItem('locale', e.target.id);
 			setAnchorEl2(null);
-			await router.push(router.asPath, router.asPath, { locale: e.target.id });
+			await router.push(router.asPath, router.asPath, { locale: e.target.id, scroll: false });
 		},
 		[router],
 	);
@@ -102,6 +123,10 @@ const Top = () => {
 		} else {
 			setColorChange(false);
 		}
+	};
+
+	const themeChangeHandler = () => {
+		themeVar(themeMode === 'dark' ? 'light' : 'dark');
 	};
 
 	const handleClose = () => {
@@ -167,23 +192,164 @@ const Top = () => {
 	}, []);
 
 	if (device == 'mobile') {
+		const closeDrawer = () => setMobileDrawer(false);
+		const navItems = [
+			{ href: '/', label: t('Home') },
+			{ href: '/property', label: t('Destinations') },
+			{ href: '/agent', label: t('Agents') },
+			{ href: '/community?articleCategory=FREE', label: t('Community') },
+			{ href: '/about', label: t('About Us') },
+			{ href: '/cs', label: t('CS') },
+			{ href: '/mypage', label: t('My Page') },
+		];
+		const isActive = (href: string) => {
+			const path = href.split('?')[0];
+			if (path === '/') return router.pathname === '/';
+			return router.pathname === path || router.pathname.startsWith(path + '/');
+		};
+
+		// ✅ YANGI: sessionStorage ishlatiladi
+		const mobileLangChoice = async (e: any) => {
+			const scrollY = window.scrollY;
+			sessionStorage.setItem('scrollPos', String(scrollY));
+
+			const id = e.currentTarget.id;
+			setLang(id);
+			localStorage.setItem('locale', id);
+			setMobileLangAnchor(null);
+			await router.push(router.asPath, router.asPath, { locale: id, scroll: false });
+		};
+
 		return (
-			<Stack className={'top'}>
-				<Link href={'/'}>
-					<div>{t('Home')}</div>
-				</Link>
-				<Link href={'/property'}>
-					<div>{t('Properties')}</div>
-				</Link>
-				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
-				</Link>
-				<Link href={'/community?articleCategory=FREE'}>
-					<div> {t('Community')} </div>
-				</Link>
-				<Link href={'/cs'}>
-					<div> {t('CS')} </div>
-				</Link>
+			<Stack className={`mobile-top ${colorChange ? 'scrolled' : ''}`}>
+				<Stack className={'mobile-top-inner'}>
+					<Link href={'/'} className={'mobile-logo'}>
+						<img src="/img/logo/logo.svg" alt="Tripout" />
+						<span>Tripout</span>
+					</Link>
+					<div className={'mobile-actions'}>
+						<IconButton
+							className={'mobile-lang-btn'}
+							onClick={(e) => setMobileLangAnchor(e.currentTarget)}
+							size={'small'}
+						>
+							{lang ? (
+								<img src={`/img/flag/lang${lang}.png`} alt={'flag'} />
+							) : (
+								<img src={`/img/flag/langen.png`} alt={'flag'} />
+							)}
+						</IconButton>
+						<StyledMenu
+							anchorEl={mobileLangAnchor}
+							open={mobileLangOpen}
+							onClose={() => setMobileLangAnchor(null)}
+						>
+							<MenuItem disableRipple onClick={mobileLangChoice} id="en">
+								<img className="img-flag" src={'/img/flag/langen.png'} alt={'English'} />
+								English
+							</MenuItem>
+							<MenuItem disableRipple onClick={mobileLangChoice} id="kr">
+								<img className="img-flag" src={'/img/flag/langkr.png'} alt={'Korean'} />
+								Korean
+							</MenuItem>
+							<MenuItem disableRipple onClick={mobileLangChoice} id="ru">
+								<img className="img-flag" src={'/img/flag/langru.png'} alt={'Russian'} />
+								Russian
+							</MenuItem>
+						</StyledMenu>
+
+						<IconButton
+							className={'mobile-theme-btn'}
+							onClick={themeChangeHandler}
+							size={'small'}
+						>
+							{themeMode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
+						</IconButton>
+
+						{user?._id ? (
+							<div className={'mobile-avatar'} onClick={() => setMobileDrawer(true)}>
+								<img
+									src={userAvatar}
+									onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+										event.currentTarget.src = DEFAULT_USER_AVATAR;
+									}}
+									alt=""
+								/>
+							</div>
+						) : null}
+
+						<IconButton
+							className={'mobile-menu-btn'}
+							onClick={() => setMobileDrawer(true)}
+							size={'small'}
+						>
+							<MenuRoundedIcon />
+						</IconButton>
+					</div>
+				</Stack>
+
+				<Drawer
+					anchor={'right'}
+					open={mobileDrawer}
+					onClose={closeDrawer}
+					classes={{ paper: 'mobile-drawer-paper' }}
+				>
+					<Stack className={'mobile-drawer'}>
+						<Stack className={'drawer-head'}>
+							<Link href={'/'} onClick={closeDrawer} className={'drawer-logo'}>
+								<img src="/img/logo/logo.svg" alt="Tripout" />
+								<span>Tripout</span>
+							</Link>
+							<IconButton onClick={closeDrawer} size={'small'} className={'drawer-close'}>
+								<CloseRoundedIcon />
+							</IconButton>
+						</Stack>
+
+						{user?._id ? (
+							<Stack className={'drawer-user'}>
+								<img
+									src={userAvatar}
+									onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+										event.currentTarget.src = DEFAULT_USER_AVATAR;
+									}}
+									alt=""
+								/>
+								<div>
+									<strong>{user?.memberNick || user?.memberFullName || 'Traveler'}</strong>
+									<span>{user?.memberPhone}</span>
+								</div>
+							</Stack>
+						) : (
+							<Link href={'/account/join'} onClick={closeDrawer} className={'drawer-cta'}>
+								<LockOutlinedIcon />
+								<span>{t('login_signup_cta')}</span>
+							</Link>
+						)}
+
+						<Stack className={'drawer-nav'}>
+							{navItems.map((item) => (
+								<Link
+									key={item.href}
+									href={item.href}
+									onClick={closeDrawer}
+									className={isActive(item.href) ? 'active' : ''}
+								>
+									<span>{item.label}</span>
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+										<path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+									</svg>
+								</Link>
+							))}
+						</Stack>
+
+						{user?._id ? (
+							<div className={'drawer-logout'} onClick={() => { closeDrawer(); logOut(); }}>
+								<Logout />
+								<span>{t('logout')}</span>
+							</div>
+						) : null}
+					</Stack>
+				</Drawer>
 			</Stack>
 		);
 	} else {
@@ -201,11 +367,11 @@ const Top = () => {
 							<Link href={'/'}>
 								<div className={router.pathname === '/' ? 'active' : ''}>{t('Home')}</div>
 							</Link>
-						
-                            <Link href={'/property'}>
+
+							<Link href={'/property'}>
 								<div className={isDestinationRoute ? 'active' : ''}>{t('Destinations')}</div>
 							</Link>
-							
+
 							<div className={`nav-dropdown ${router.pathname.startsWith('/service') ? 'active' : ''}`}>
 								<div className={'nav-dropdown-trigger'}>
 									{t('Services')}
@@ -220,7 +386,7 @@ const Top = () => {
 									</Link>
 								</div>
 							</div>
-						
+
 							<Link href={'/agent'}>
 								<div className={isAgentRoute ? 'active' : ''}>{t('Agents')}</div>
 							</Link>
@@ -228,11 +394,9 @@ const Top = () => {
 								<div className={isMyPageRoute ? 'active' : ''}>{t('My Page')}</div>
 							</Link>
 
-								<Link href={'/about'}>
+							<Link href={'/about'}>
 								<div className={isAboutRoute ? 'active' : ''}>{t('About Us')}</div>
 							</Link>
-
-
 						</Box>
 						<Box component={'div'} className={'user-box'}>
 							<div className={'search-btn'}>
@@ -261,7 +425,7 @@ const Top = () => {
 									>
 										<MenuItem onClick={() => logOut()}>
 											<Logout fontSize="small" style={{ color: 'blue', marginRight: '10px' }} />
-											Logout
+											{t('logout')}
 										</MenuItem>
 									</Menu>
 								</>
@@ -269,7 +433,7 @@ const Top = () => {
 								<Link href={'/account/join'}>
 									<div className={'join-box'}>
 										<LockOutlinedIcon />
-										<span>LOG IN / SIGN UP</span>
+										<span>{t('login_signup_cta')}</span>
 									</div>
 								</Link>
 							)}
@@ -293,33 +457,37 @@ const Top = () => {
 
 								<StyledMenu anchorEl={anchorEl2} open={drop} onClose={langClose} sx={{ position: 'absolute' }}>
 									<MenuItem disableRipple onClick={langChoice} id="en">
-										<img
-											className="img-flag"
-											src={'/img/flag/langen.png'}
-											id="en"
-											alt={'English'}
-										/>
+										<img className="img-flag" src={'/img/flag/langen.png'} id="en" alt={'English'} />
 										English
 									</MenuItem>
 									<MenuItem disableRipple onClick={langChoice} id="kr">
-										<img
-											className="img-flag"
-											src={'/img/flag/langkr.png'}
-											id="kr"
-											alt={'Korean'}
-										/>
+										<img className="img-flag" src={'/img/flag/langkr.png'} id="kr" alt={'Korean'} />
 										Korean
 									</MenuItem>
 									<MenuItem disableRipple onClick={langChoice} id="ru">
-										<img
-											className="img-flag"
-											src={'/img/flag/langru.png'}
-											id="ru"
-											alt={'Russian'}
-										/>
+										<img className="img-flag" src={'/img/flag/langru.png'} id="ru" alt={'Russian'} />
 										Russian
 									</MenuItem>
 								</StyledMenu>
+
+								<Box
+									component={'div'}
+									className={'theme-toggle-box'}
+									onClick={themeChangeHandler}
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+										cursor: 'pointer',
+										ml: 1,
+										p: 1,
+										borderRadius: '50%',
+										flexShrink: 0,
+										color: themeMode === 'dark' ? '#fff' : '#222',
+										'&:hover': { background: themeMode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' },
+									}}
+								>
+									{themeMode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
+								</Box>
 							</div>
 						</Box>
 					</Stack>

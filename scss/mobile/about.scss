@@ -1,0 +1,118 @@
+/* =========================================================================
+ *  MOBILE ABOUT
+ * ========================================================================= */
+#mobile-wrap {
+  .about-page,
+  #about-page {
+    width: 100%;
+
+    /* Hero (in-page) section */
+    .hero-section,
+    .about-hero {
+      padding: 32px 18px !important;
+      .hero-content,
+      .row-box {
+        flex-direction: column !important;
+        gap: 24px !important;
+      }
+      .left-content,
+      .right-content { width: 100% !important; }
+
+      h1, .main-heading {
+        font-size: 26px !important;
+        line-height: 1.18 !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.4px;
+        margin-bottom: 12px;
+      }
+      p, .desc-text, .sub-title {
+        font-size: 13.5px !important;
+        line-height: 1.6 !important;
+      }
+      .tag-line { font-size: 12px !important; }
+      img {
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 18px;
+      }
+      .right-content img { max-height: 320px; object-fit: cover; }
+    }
+
+    /* About Us section */
+    .about-us-section {
+      padding: 32px 14px !important;
+      .row-box,
+      .content-top {
+        flex-direction: column !important;
+        gap: 18px !important;
+      }
+      h2, .section-title {
+        font-size: 24px !important;
+        line-height: 1.22 !important;
+      }
+      .sub-title { font-size: 13px !important; }
+      .features-grid,
+      .about-features {
+        grid-template-columns: 1fr !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+      }
+      .stat-pill,
+      .about-features > div {
+        padding: 16px !important;
+        border-radius: 14px !important;
+      }
+    }
+
+    /* Process / steps */
+    .process-section {
+      padding: 32px 14px !important;
+      .steps-wrap,
+      .step {
+        flex-direction: column !important;
+        gap: 16px !important;
+      }
+      .step {
+        padding: 16px !important;
+        border-radius: 16px !important;
+        background: #fff;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+
+        .step-image {
+          width: 100% !important;
+          height: 180px !important;
+          border-radius: 12px;
+          object-fit: cover;
+        }
+        .number, .step-number {
+          width: 40px;
+          height: 40px;
+          font-size: 16px !important;
+        }
+        .title { font-size: 16px !important; font-weight: 600 !important; }
+        .desc-text { font-size: 13px !important; line-height: 1.55 !important; }
+      }
+    }
+
+    /* Testimonials inside about */
+    .svc-testimonials,
+    .testimonials {
+      padding: 32px 14px !important;
+      .test-cards {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+      }
+      .testimonials-body {
+        flex-direction: column !important;
+        gap: 18px !important;
+      }
+    }
+
+    /* Partners strip */
+    .partners-section,
+    .partner {
+      padding: 22px 0 !important;
+      img { max-height: 32px !important; }
+    }
+  }
+}

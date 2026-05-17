@@ -5,9 +5,7 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 const Article = () => {
 	const device = useDeviceDetect();
 
-	if (device === 'mobile') {
-		return <div>PROPERTY CARD</div>;
-	} else {
+
 		return (
 			<Stack className="card-config">
 				<Stack className="top">
@@ -28,7 +26,6 @@ const Article = () => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default Article;

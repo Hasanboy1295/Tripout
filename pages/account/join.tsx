@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { logIn, signUp } from '../../libs/auth';
 import { sweetMixinErrorAlert } from '../../libs/sweetAlert';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 import dynamic from 'next/dynamic';
 import { useMutation } from '@apollo/client';
 
@@ -24,6 +25,7 @@ props: {
 const Join: NextPage = () => {
 const router = useRouter();
 const device = useDeviceDetect();
+const { t } = useTranslation('common');
 const [input, setInput] = useState({ nick: '', password: '', phone: '', type: 'USER' });
 const [loginView, setLoginView] = useState<boolean>(true);
 
@@ -79,7 +81,7 @@ await sweetMixinErrorAlert(err.message);
 const handlePhoneLoginStart = async () => {
 	try {
 		if (!phoneNumber || phoneNumber.length < 10) {
-			sweetMixinErrorAlert('Please enter a valid phone number');
+			sweetMixinErrorAlert(t('join_invalid_phone'));
 			return;
 		}
 		// Call backend to send SMS code
@@ -103,14 +105,14 @@ const handlePhoneLoginStart = async () => {
 		}
 	} catch (err: any) {
 		console.error('SMS send error:', err);
-		sweetMixinErrorAlert('Failed to send SMS code');
+		sweetMixinErrorAlert(t('join_sms_failed'));
 	}
 };
 
 const handlePhoneLoginVerify = async () => {
 	try {
 		if (!verificationCode || verificationCode.length < 4) {
-			sweetMixinErrorAlert('Please enter the verification code');
+			sweetMixinErrorAlert(t('join_enter_code'));
 			return;
 		}
 		
@@ -136,15 +138,11 @@ const handlePhoneLoginVerify = async () => {
 		}
 	} catch (err: any) {
 		console.error('Verification error:', err);
-		sweetMixinErrorAlert('Invalid verification code');
+		sweetMixinErrorAlert(t('join_invalid_code'));
 	}
 };
 
 console.log('+input: ', input);
-
-if (device === 'mobile') {
-return <div>LOGIN MOBILE</div>;
-} else {
 return (
 <Stack className={'join-page'}>
 <Stack className={'container'}>
@@ -153,24 +151,24 @@ return (
 {/* @ts-ignore */}
 <Box className={'logo'}>
 <img src="/img/logo/logoText.svg" alt="" />
-<span>Nestar</span>
+<span>{t('join_brand')}</span>
 </Box>
 <Box className={'info'}>
-<span>{loginView ? 'login' : 'signup'}</span>
-<p>{loginView ? 'Login' : 'Sign'} in with this account across the following sites.</p>
+<span>{loginView ? t('join_login') : t('join_signup')}</span>
+<p>{loginView ? t('join_login') : t('join_signup')} {t('join_account_intro')}</p>
 </Box>
 
 {loginView ? (
 <>
 {/* PHONE LOGIN SECTION */}
 <Box className={'telegram-auth-box'}>
-<Typography className={'telegram-title'}>Login with Phone Number</Typography>
+<Typography className={'telegram-title'}>{t('join_phone_title')}</Typography>
 <div className={'telegram-button-wrapper'}>
 {phoneLoginStep === null && (
 <Box sx={{ width: '100%', maxWidth: '300px' }}>
 <input
 type="tel"
-placeholder="Enter your phone number"
+placeholder={t('join_phone_placeholder')}
 value={phoneNumber}
 onChange={(e) => setPhoneNumber(e.target.value)}
 style={{
@@ -199,7 +197,7 @@ backgroundColor: '#0077b6',
 }}
 onClick={handlePhoneLoginStart}
 >
-Send SMS Code
+{t('join_send_sms')}
 </Button>
 </Box>
 )}
@@ -207,11 +205,11 @@ Send SMS Code
 {phoneLoginStep === 'code' && (
 <Box sx={{ width: '100%', maxWidth: '300px' }}>
 <Typography sx={{ fontSize: '14px', color: '#666', mb: 2, textAlign: 'center' }}>
-We sent a code to {phoneNumber}
+{t('join_code_sent_prefix')} {phoneNumber}
 </Typography>
 <input
 type="text"
-placeholder="Enter 6-digit code"
+placeholder={t('join_code_placeholder')}
 value={verificationCode}
 onChange={(e) => setVerificationCode(e.target.value)}
 maxLength={6}
@@ -243,7 +241,7 @@ backgroundColor: '#0077b6',
 }}
 onClick={handlePhoneLoginVerify}
 >
-Verify & Login
+{t('join_verify_login')}
 </Button>
 <Button
 variant="text"
@@ -254,23 +252,23 @@ setPhoneLoginStep(null);
 setVerificationCode('');
 }}
 >
-Change phone number
+{t('join_change_phone')}
 </Button>
 </Box>
 )}
 </div>
 				<Divider sx={{ my: 2.5, color: '#DDD' }}>
-					<Typography className={'divider-text'}>OR</Typography>
+					<Typography className={'divider-text'}>{t('join_or')}</Typography>
 				</Divider>
 			</Box>
 
 			{/* STANDARD LOGIN FORM */}
 			<Box className={'input-wrap'}>
 <div className={'input-box'}>
-<span>Nickname</span>
+<span>{t('join_nickname')}</span>
 <input
 type="text"
-placeholder={'Enter Nickname'}
+placeholder={t('join_nickname_placeholder')}
 onChange={(e) => handleInput('nick', e.target.value)}
 required={true}
 onKeyDown={(event) => {
@@ -279,10 +277,10 @@ if (event.key == 'Enter' && loginView) doLogin();
 />
 </div>
 <div className={'input-box'}>
-<span>Password</span>
+<span>{t('join_password')}</span>
 <input
 type="password"
-placeholder={'Enter Password'}
+placeholder={t('join_password_placeholder')}
 onChange={(e) => handleInput('password', e.target.value)}
 required={true}
 onKeyDown={(event) => {
@@ -295,9 +293,9 @@ if (event.key == 'Enter' && loginView) doLogin();
 <Box className={'register'}>
 <div className={'remember-info'}>
 <FormGroup>
-<FormControlLabel control={<Checkbox defaultChecked size="small" />} label="Remember me" />
+<FormControlLabel control={<Checkbox defaultChecked size="small" />} label={t('join_remember_me')} />
 </FormGroup>
-<a>Lost your password?</a>
+<a>{t('join_lost_password')}</a>
 </div>
 
 <Button
@@ -306,7 +304,7 @@ endIcon={<img src="/img/icons/rightup.svg" alt="" />}
 disabled={input.nick == '' || input.password == ''}
 onClick={doLogin}
 >
-LOGIN WITH EMAIL
+{t('join_login_with_email')}
 </Button>
 </Box>
 </>
@@ -314,10 +312,10 @@ LOGIN WITH EMAIL
 <>
 <Box className={'input-wrap'}>
 <div className={'input-box'}>
-<span>Nickname</span>
+<span>{t('join_nickname')}</span>
 <input
 type="text"
-placeholder={'Enter Nickname'}
+placeholder={t('join_nickname_placeholder')}
 onChange={(e) => handleInput('nick', e.target.value)}
 required={true}
 onKeyDown={(event) => {
@@ -326,10 +324,10 @@ if (event.key == 'Enter' && !loginView) doSignUp();
 />
 </div>
 <div className={'input-box'}>
-<span>Password</span>
+<span>{t('join_password')}</span>
 <input
 type="password"
-placeholder={'Enter Password'}
+placeholder={t('join_password_placeholder')}
 onChange={(e) => handleInput('password', e.target.value)}
 required={true}
 onKeyDown={(event) => {
@@ -338,10 +336,10 @@ if (event.key == 'Enter' && !loginView) doSignUp();
 />
 </div>
 <div className={'input-box'}>
-<span>Phone</span>
+<span>{t('join_phone')}</span>
 <input
 type="text"
-placeholder={'Enter Phone'}
+placeholder={t('join_phone_placeholder_2')}
 onChange={(e) => handleInput('phone', e.target.value)}
 required={true}
 onKeyDown={(event) => {
@@ -353,7 +351,7 @@ if (event.key == 'Enter') doSignUp();
 
 <Box className={'register'}>
 <div className={'type-option'}>
-<span className={'text'}>I want to be registered as:</span>
+<span className={'text'}>{t('join_register_as')}</span>
 <div>
 <FormGroup>
 <FormControlLabel
@@ -365,7 +363,7 @@ onChange={checkUserTypeHandler}
 checked={input?.type == 'USER'}
 />
 }
-label="User"
+label={t('join_role_user')}
 />
 </FormGroup>
 <FormGroup>
@@ -378,7 +376,7 @@ onChange={checkUserTypeHandler}
 checked={input?.type == 'AGENT'}
 />
 }
-label="Agent"
+label={t('join_role_agent')}
 />
 </FormGroup>
 </div>
@@ -390,7 +388,7 @@ disabled={input.nick == '' || input.password == '' || input.phone == '' || input
 onClick={doSignUp}
 endIcon={<img src="/img/icons/rightup.svg" alt="" />}
 >
-SIGNUP
+{t('join_signup_btn')}
 </Button>
 </Box>
 </>
@@ -399,19 +397,19 @@ SIGNUP
 <Box className={'ask-info'}>
 {loginView ? (
 <p>
-Not registered yet?
+{t('join_not_registered')}
 <b
 onClick={() => {
 viewChangeHandler(false);
 }}
 >
-SIGNUP
+{' '}{t('join_signup_link')}
 </b>
 </p>
 ) : (
 <p>
-Have account?
-<b onClick={() => viewChangeHandler(true)}> LOGIN</b>
+{t('join_have_account')}
+<b onClick={() => viewChangeHandler(true)}> {t('join_login_link')}</b>
 </p>
 )}
 </Box>
@@ -421,7 +419,6 @@ Have account?
 </Stack>
 </Stack>
 );
-}
 };
 
 export default withLayoutBasic(Join);

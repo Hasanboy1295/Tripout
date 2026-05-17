@@ -9,6 +9,7 @@ export interface Comment {
 	commentContent: string;
 	commentRefId: string;
 	memberId: string;
+	commentViews: number;
 	createdAt: Date;
 	updatedAt: Date;
 	/** from aggregation **/

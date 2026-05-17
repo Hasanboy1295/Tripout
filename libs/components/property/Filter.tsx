@@ -14,6 +14,22 @@ import { PropertiesInquiry } from '../../types/property/property.input';
 import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import SearchIcon from '@mui/icons-material/Search';
+import RestartAltOutlinedIcon from '@mui/icons-material/RestartAltOutlined';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
+import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
+import { useTranslation } from 'next-i18next';
+
+const DURATION_OPTIONS = [
+	{ key: 'filter_duration_short', start: 1, end: 3 },
+	{ key: 'filter_duration_week', start: 4, end: 7 },
+	{ key: 'filter_duration_two_weeks', start: 8, end: 14 },
+	{ key: 'filter_duration_long', start: 15, end: 365 },
+];
+
+const PRICE_MAX = 5000;
 
 interface FilterType {
 	searchFilter: PropertiesInquiry;
@@ -21,54 +37,47 @@ interface FilterType {
 	initialInput: PropertiesInquiry;
 }
 
-// Tour type labels for travel theme
-const tourTypeLabels: Record<string, string> = {
-	CITY: 'City & Culture',
-	BATCH: 'Beach & Sunset',
-	LUXRY: 'Luxury & Romance',
-};
-
-
-
-// Destination labels
-const destinationLabels: Record<string, string> = {
-	UZBEKISTAN: 'Tashkent, Samarkhand',
-	BANGKOK: 'Bangkok, Thailand',
-	PARIS: 'Paris, France',
-	COSTA_RICA: 'Costa Rica, America',
-	SINGAPORE: 'Singapore, Asia',
-	DUBAI: 'Dubai, United Arab Emirates',
-	TOKYO: 'Tokyo, Japan',
-	KOREA: 'Seoul, Korea',
-	LONDON: 'London, England',
-	BALI: 'Bali, Indonesia',
-	TURKEY: 'Istanbul, Turkey',
-};
-
-
-
 const Filter = (props: FilterType) => {
 	const { searchFilter, setSearchFilter, initialInput } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { t } = useTranslation('common');
 	const [propertyLocation] = useState<PropertyLocation[]>(Object.values(PropertyLocation));
 	const [propertyType] = useState<PropertyType[]>(Object.values(PropertyType));
 	const [searchText, setSearchText] = useState<string>('');
 	const [priceRange, setPriceRange] = useState<number[]>([
-		searchFilter?.search?.pricesRange?.start ?? 100,
-		searchFilter?.search?.pricesRange?.end ?? 500,
+		searchFilter?.search?.pricesRange?.start ?? 0,
+		searchFilter?.search?.pricesRange?.end ?? PRICE_MAX,
 	]);
+	const activeDurationKey = (() => {
+		const r = searchFilter?.search?.periodsRange;
+		if (!r) return '';
+		return DURATION_OPTIONS.find((o) => o.start === r.start && o.end === r.end)?.key || '';
+	})();
 
 	// Reset all filters handler
 	const handleResetFilters = async () => {
 		setSearchText('');
-		setPriceRange([0, 2000]);
+		setPriceRange([0, PRICE_MAX]);
 		setSearchFilter({
 			page: 1,
 			limit: initialInput?.limit || 9,
 			search: {},
 		});
 		await router.push('/property', undefined, { scroll: false });
+	};
+
+	const handleDurationSelect = async (start: number, end: number, isActive: boolean) => {
+		const next = isActive
+			? { ...searchFilter, search: { ...searchFilter.search, periodsRange: undefined } }
+			: { ...searchFilter, search: { ...searchFilter.search, periodsRange: { start, end } } };
+		// strip undefined so it doesn't end up as null in the query string
+		if (isActive) delete next.search.periodsRange;
+		await router.push(
+			`/property?input=${JSON.stringify(next)}`,
+			`/property?input=${JSON.stringify(next)}`,
+			{ scroll: false },
+		);
 	};
 
 	/** LIFECYCLES **/
@@ -204,26 +213,34 @@ const Filter = (props: FilterType) => {
 		);
 	};
 
-	if (device === 'mobile') {
-		return <div>PROPERTIES FILTER</div>;
-	} else {
+
 		return (
 			<Stack className={'filter-main'}>
-				{/* Reset All Filters Button */}
-				<Stack direction="row" justifyContent="flex-end" sx={{ mb: 1 }}>
-					<Button variant="outlined" size="small" color="warning" onClick={handleResetFilters}>
-						Reset All Filters
+				{/* Filter header — title + reset */}
+				<Stack className={'filter-head'} direction="row" alignItems="center" justifyContent="space-between">
+					<Typography className={'filter-head-title'}>Filters</Typography>
+					<Button
+						className={'filter-reset-btn'}
+						size="small"
+						startIcon={<RestartAltOutlinedIcon />}
+						onClick={handleResetFilters}
+					>
+						{t('filter_reset_all')}
 					</Button>
 				</Stack>
+
 				{/* Search Destination */}
 				<Stack className={'filter-section search-section'}>
-					<Typography className={'section-title'}>Search Destination</Typography>
+					<Stack className={'section-head'} direction="row" alignItems="center">
+						<SearchOutlinedIcon className={'section-icon'} />
+						<Typography className={'section-title'}>{t('filter_search_destination')}</Typography>
+					</Stack>
 					<Stack className={'search-box'}>
 						<OutlinedInput
 							value={searchText}
 							type={'text'}
 							className={'search-input'}
-							placeholder={'Search Here...'}
+							placeholder={t('filter_search_placeholder')}
 							onChange={(e: any) => setSearchText(e.target.value)}
 							onKeyDown={(event: any) => {
 								if (event.key == 'Enter') {
@@ -256,73 +273,108 @@ const Filter = (props: FilterType) => {
 
 				{/* Tour Type */}
 				<Stack className={'filter-section'}>
-					<Typography className={'section-title'}>Tour Type</Typography>
-					<Stack className={'checkbox-list'}>
-						{propertyType.map((type: string) => (
-							<Stack className={'checkbox-row'} key={type}>
-								<Stack className={'checkbox-left'} direction={'row'} alignItems={'center'}>
-									<Checkbox
+					<Stack className={'section-head'} direction="row" alignItems="center">
+						<CategoryOutlinedIcon className={'section-icon'} />
+						<Typography className={'section-title'}>{t('filter_tour_type')}</Typography>
+					</Stack>
+					<Stack className={'chip-list'} direction="row" flexWrap="wrap">
+						{propertyType.map((type: string) => {
+							const checked = (searchFilter?.search?.typeList || []).includes(type as PropertyType);
+							return (
+								<label
+									key={type}
+									htmlFor={`type-${type}`}
+									className={`filter-chip ${checked ? 'is-active' : ''}`}
+								>
+									<input
 										id={`type-${type}`}
-										size="small"
+										type="checkbox"
 										value={type}
 										onChange={propertyTypeSelectHandler}
-										checked={(searchFilter?.search?.typeList || []).includes(type as PropertyType)}
-										sx={{
-											color: '#ccc',
-											'&.Mui-checked': { color: '#e8a54b' },
-											padding: '4px',
-										}}
+										checked={checked}
+										style={{ display: 'none' }}
 									/>
-									<label htmlFor={`type-${type}`} style={{ cursor: 'pointer' }}>
-										<Typography className="checkbox-label">
-											{tourTypeLabels[type] || type}
-										</Typography>
-									</label>
-								</Stack>
-							</Stack>
-						))}
+									<span>{t(`tour_type_${type}`, { defaultValue: type })}</span>
+								</label>
+							);
+						})}
+					</Stack>
+				</Stack>
+
+				{/* Duration */}
+				<Stack className={'filter-section'}>
+					<Stack className={'section-head'} direction="row" alignItems="center">
+						<AccessTimeOutlinedIcon className={'section-icon'} />
+						<Typography className={'section-title'}>{t('filter_duration')}</Typography>
+					</Stack>
+					<Stack className={'chip-list'} direction="row" flexWrap="wrap">
+						{DURATION_OPTIONS.map((opt) => {
+							const isActive = activeDurationKey === opt.key;
+							return (
+								<button
+									key={opt.key}
+									type="button"
+									className={`filter-chip ${isActive ? 'is-active' : ''}`}
+									onClick={() => handleDurationSelect(opt.start, opt.end, isActive)}
+								>
+									<span>{t(opt.key)}</span>
+								</button>
+							);
+						})}
 					</Stack>
 				</Stack>
 
 				{/* Filter by Price */}
 				<Stack className={'filter-section'}>
-					<Typography className={'section-title'}>Filter by Price</Typography>
+					<Stack className={'section-head'} direction="row" alignItems="center">
+						<AttachMoneyOutlinedIcon className={'section-icon'} />
+						<Typography className={'section-title'}>{t('filter_filter_by_price')}</Typography>
+					</Stack>
 					<Stack className={'price-slider-box'}>
 						<Slider
 							value={priceRange}
 							onChange={handlePriceChange}
 							onChangeCommitted={handlePriceCommitted}
 							min={0}
-							max={2000}
+							max={PRICE_MAX}
+							step={50}
 							sx={{
 								color: '#e8a54b',
 								'& .MuiSlider-thumb': {
-									backgroundColor: '#e8a54b',
-									border: '3px solid #fff',
-									boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
-									width: 18,
-									height: 18,
+									backgroundColor: '#fff',
+									border: '3px solid #e8a54b',
+									boxShadow: '0 4px 10px rgba(232, 165, 75, 0.32)',
+									width: 20,
+									height: 20,
+									'&:hover, &.Mui-focusVisible': {
+										boxShadow: '0 0 0 8px rgba(232, 165, 75, 0.18)',
+									},
 								},
 								'& .MuiSlider-track': {
-									backgroundColor: '#e8a54b',
-									height: 5,
+									background: 'linear-gradient(90deg, #f5a623 0%, #e8a54b 100%)',
+									border: 'none',
+									height: 6,
 								},
 								'& .MuiSlider-rail': {
-									backgroundColor: '#e0d5c8',
-									height: 5,
+									backgroundColor: '#f1dcc0',
+									height: 6,
+									opacity: 1,
 								},
 							}}
 						/>
 						<Stack className={'price-labels'} direction={'row'} justifyContent={'space-between'}>
-							<span>${priceRange[0]}</span>
-							<span>${priceRange[1]}</span>
+							<span className="price-pill">${priceRange[0]}</span>
+							<span className="price-pill">${priceRange[1]}</span>
 						</Stack>
 					</Stack>
 				</Stack>
 
 				{/* Popular Destination */}
 				<Stack className={'filter-section'}>
-					<Typography className={'section-title'}>Popular Destination</Typography>
+					<Stack className={'section-head'} direction="row" alignItems="center">
+						<PublicOutlinedIcon className={'section-icon'} />
+						<Typography className={'section-title'}>{t('filter_popular_destination')}</Typography>
+					</Stack>
 					<Stack
 						className={'checkbox-list destination-list'}
 						sx={{
@@ -344,14 +396,14 @@ const Filter = (props: FilterType) => {
 										checked={(searchFilter?.search?.locationList || []).includes(location as PropertyLocation)}
 										onChange={propertyLocationSelectHandler}
 										sx={{
-											color: '#ccc',
+											color: '#d6cab2',
 											'&.Mui-checked': { color: '#e8a54b' },
 											padding: '4px',
 										}}
 									/>
 									<label htmlFor={`loc-${location}`} style={{ cursor: 'pointer' }}>
 										<Typography className="checkbox-label">
-											{destinationLabels[location] || location}
+											{t(`destination_${location}`, { defaultValue: location })}
 										</Typography>
 									</label>
 								</Stack>
@@ -361,7 +413,6 @@ const Filter = (props: FilterType) => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default Filter;

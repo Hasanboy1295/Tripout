@@ -5,6 +5,7 @@ import { GET_BOARD_ARTICLES } from '../../../apollo/user/query';
 import { BoardArticle } from '../../types/board-article/board-article';
 import { BoardArticleCategory } from '../../enums/board-article.enum';
 import { REACT_APP_API_URL } from '../../config';
+import { useTranslation } from 'next-i18next';
 
 // Helper function to strip HTML tags from content
 const stripHtml = (html: string): string => {
@@ -82,6 +83,7 @@ const partners = [
 
 const Testimonials = () => {
 	const device = useDeviceDetect();
+	const { t } = useTranslation('common');
 	const [activeIdx, setActiveIdx] = useState(0);
 	const [activeNav, setActiveNav] = useState<'prev' | 'next' | null>(null);
 	const navResetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -159,15 +161,15 @@ const Testimonials = () => {
 		const chosenImage = a.articleImage || imageFromContent;
 
 		return {
-		name: a.memberData?.memberFullName || a.memberData?.memberNick || 'Unknown Author',
+		name: a.memberData?.memberFullName || a.memberData?.memberNick || t('unknown_author'),
 		role: a.memberData?.memberNick || 'member',
 		category: formatCategory(a.articleCategory),
 		publishedAt: a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '',
 		text: cleanText
 			? `${cleanText.slice(0, 250)}${cleanText.length > 250 ? '...' : ''}`
-			: 'Open this article to read full details.',
+			: t('open_article_full'),
 		image: resolveImageUrl(chosenImage),
-		title: a.articleTitle || 'Untitled Article',
+		title: a.articleTitle || t('untitled_article'),
 		};
 	});
 
@@ -223,8 +225,8 @@ const Testimonials = () => {
 	const isLoading =
 		freeArticlesQuery.loading || recommendArticlesQuery.loading || newsArticlesQuery.loading || humorArticlesQuery.loading;
 
-	if (isLoading && reviews.length === 0) return <div style={{ padding: 32, textAlign: 'center' }}>Loading real board articles...</div>;
-	if (reviews.length === 0) return <div style={{ padding: 32, textAlign: 'center' }}>No board articles found yet. Please publish articles in Free, Recommendation, News, or Humor categories.</div>;
+	if (isLoading && reviews.length === 0) return <div style={{ padding: 32, textAlign: 'center' }}>{t('loading_articles')}</div>;
+	if (reviews.length === 0) return <div style={{ padding: 32, textAlign: 'center' }}>{t('no_articles')}</div>;
 
 	const review = reviews[activeIdx] || reviews[0];
 
@@ -245,9 +247,9 @@ const Testimonials = () => {
 							<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
 								<path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#e8a54b"/>
 							</svg>
-							Community Board
+							{t('community_board')}
 						</div>
-						<h2 className={'t-title'}>Real Articles Written by Our Users</h2>
+						<h2 className={'t-title'}>{t('real_articles')}</h2>
 						<div className={'t-meta-row'}>
 							<span className={'t-chip'}>{review.category}</span>
 							{review.publishedAt && <span className={'t-date'}>{review.publishedAt}</span>}
@@ -256,7 +258,7 @@ const Testimonials = () => {
 						<p className={'t-text'}>{review.text}</p>
 						<div className={'t-author'}>
 							<span className={'t-name'}>{review.name}</span>
-							<span className={'t-role'}>by {review.role}</span>
+							<span className={'t-role'}>{t('by_prefix')} {review.role}</span>
 						</div>
 						<div className={'t-nav'}>
 							<button disabled={reviews.length < 2} className={`t-nav-btn${activeNav === 'prev' ? ' active' : ''}`} onClick={prev}>‹</button>
@@ -319,9 +321,9 @@ const Testimonials = () => {
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
 							<path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#e8a54b"/>
 						</svg>
-						Community Board
+						{t('community_board')}
 					</div>
-					<h2 className={'t-title'}>Real Articles Written by Our Users</h2>
+					<h2 className={'t-title'}>{t('real_articles')}</h2>
 					<div className={'t-meta-row'}>
 						<span className={'t-chip'}>{review.category}</span>
 						{review.publishedAt && <span className={'t-date'}>{review.publishedAt}</span>}
@@ -330,7 +332,7 @@ const Testimonials = () => {
 					<p className={'t-text'}>{review.text}</p>
 					<div className={'t-author'}>
 						<span className={'t-name'}>{review.name}</span>
-						<span className={'t-role'}>by {review.role}</span>
+						<span className={'t-role'}>{t('by_prefix')} {review.role}</span>
 					</div>
 				<div className={'t-nav'}>
 					<button disabled={reviews.length < 2} className={`t-nav-btn ${activeNav === 'prev' ? 'active' : ''}`} onClick={prev}>‹</button>

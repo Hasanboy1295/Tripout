@@ -18,10 +18,7 @@ const About: NextPage = () => {
 	const device = useDeviceDetect();
 	const { t } = useTranslation('common');
 
-	   if (device === 'mobile') {
-		   return <div>{t('aboutus_mobile')}</div>;
-	   } else {
-		   return (
+	   return (
 			   <Stack className={'about-page'}>
 				   {/* Hero Section */}
 				   <Stack className={'hero-section'}>
@@ -139,7 +136,7 @@ const About: NextPage = () => {
 									</div>
 									<div className={'badge-content'}>
 										<span className={'number'}>+500</span>
-										<span className={'label'}>Destination</span>
+										<span className={'label'}>{t('aboutus_destination_label')}</span>
 									</div>
 								</div>
 							</div>
@@ -205,7 +202,6 @@ const About: NextPage = () => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default withLayoutBasic(About);

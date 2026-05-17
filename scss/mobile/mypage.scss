@@ -1,0 +1,212 @@
+/* =========================================================================
+ *  MOBILE MYPAGE & MEMBER PAGES
+ * ========================================================================= */
+#mobile-wrap {
+  #mypage,
+  #member-page,
+  .my-page,
+  .member-page {
+    width: 100%;
+    padding: 4px 14px 24px;
+
+    .container {
+      width: 100% !important;
+      padding: 0 !important;
+      gap: 16px !important;
+    }
+
+    .main-box,
+    .mp-config,
+    .member-box {
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+
+    /* sidebar nav becomes a horizontal scroller of pill tabs */
+    > aside,
+    .left,
+    .menu,
+    .left-config,
+    .mp-menu {
+      width: 100% !important;
+      padding: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+
+      .image-info {
+        background: #fff;
+        padding: 16px;
+        border-radius: 16px;
+        margin-bottom: 12px;
+        display: flex;
+        flex-direction: row !important;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+
+        .member-image,
+        img {
+          width: 64px !important;
+          height: 64px !important;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid #fff5e7;
+        }
+        .name, strong, .member-nick {
+          font-size: 16px !important;
+          font-weight: 600 !important;
+        }
+        .member-email, .desc, span {
+          font-size: 12.5px !important;
+          color: #717171;
+        }
+      }
+
+      .nav-list,
+      .tab,
+      .tabs,
+      ul,
+      .menu-list {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        gap: 8px !important;
+        padding: 4px 0 !important;
+        margin: 0 !important;
+        list-style: none;
+
+        &::-webkit-scrollbar { display: none; }
+        scrollbar-width: none;
+
+        > li,
+        > div,
+        > a,
+        .tab-button {
+          flex-shrink: 0;
+          padding: 10px 16px !important;
+          border-radius: 999px !important;
+          background: #fff !important;
+          font-size: 13px !important;
+          font-weight: 500 !important;
+          white-space: nowrap !important;
+          color: #181a20 !important;
+          border: 1px solid #f0f0f0;
+          transition: all 0.15s ease;
+
+          &.active,
+          &.selected {
+            background: #181a20 !important;
+            color: #fff !important;
+            border-color: #181a20 !important;
+          }
+        }
+      }
+    }
+
+    .main-config,
+    .right,
+    .right-config,
+    .mp-content,
+    .panel-config {
+      width: 100% !important;
+      padding: 16px !important;
+      background: #fff;
+      border-radius: 16px !important;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    /* content cards inside (e.g., listings, articles, favorites) */
+    .list-config,
+    .listings,
+    .card-wrap {
+      grid-template-columns: 1fr !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+    }
+
+    .property-card,
+    .article-card,
+    .agent-card,
+    .vertical-card {
+      width: 100% !important;
+      max-width: 100% !important;
+      .card-img, img {
+        width: 100% !important;
+        height: 200px !important;
+        object-fit: cover;
+      }
+      .info { padding: 14px !important; }
+      .title { font-size: 15px !important; font-weight: 600 !important; }
+      .desc { font-size: 12.5px !important; }
+      .price, .amount { font-size: 15px !important; font-weight: 700 !important; }
+    }
+
+    /* MyProfile form */
+    .my-profile,
+    .myProfile,
+    #my-profile {
+      .input-box,
+      .input-wrap,
+      input,
+      textarea,
+      select {
+        width: 100% !important;
+        padding: 12px 14px !important;
+        font-size: 14px !important;
+        border-radius: 12px !important;
+      }
+      label {
+        font-size: 13px !important;
+        margin-bottom: 6px !important;
+      }
+      .photo-box,
+      .upload-box {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+        img {
+          width: 96px !important;
+          height: 96px !important;
+          border-radius: 50% !important;
+        }
+      }
+      .submit-btn,
+      .button-box {
+        width: 100% !important;
+        padding: 14px 18px !important;
+        border-radius: 12px !important;
+      }
+    }
+
+    /* Add new property form */
+    #add-property,
+    .add-new-property,
+    .write-property {
+      .config {
+        flex-direction: column !important;
+        gap: 12px !important;
+        > div { width: 100% !important; }
+      }
+      .input-box,
+      .input-wrap,
+      input,
+      textarea,
+      select {
+        width: 100% !important;
+        padding: 12px 14px !important;
+        border-radius: 12px !important;
+        font-size: 14px !important;
+      }
+      .upload-box,
+      .images-box {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+    }
+
+    h1 { font-size: 22px !important; line-height: 1.22 !important; }
+    h2 { font-size: 18px !important; }
+    h3 { font-size: 15px !important; }
+  }
+}

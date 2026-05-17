@@ -18,6 +18,7 @@ import {
 import { GET_BOARD_ARTICLES } from '../../apollo/user/query';
 import { Messages } from '../../libs/config';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { useTranslation } from 'next-i18next';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -28,6 +29,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 const Community: NextPage = ({ initialInput, ...props }: T) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { t } = useTranslation('common');
 	const { query } = router;
 	const articleCategory = query?.articleCategory as string;
 	const [searchCommunity, setSearchCommunity] = useState<BoardArticlesInquiry>(initialInput);
@@ -94,7 +96,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 			if (likeLoading) return;
 			if (!id) return;
 			if (!user._id) throw new Error(Messages.error2);
-			if (articleMemberId && user._id === articleMemberId) throw new Error('You cannot like your own article.');
+			if (articleMemberId && user._id === articleMemberId) throw new Error(t('comm_like_self_error'));
 
 			setLikeLoading(true);
 
@@ -108,16 +110,12 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
 			console.log('ERROR, likePropertyHandler:', err.message);
-			const readableErrorMessage = err?.graphQLErrors?.[0]?.message || err?.message || 'Failed to like article';
+			const readableErrorMessage = err?.graphQLErrors?.[0]?.message || err?.message || t('comm_like_failed');
 			sweetMixinErrorAlert(readableErrorMessage).then();
 		} finally {
 			setLikeLoading(false);
 		}
 	};
-
-	if (device === 'mobile') {
-		return <h1>COMMUNITY PAGE MOBILE</h1>;
-	} else {
 		return (
 			<div id="community-list-page">
 				<div className="container">
@@ -127,7 +125,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 								<Stack className={'image-info'}>
 									<img src={'/img/logo/logo.svg'} />
 									<Stack className={'community-name'}>
-										<Typography className={'name'}>Tripout Community</Typography>
+										<Typography className={'name'}>{t('comm_brand')}</Typography>
 									</Stack>
 								</Stack>
 
@@ -141,22 +139,22 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 								>
 									<Tab
 										value={'FREE'}
-										label={'Free Board'}
+										label={t('comm_tab_free')}
 										className={`tab-button ${searchCommunity.search.articleCategory == 'FREE' ? 'active' : ''}`}
 									/>
 									<Tab
 										value={'RECOMMEND'}
-										label={'Recommendation'}
+										label={t('comm_tab_recommend')}
 										className={`tab-button ${searchCommunity.search.articleCategory == 'RECOMMEND' ? 'active' : ''}`}
 									/>
 									<Tab
 										value={'NEWS'}
-										label={'News'}
+										label={t('comm_tab_news')}
 										className={`tab-button ${searchCommunity.search.articleCategory == 'NEWS' ? 'active' : ''}`}
 									/>
 									<Tab
 										value={'HUMOR'}
-										label={'Humor'}
+										label={t('comm_tab_humor')}
 										className={`tab-button ${searchCommunity.search.articleCategory == 'HUMOR' ? 'active' : ''}`}
 									/>
 								</TabList>
@@ -165,9 +163,9 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 								<Stack className="panel-config">
 									<Stack className="title-box">
 										<Stack className="left">
-											<Typography className="title">{searchCommunity.search.articleCategory} BOARD</Typography>
+											<Typography className="title">{t(`comm_tab_${searchCommunity.search.articleCategory.toLowerCase()}`)} {t('comm_board_suffix')}</Typography>
 											<Typography className="sub-title">
-												Express your opinions freely here without content restrictions
+												{t('comm_subtitle')}
 											</Typography>
 										</Stack>
 										<Button
@@ -181,7 +179,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 											}
 											className="right"
 										>
-											Write
+											{t('comm_write')}
 										</Button>
 									</Stack>
 
@@ -200,7 +198,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 											) : (
 												<Stack className={'no-data'}>
 													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
+													<p>{t('comm_no_articles')}</p>
 												</Stack>
 											)}
 										</Stack>
@@ -220,7 +218,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 											) : (
 												<Stack className={'no-data'}>
 													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
+													<p>{t('comm_no_articles')}</p>
 												</Stack>
 											)}
 										</Stack>
@@ -240,7 +238,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 											) : (
 												<Stack className={'no-data'}>
 													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
+													<p>{t('comm_no_articles')}</p>
 												</Stack>
 											)}
 										</Stack>
@@ -260,7 +258,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 											) : (
 												<Stack className={'no-data'}>
 													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
+													<p>{t('comm_no_articles')}</p>
 												</Stack>
 											)}
 										</Stack>
@@ -283,7 +281,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 							</Stack>
 							<Stack className="total-result">
 								<Typography>
-									Total {totalCount} article{totalCount > 1 ? 's' : ''} available
+									{t(totalCount > 1 ? 'comm_total_many' : 'comm_total_one', { count: totalCount })}
 								</Typography>
 							</Stack>
 						</Stack>
@@ -291,7 +289,6 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 				</div>
 			</div>
 		);
-	}
 };
 
 Community.defaultProps = {

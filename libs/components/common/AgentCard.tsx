@@ -9,6 +9,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import { useTranslation } from 'next-i18next';
 
 interface AgentCardProps {
 	agent: any;
@@ -19,13 +20,13 @@ const AgentCard = (props: AgentCardProps) => {
 	const { agent, likeMemberHandler } = props;
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
-	const imagePath: string = agent?.memberImage
+	const { t, i18n } = useTranslation('common');
+	const hasAvatar = Boolean(agent?.memberImage);
+	const avatarSrc = hasAvatar
 		? `${REACT_APP_API_URL}/${agent?.memberImage}`
 		: '/img/profile/defaultUser.svg';
 
-	if (device === 'mobile') {
-		return <div>AGENT CARD</div>;
-	} else {
+
 		return (
 			<Stack className="agent-general-card">
 				<Link
@@ -34,17 +35,15 @@ const AgentCard = (props: AgentCardProps) => {
 						query: { agentId: agent?._id },
 					}}
 				>
-					<Box
-						component={'div'}
-						className={'agent-img'}
-						style={{
-							backgroundImage: `url(${imagePath})`,
-							backgroundSize: 'cover',
-							backgroundPosition: 'center',
-							backgroundRepeat: 'no-repeat',
-						}}
-					>
-						<div>{agent?.memberProperties} destinations</div>
+					<Box component={'div'} className={`agent-img${hasAvatar ? '' : ' no-avatar'}`}>
+						<img
+							src={avatarSrc}
+							alt={agent?.memberNick ?? ''}
+							onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+								event.currentTarget.src = '/img/profile/defaultUser.svg';
+							}}
+						/>
+						<div>{agent?.memberProperties} {t('agent_destinations')}</div>
 					</Box>
 				</Link>
 
@@ -58,7 +57,7 @@ const AgentCard = (props: AgentCardProps) => {
 						>
 							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
 						</Link>
-						<span>Agent</span>
+						<span>{t('agent_role')}</span>
 					</Box>
 					<Box component={'div'} className={'buttons'}>
 						<IconButton color={'default'}>
@@ -77,7 +76,6 @@ const AgentCard = (props: AgentCardProps) => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default AgentCard;

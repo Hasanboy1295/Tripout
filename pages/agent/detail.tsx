@@ -18,6 +18,7 @@ import { Comment } from '../../libs/types/comment/comment';
 import { CommentGroup } from '../../libs/enums/comment.enum';
 import { Messages, REACT_APP_API_URL } from '../../libs/config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { GET_COMMENTS, GET_MEMBER, GET_PROPERTIES } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
@@ -33,6 +34,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
+	const { t, i18n } = useTranslation('common');
 	const [agentId, setAgentId] = useState<string | null>(null);
 	const [agent, setAgent] = useState<Member | null>(null);
 	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(initialInput);
@@ -144,7 +146,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	const createCommentHandler = async () => {
 		try {
 			if (!user._id) throw new Error(Messages.error2);
-			if (user._id === agentId) throw new Error('Cannot write a rewiew for yourself');
+			if (user._id === agentId) throw new Error(t('agent_review_self_error'));
 			await createComment({
 				variables: {
 					input: insertCommentData,
@@ -176,16 +178,15 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 			sweetMixinErrorAlert(err.message).then();
 		}
 	};
-
-	if (device === 'mobile') {
-		return <div>AGENT DETAIL PAGE MOBILE</div>;
-	} else {
 		return (
 			<Stack className={'agent-detail-page'}>
 				<Stack className={'container'}>
 					<Stack className={'agent-info'}>
 						<img
 							src={agent?.memberImage ? `${REACT_APP_API_URL}/${agent?.memberImage}` : '/img/profile/defaultUser.svg'}
+							onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+								event.currentTarget.src = '/img/profile/defaultUser.svg';
+							}}
 							alt=""
 						/>
 						<Box component={'div'} className={'info'} onClick={() => redirectToMemberPageHandler(agent?._id as string)}>
@@ -223,28 +224,28 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 										/>
 									</Stack>
 									<span>
-										Total {propertyTotal} propert{propertyTotal > 1 ? 'ies' : 'y'} available
+										{t('total_properties_available', { total: propertyTotal })}
 									</span>
 								</>
 							) : (
 								<div className={'no-data'}>
 									<img src="/img/icons/icoAlert.svg" alt="" />
-									<p>No properties found!</p>
+									<p>{t('no_properties_found')}</p>
 								</div>
 							)}
 						</Stack>
 					</Stack>
 					<Stack className={'review-box'}>
 						<Stack className={'main-intro'}>
-							<span>Reviews</span>
-							<p>we are glad to see you again</p>
+							<span>{t('reviews')}</span>
+							<p>{t('glad_to_see_you')}</p>
 						</Stack>
 						{commentTotal !== 0 && (
 							<Stack className={'review-wrap'}>
 								<Box component={'div'} className={'title-box'}>
 									<StarIcon />
 									<span>
-										{commentTotal} review{commentTotal > 1 ? 's' : ''}
+										{t('total_reviews', { total: commentTotal })}
 									</span>
 								</Box>
 								{agentComments?.map((comment: Comment) => {
@@ -263,8 +264,8 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 						)}
 
 						<Stack className={'leave-review-config'}>
-							<Typography className={'main-title'}>Leave A Review</Typography>
-							<Typography className={'review-title'}>Review</Typography>
+							<Typography className={'main-title'}>{t('leave_a_review')}</Typography>
+							<Typography className={'review-title'}>{t('review')}</Typography>
 							<textarea
 								onChange={({ target: { value } }: any) => {
 									setInsertCommentData({ ...insertCommentData, commentContent: value });
@@ -277,7 +278,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 									disabled={insertCommentData.commentContent === '' || user?._id === ''}
 									onClick={createCommentHandler}
 								>
-									<Typography className={'title'}>Submit Review</Typography>
+									<Typography className={'title'}>{t('submit_review')}</Typography>
 									<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
 										<g clipPath="url(#clip0_6975_3642)">
 											<path
@@ -298,7 +299,6 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 AgentDetail.defaultProps = {

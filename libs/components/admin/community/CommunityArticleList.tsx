@@ -172,12 +172,17 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 									<TableCell align="left" className={'name'}>
 										<Link href={`/member?memberId=${article?.memberData?._id}`}>
 											<Avatar
-												alt="Remy Sharp"
+												alt={article?.memberData?.memberNick || 'User'}
 												src={
 													article?.memberData?.memberImage
 														? `${REACT_APP_API_URL}/${article?.memberData?.memberImage}`
 														: `/img/profile/defaultUser.svg`
 												}
+												imgProps={{
+													onError: (e) => {
+														(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+													},
+												}}
 												sx={{ ml: '2px', mr: '10px' }}
 											/>
 											{article?.memberData?.memberNick}

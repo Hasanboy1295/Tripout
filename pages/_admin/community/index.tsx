@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import withAdminLayout from '../../../libs/components/layout/LayoutAdmin';
 import { Box, Stack, MenuItem } from '@mui/material';
 import { List, ListItem } from '@mui/material';
@@ -235,5 +236,11 @@ AdminCommunity.defaultProps = {
 		search: {},
 	},
 };
+
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await serverSideTranslations(locale ?? 'en', ['common'])),
+	},
+});
 
 export default withAdminLayout(AdminCommunity);

@@ -50,9 +50,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 		setSearchFilter({ ...searchFilter, page: value });
 	};
 
-	if (device === 'mobile') {
-		return <div>NESTAR PROPERTIES MOBILE</div>;
-	} else {
+
 		return (
 			<div id="member-properties-page">
 				<Stack className="main-title-box">
@@ -100,7 +98,6 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 				</Stack>
 			</div>
 		);
-	}
 };
 
 MyProperties.defaultProps = {

@@ -62,9 +62,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 		setFollowInquiry({ ...followInquiry });
 	};
 
-	if (device === 'mobile') {
-		return <div>NESTAR FOLLOWS MOBILE</div>;
-	} else {
+
 		return (
 			<div id="member-follows-page">
 				<Stack className="main-title-box">
@@ -92,7 +90,13 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 							<Stack className="follows-card-box" key={follower._id}>
 								<Stack className={'info'} onClick={() => redirectToMemberPageHandler(follower?.followerData?._id)}>
 									<Stack className="image-box">
-										<img src={imagePath} alt="" />
+										<img
+											src={imagePath}
+											alt=""
+											onError={(e) => {
+												(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+											}}
+										/>
 									</Stack>
 									<Stack className="information-box">
 										<Typography className="name">{follower?.followerData?.memberNick}</Typography>
@@ -175,7 +179,6 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 				)}
 			</div>
 		);
-	}
 };
 
 MemberFollowers.defaultProps = {

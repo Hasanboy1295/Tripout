@@ -48,9 +48,7 @@ const CommunityBoards = () => {
 		},
 	});
 
-	if (device === 'mobile') {
-		return <div>COMMUNITY BOARDS (MOBILE)</div>;
-	} else {
+
 		return (
 			<Stack className={'community-board'}>
 				<Stack className={'container'}>
@@ -88,7 +86,6 @@ const CommunityBoards = () => {
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 export default CommunityBoards;

@@ -9,9 +9,11 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import { Stack, Box } from '@mui/material';
 import moment from 'moment';
+import { useTranslation } from 'next-i18next';
 
 const Footer = () => {
 	const device = useDeviceDetect();
+	const { t } = useTranslation('common');
 
 	const scrollToTop = () => {
 		window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -23,34 +25,34 @@ const Footer = () => {
 				<Stack className={'main'}>
 					<Stack className={'left'}>
 						<Box component={'div'} className={'hero-section'}>
-							<h2>Explore the World Your Journey <span className="highlight">Begins Here!</span></h2>
+							<h2>{t('footer_hero_title')} <span className="highlight">{t('footer_hero_highlight')}</span></h2>
 							<div className={'subscribe-box'}>
-								<input type="email" placeholder={'Email Address...'} />
-								<button className={'subscribe-btn'}>SUBSCRIBE ↗</button>
+								<input type="email" placeholder={t('footer_subscribe_placeholder')} />
+								<button className={'subscribe-btn'}>{t('footer_subscribe_btn')} ↗</button>
 							</div>
 						</Box>
 					</Stack>
 					<Stack className={'right'}>
 						<Box component={'div'} className={'links-section'}>
 							<div className={'links-column'}>
-								<strong className={'section-title'}>Our Links</strong>
-								<span>Home</span>
-								<span>About Us</span>
-								<span>Services</span>
-								<span>Destination</span>
-								<span>Blog</span>
-								<span>Contact Us</span>
+								<strong className={'section-title'}>{t('footer_links_title')}</strong>
+								<span>{t('footer_link_home')}</span>
+								<span>{t('footer_link_about')}</span>
+								<span>{t('footer_link_services')}</span>
+								<span>{t('footer_link_destination')}</span>
+								<span>{t('footer_link_blog')}</span>
+								<span>{t('footer_link_contact')}</span>
 							</div>
 						</Box>
 						<Box component={'div'} className={'contact-section'}>
-							<strong className={'section-title'}>Contact Us</strong>
+							<strong className={'section-title'}>{t('footer_contact_title')}</strong>
 							<div className={'contact-item'}>
 								<div className={'icon-wrapper'}>
 									<LocationOnOutlinedIcon />
 								</div>
 								<div>
-									<span>Chungju  109-7 Manjeong-ri,</span>
-									<span>Chungju </span>
+									<span>{t('footer_contact_address_mobile_line1')}</span>
+									<span>{t('footer_contact_address_mobile_line2')}</span>
 								</div>
 							</div>
 							<div className={'contact-item'}>
@@ -78,7 +80,7 @@ const Footer = () => {
 					<KeyboardArrowUpIcon />
 				</Box>
 				<Stack className={'second'}>
-					<span>Copyright {moment().year()} <span className="brand">Tripout</span>. All Rights Reserved.</span>
+					<span>{t('footer_copyright')} {moment().year()} <span className="brand">Tripout</span>. {t('footer_rights')}</span>
 					<div className={'social-icons'}>
 						<FacebookOutlinedIcon />
 						<InstagramIcon />
@@ -201,34 +203,34 @@ const Footer = () => {
 
 
 						<Box component={'div'} className={'hero-section'}>
-							<h2>Explore the World Your Journey <span className="highlight">Begins Here!</span></h2>
+							<h2>{t('footer_hero_title')} <span className="highlight">{t('footer_hero_highlight')}</span></h2>
 							<div className={'subscribe-box'}>
-								<input type="email" placeholder={'Email Address...'} />
-								<button className={'subscribe-btn'}>SUBSCRIBE ↗</button>
+								<input type="email" placeholder={t('footer_subscribe_placeholder')} />
+								<button className={'subscribe-btn'}>{t('footer_subscribe_btn')} ↗</button>
 							</div>
 						</Box>
 					</Stack>
 					<Stack className={'right'}>
 						<Box component={'div'} className={'links-section'}>
 							<div className={'links-column'}>
-								<strong className={'section-title'}>Our Links</strong>
-								<span>Home</span>
-								<span>About Us</span>
-								<span>Services</span>
-								<span>Destination</span>
-								<span>Blog</span>
-								<span>Contact Us</span>
+								<strong className={'section-title'}>{t('footer_links_title')}</strong>
+								<span>{t('footer_link_home')}</span>
+								<span>{t('footer_link_about')}</span>
+								<span>{t('footer_link_services')}</span>
+								<span>{t('footer_link_destination')}</span>
+								<span>{t('footer_link_blog')}</span>
+								<span>{t('footer_link_contact')}</span>
 							</div>
 						</Box>
 						<Box component={'div'} className={'contact-section'}>
-							<strong className={'section-title'}>Contact Us</strong>
+							<strong className={'section-title'}>{t('footer_contact_title')}</strong>
 							<div className={'contact-item'}>
 								<div className={'icon-wrapper'}>
 									<LocationOnOutlinedIcon />
 								</div>
 								<div>
-									<span>123 Adventure Lane, Suiteroad 456,</span>
-									<span>Cityville, ST 12345</span>
+									<span>{t('footer_contact_address_line1')}</span>
+									<span>{t('footer_contact_address_line2')}</span>
 								</div>
 							</div>
 							<div className={'contact-item'}>
@@ -256,7 +258,7 @@ const Footer = () => {
 					<KeyboardArrowUpIcon />
 				</Box>
 				<Stack className={'second'}>
-					<span>Copyright {moment().year()} <span className="brand">Tripout</span>. All Rights Reserved.</span>
+					<span>{t('footer_copyright')} {moment().year()} <span className="brand">Tripout</span>. {t('footer_rights')}</span>
 					<div className={'social-icons'}>
 						<FacebookOutlinedIcon />
 						<InstagramIcon />

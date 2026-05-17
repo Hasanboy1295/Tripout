@@ -1,0 +1,472 @@
+/* =========================================================================
+ *  MOBILE HOMEPAGE — sections rendered inside <Stack className="home-page">
+ * ========================================================================= */
+#mobile-wrap {
+  .home-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    padding: 28px 0 24px;
+
+    > section,
+    > div {
+      width: 100%;
+      padding: 0 14px;
+    }
+
+    /* generic section header pattern across components */
+    .info-box,
+    .section-header,
+    .blog-header,
+    .story-header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 8px;
+
+      .left,
+      .story-header-left {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 100%;
+      }
+
+      .right,
+      .see-more-btn,
+      .see-more-wrap {
+        align-self: flex-start;
+        margin-top: 6px;
+      }
+
+      span,
+      strong,
+      .section-title,
+      .story-title,
+      .blog-title {
+        color: #181a20;
+        font-family: $font;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.22;
+        letter-spacing: -0.4px;
+
+        &.white { color: #fff; }
+      }
+
+      .section-subtitle,
+      .blog-subtitle,
+      p {
+        color: #717171;
+        font-family: $font;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.5;
+        max-width: 100%;
+      }
+    }
+
+    /* swipers — universal sizing for any section */
+    .swiper {
+      width: 100%;
+      padding-bottom: 4px;
+    }
+    .swiper-slide { height: auto; }
+    .swiper-pagination-bullet { background: #d8d8d8; opacity: 1; }
+    .swiper-pagination-bullet-active { background: #e8a54b; }
+
+    /* nav arrows visible only on big screens */
+    .swiper-popular-prev,
+    .swiper-popular-next,
+    .swiper-top-prev,
+    .swiper-top-next,
+    .swiper-agents-prev,
+    .swiper-agents-next {
+      display: none !important;
+    }
+
+    /* ───── TREND PROPERTIES ───── */
+    .trend-properties {
+      padding: 0 14px;
+      .container { width: 100%; }
+      .card-box { margin-top: 16px; width: 100%; }
+      .trend-property-swiper { width: 100%; height: auto; }
+      .trend-card-box {
+        position: relative;
+        width: 100%;
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+        .card-img {
+          position: relative;
+          width: 100%;
+          height: 220px;
+          background-size: cover;
+          background-position: center;
+          border-radius: 0;
+          div {
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            padding: 7px 12px;
+            border-radius: 8px;
+            background: #fff;
+            color: #181a20;
+            font-family: $font;
+            font-size: 14px;
+            font-weight: 600;
+          }
+        }
+        .info {
+          padding: 16px 16px 18px;
+          border-radius: 0;
+          border: none;
+          box-shadow: none;
+          .title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #181a20;
+            text-transform: capitalize;
+          }
+          .desc {
+            margin-top: 4px;
+            font-size: 12.5px;
+            color: #717171;
+          }
+          .options {
+            margin-top: 12px;
+            div { gap: 4px; }
+            span { font-size: 12.5px; }
+            img { width: 16px; height: 16px; }
+          }
+          .bott {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
+            p { font-size: 12.5px; }
+            .view-like-box .view-cnt { font-size: 12.5px; }
+          }
+        }
+      }
+    }
+
+    /* ───── POPULAR PROPERTIES ───── */
+    .popular-properties {
+      padding: 32px 14px;
+      background: #f6f6f6;
+      .container { width: 100%; }
+      .card-box {
+        margin-top: 16px;
+        flex-direction: row;
+      }
+      .popular-property-swiper { width: 100%; height: auto; }
+      .popular-card-box {
+        position: relative;
+        width: 100%;
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+        .card-img {
+          height: 230px;
+          border-radius: 0;
+          div.status {
+            top: 14px;
+            left: 14px;
+            padding: 5px 18px;
+            border-radius: 6px;
+            span { font-size: 11px; }
+          }
+          div.price {
+            left: 14px;
+            bottom: 14px;
+            padding: 7px 12px;
+            font-size: 14px;
+          }
+        }
+        .info {
+          padding: 16px 16px 18px;
+          border: none;
+          box-shadow: none;
+          border-radius: 0;
+          .title { font-size: 16px; font-weight: 600; }
+          .desc { font-size: 12.5px; }
+          .options span { font-size: 12.5px; }
+          .bott {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
+          }
+        }
+      }
+      .pagination-box {
+        margin-top: 18px;
+        gap: 6px;
+      }
+    }
+
+    /* ───── TOP PROPERTIES ───── */
+    .top-properties {
+      padding: 0 14px;
+      .container { width: 100%; }
+      .card-box {
+        margin-top: 16px;
+        width: 100%;
+      }
+      .top-property-swiper { width: 100%; height: auto; }
+      .top-card-box {
+        width: 100%;
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+        .card-img {
+          height: 220px;
+          border-radius: 0;
+        }
+        .info {
+          padding: 16px 16px 18px;
+          border: none;
+          box-shadow: none;
+          border-radius: 0;
+          .title { font-size: 16px; font-weight: 600; }
+          .desc { font-size: 12.5px; }
+          .options span { font-size: 12.5px; }
+          .bott {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
+          }
+        }
+      }
+    }
+
+    /* ───── TOP AGENTS ───── */
+    .top-agents {
+      padding: 32px 14px;
+      background: #fdf8f3;
+      .container { width: 100%; }
+      .wrapper { width: 100%; margin-top: 16px; }
+      .top-agents-swiper { width: 100%; height: auto; }
+      .top-agent-card {
+        width: 100%;
+        background: #fff;
+        border-radius: 18px;
+        padding: 22px 16px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+        img {
+          width: 110px;
+          height: 110px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 3px solid #fff5e7;
+        }
+        strong {
+          margin-top: 6px;
+          font-size: 18px;
+          font-weight: 600;
+          color: #181a20;
+          text-align: center;
+        }
+        span {
+          font-size: 13px;
+          color: #717171;
+          text-align: center;
+          line-height: 1.4;
+        }
+      }
+    }
+
+    /* ───── ADVERTISEMENT (mobile branch in component) ───── */
+    .advertisement,
+    .ad-card {
+      width: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      img { width: 100%; height: auto; display: block; }
+      .ad-left, .ad-right {
+        width: 100% !important;
+        padding: 22px 18px !important;
+      }
+    }
+
+    /* ───── ABOUT US ───── */
+    .about-us {
+      padding: 0 14px;
+      .about-content,
+      .about-features,
+      .about-images {
+        width: 100% !important;
+        flex-direction: column !important;
+        gap: 16px;
+      }
+      .about-title {
+        font-size: 24px !important;
+        line-height: 1.22 !important;
+        margin-bottom: 10px;
+      }
+      .about-desc {
+        font-size: 13.5px !important;
+        line-height: 1.55 !important;
+      }
+      .about-features {
+        margin-top: 14px;
+        gap: 14px;
+        > div {
+          padding: 14px;
+          border-radius: 14px;
+          background: #fff8ee;
+        }
+      }
+      .about-images {
+        margin-top: 18px;
+        img {
+          width: 100% !important;
+          height: auto !important;
+          border-radius: 16px;
+        }
+      }
+      .row-box {
+        flex-direction: column !important;
+        gap: 14px;
+      }
+    }
+
+    /* ───── DESTINATION STORY ───── */
+    .story-header {
+      flex-direction: column;
+      align-items: flex-start;
+      .story-nav { display: none; }
+    }
+    .story-swiper { width: 100%; height: auto; }
+    .story-slide,
+    .story-card {
+      width: 100% !important;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+      .dest-img-wrap,
+      .destination-card {
+        width: 100% !important;
+        height: 220px !important;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      .info,
+      .side-info {
+        padding: 16px;
+      }
+    }
+
+    /* ───── TESTIMONIALS ───── */
+    .testimonials {
+      padding: 32px 14px;
+      background: #fff5e7;
+      border-radius: 0;
+
+      .testimonials-body {
+        flex-direction: column !important;
+        gap: 22px;
+      }
+      .testimonials-left,
+      .testimonials-right {
+        width: 100% !important;
+      }
+      .t-nav { display: none; }
+      .t-title,
+      .section-title { font-size: 24px !important; line-height: 1.22 !important; }
+      .t-subtitle, .section-subtitle { font-size: 13px !important; }
+      .test-cards {
+        grid-template-columns: 1fr !important;
+        gap: 14px;
+      }
+      .t-quote, .t-text {
+        font-size: 14px !important;
+        line-height: 1.55 !important;
+      }
+      .t-author, .t-meta-row {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        img { width: 42px !important; height: 42px !important; }
+      }
+      .t-name, .t-role { font-size: 12.5px !important; }
+    }
+
+    /* ───── FAQ ───── */
+    .faq-section {
+      padding: 0 14px;
+      .section-title { font-size: 24px !important; }
+      .section-subtitle { font-size: 13px !important; }
+      .faq-item {
+        padding: 14px 16px !important;
+        border-radius: 14px !important;
+        margin-bottom: 10px !important;
+      }
+    }
+
+    /* ───── MARQUEE TICKER (clients/brand strip) ───── */
+    .partners-section,
+    .partner,
+    .partners-wrap {
+      padding: 18px 0 !important;
+      .partner-item {
+        padding: 0 14px !important;
+        img { max-height: 32px !important; width: auto; }
+      }
+    }
+
+    /* ───── BLOG ───── */
+    .blog-section {
+      padding: 0 14px;
+      .blog-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+      }
+      .blog-card-featured,
+      .blog-card-side {
+        width: 100% !important;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+        img { width: 100% !important; height: 200px !important; object-fit: cover; }
+      }
+      .blog-side-list { gap: 14px !important; }
+      .post-title { font-size: 16px !important; line-height: 1.3 !important; }
+      .post-excerpt { font-size: 13px !important; line-height: 1.5 !important; }
+      .post-meta { font-size: 12px !important; }
+    }
+
+    /* ───── COMMUNITY BOARDS section ───── */
+    .community-board {
+      padding: 32px 14px !important;
+      .community-main {
+        flex-direction: column !important;
+        gap: 16px;
+      }
+      .community-left,
+      .community-right { width: 100% !important; }
+      .community-img {
+        width: 100% !important;
+        height: 240px !important;
+        border-radius: 16px;
+      }
+    }
+  }
+}

@@ -20,7 +20,13 @@ const TopAgentCard = (props: TopAgentProps) => {
 	if (device === 'mobile') {
 		return (
 			<Stack className="top-agent-card">
-				<img src={agentImage} alt="" />
+				<img
+					src={agentImage}
+					alt=""
+					onError={(e) => {
+						(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+					}}
+				/>
 
 				<strong>{agent?.memberNick}</strong>
 				<span>{agent?.memberType}</span>
@@ -29,7 +35,13 @@ const TopAgentCard = (props: TopAgentProps) => {
 	} else {
 		return (
 			<Stack className="top-agent-card">
-				<img src={agentImage} alt="" />
+				<img
+					src={agentImage}
+					alt=""
+					onError={(e) => {
+						(e.currentTarget as HTMLImageElement).src = '/img/profile/defaultUser.svg';
+					}}
+				/>
 
 				<strong>{agent?.memberNick}</strong>
 				<span>{agent?.memberType}</span>

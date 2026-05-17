@@ -176,24 +176,55 @@
 	.agent-img {
 		width: 100%;
 		height: 260px;
-		background-size: cover;
-		background-repeat: no-repeat;
 		cursor: pointer;
 		position: relative;
-		div {
+		overflow: hidden;
+		background: #eef1f5;
+
+		> img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform 0.3s ease;
+		}
+
+		&:hover > img { transform: scale(1.03); }
+
+		/* Fallback state — member has no memberImage, <img> renders
+		 * defaultUser.svg. The SVG is only 100×100 so it'd sit tiny
+		 * and washed out; show it as a contained icon on a warm-tinted
+		 * card surface instead. */
+		&.no-avatar {
+			background: linear-gradient(135deg, #fdeccf 0%, #f5cf99 100%);
+
+			> img {
+				width: 44%;
+				height: 44%;
+				margin: auto;
+				object-fit: contain;
+				position: absolute;
+				inset: 0;
+				filter: drop-shadow(0 4px 10px rgba(156, 106, 26, 0.25));
+			}
+		}
+
+		> div {
 			position: absolute;
-			padding: 12px;
+			padding: 10px 14px;
 			top: 12px;
 			left: 12px;
-			border-radius: 6px;
+			border-radius: 8px;
 			background: linear-gradient(135deg, #e8a54b, #f6c47a);
 			color: #1a1203;
 			font-family: $font;
 			font-size: 12px;
 			font-style: normal;
-			font-weight: 600;
+			font-weight: 700;
 			line-height: normal;
 			text-transform: capitalize;
+			box-shadow: 0 6px 16px rgba(232, 165, 75, 0.35);
+			z-index: 2;
 		}
 	}
 	.agent-desc {

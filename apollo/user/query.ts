@@ -472,6 +472,7 @@ export const GET_COMMENTS = gql`
 				commentContent
 				commentRefId
 				memberId
+				commentViews
 				createdAt
 				updatedAt
 				memberData {
