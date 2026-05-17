@@ -4,11 +4,12 @@ import { CssBaseline } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { socketVar } from '../apollo/store';
 // WebSocket URL (adjust if needed)
-const WS_URL = process.env.REACT_APP_API_CHAT_WS || 'ws://localhost:3007/chat';
+const WS_URL = process.env.REACT_APP_API_CHAT_WS || 'ws://localhost:3030/chat';
 import { light, dark } from '../scss/MaterialTheme';
 import { ApolloProvider, useReactiveVar } from '@apollo/client';
 import { useApollo } from '../apollo/client';
 import { appWithTranslation } from 'next-i18next';
+import type { UserConfig } from 'next-i18next';
 import { themeVar } from '../apollo/store';
 import nextI18NextConfig from '../next-i18next.config';
 import '../scss/app.scss';
@@ -69,4 +70,4 @@ const App = ({ Component, pageProps }: AppProps) => {
 	);
 };
 
-export default appWithTranslation(App, nextI18NextConfig);
+export default appWithTranslation(App, nextI18NextConfig as UserConfig);
