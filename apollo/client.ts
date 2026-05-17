@@ -30,7 +30,7 @@ const tokenRefreshLink = new TokenRefreshLink({
 });
 
 function createIsomorphicLink() {
-	const graphqlUri = process.env.NEXT_PUBLIC_API_GRAPHQL_URL ?? 'http://localhost:3030/graphql';
+	const graphqlUri = process.env.NEXT_PUBLIC_API_GRAPHQL_URL ?? 'http://localhost:3007/graphql';
 
 	const authLink = new ApolloLink((operation, forward) => {
 		operation.setContext(({ headers = {} }) => ({
@@ -64,7 +64,7 @@ function createIsomorphicLink() {
 	}
 
 	const wsLink = new WebSocketLink({
-		uri: process.env.NEXT_PUBLIC_API_WS ?? 'ws://localhost:3030/graphql',
+		uri: process.env.NEXT_PUBLIC_API_WS ?? 'ws://localhost:3007/graphql',
 		options: {
 			reconnect: false,
 			timeout: 30000,
