@@ -4,9 +4,10 @@ services:
     restart: always
     image: node:20.10.0
     ports:
-      - 3000:3035        # ✅ host:container (PORT=3035 bilan mos)
+      - 3000:3000
     environment:
-      - PORT=3035
+      - PORT=3000
+      - NODE_ENV=development
     volumes:
       - ./:/usr/src/tripout-frontend
     working_dir: /usr/src/tripout-frontend
@@ -18,6 +19,6 @@ services:
 networks:
   client-network:
     driver: bridge
-  monorepo-network:          # ✅ /??  yo'q
-    external: true           # ✅ / yo'q
+  monorepo-network:
+    external: true
     name: tripagency_monorepo-network
