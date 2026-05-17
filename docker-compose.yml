@@ -34,13 +34,19 @@ services:
       - 4000:3035
     environment:
       - PORT=3035
+      - REACT_APP_API_URL=http://localhost:3030
+      - REACT_APP_API_GRAPHQL_URL=http://localhost:3030/graphql
+      - NEXT_PUBLIC_API_URL=http://localhost:3030
+      - NEXT_PUBLIC_API_GRAPHQL_URL=http://localhost:3030/graphql
+      - NEXT_PUBLIC_API_WS=ws://localhost:3030/graphql
+      - REACT_APP_API_CHAT_WS=ws://localhost:3030/chat
     volumes:
       - ./:/usr/src/tripout-frontend
     working_dir: /usr/src/tripout-frontend
     networks:
       - client-network
       - monorepo-network
-    command: bash -c "yarn  && yarn run start"
+    command: bash -c "yarn && yarn run build && yarn run start"
 
 networks:
   client-network:
