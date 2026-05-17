@@ -1,56 +1,23 @@
-# version: "3.3"
-
-# services:
-#   nestar-next:
-#     container_name: nestar-next
-#     restart: always
-#     image: node:20.10.0
-#     ports:
-#       - 4000:3000
-#     environment:
-#       - PORT=3000
-#     volumes:
-#       - ./:/usr/src/nestar-next
-#     working_dir: /usr/src/nestar-next
-#     networks:
-#       - client-network
-#       - monorepo-network
-
-#     # FOR PRODUCTION
-#     command: bash -c "yarn && yarn run build && yarn run start"
-
-# networks:
-#   client-network:
-#     driver: bridge
-#   monorepo-network:
-#     external: true
-#     name: tripagency_monorepo-network  # ✅ to'g'ri nom
 services:
   tripout-frontend:
     container_name: tripout-frontend
     restart: always
     image: node:20.10.0
     ports:
-      - 4000:3035
+      - 3000:3035        # ✅ host:container (PORT=3035 bilan mos)
     environment:
       - PORT=3035
-      - REACT_APP_API_URL=http://localhost:3030
-      - REACT_APP_API_GRAPHQL_URL=http://localhost:3030/graphql
-      - NEXT_PUBLIC_API_URL=http://localhost:3030
-      - NEXT_PUBLIC_API_GRAPHQL_URL=http://localhost:3030/graphql
-      - NEXT_PUBLIC_API_WS=ws://localhost:3030/graphql
-      - REACT_APP_API_CHAT_WS=ws://localhost:3030/chat
     volumes:
       - ./:/usr/src/tripout-frontend
     working_dir: /usr/src/tripout-frontend
     networks:
       - client-network
       - monorepo-network
-    command: bash -c "yarn && yarn run build && yarn run start"
+    command: bash -c "yarn && yarn run start"
 
 networks:
   client-network:
     driver: bridge
-  monorepo-network:
-    external: true
+  monorepo-network:          # ✅ /??  yo'q
+    external: true           # ✅ / yo'q
     name: tripagency_monorepo-network
