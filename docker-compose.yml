@@ -4,17 +4,23 @@ services:
     restart: always
     image: node:20.10.0
     ports:
-      - 3000:3000
+      - 4000:3000
     environment:
       - PORT=3000
       - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:3007
+      - REACT_APP_API_GRAPHQL_URL=http://localhost:3007/graphql
+      - NEXT_PUBLIC_API_URL=http://localhost:3007
+      - NEXT_PUBLIC_API_GRAPHQL_URL=http://localhost:3007/graphql
+      - NEXT_PUBLIC_API_WS=ws://localhost:3007/graphql
+      - REACT_APP_API_CHAT_WS=ws://localhost:3007/chat
     volumes:
       - ./:/usr/src/tripout-frontend
     working_dir: /usr/src/tripout-frontend
     networks:
       - client-network
       - monorepo-network
-    command: bash -c "yarn && yarn run start"
+    command: bash -c "yarn && yarn run dev"
 
 networks:
   client-network:
