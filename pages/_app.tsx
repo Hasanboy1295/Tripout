@@ -4,7 +4,7 @@ import { CssBaseline } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { socketVar } from '../apollo/store';
 // WebSocket URL (adjust if needed)
-const WS_URL = process.env.REACT_APP_API_CHAT_WS || 'ws://localhost:3030/chat';
+const WS_URL = process.env.NEXT_PUBLIC_API_CHAT_WS || 'ws://localhost:3007/chat';
 import { light, dark } from '../scss/MaterialTheme';
 import { ApolloProvider, useReactiveVar } from '@apollo/client';
 import { useApollo } from '../apollo/client';
@@ -45,8 +45,10 @@ const App = ({ Component, pageProps }: AppProps) => {
 	useEffect(() => {
 		// Only run on client
 		if (typeof window !== 'undefined') {
+			if (!WS_URL) return;
 			// Only create socket if not already set
-			if (!socketVar() || socketVar().readyState > 1) {
+			const existingSocket = socketVar();
+			if (!existingSocket || existingSocket.readyState > 1) {
 				const ws = new window.WebSocket(WS_URL);
 				socketVar(ws);
 			}
