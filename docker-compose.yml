@@ -4,16 +4,16 @@ services:
     restart: always
     image: node:20.10.0
     ports:
-      - 4000:3000
+      - 4008:3000
     environment:
       - PORT=3000
       - NODE_ENV=development
-      - REACT_APP_API_URL=http://localhost:3007
-      - REACT_APP_API_GRAPHQL_URL=http://localhost:3007/graphql
-      - NEXT_PUBLIC_API_URL=http://localhost:3007
-      - NEXT_PUBLIC_API_GRAPHQL_URL=http://localhost:3007/graphql
-      - NEXT_PUBLIC_API_WS=ws://localhost:3007/graphql
-      - REACT_APP_API_CHAT_WS=ws://localhost:3007/chat
+      - REACT_APP_API_URL=http://187.127.113.124:3019
+      - REACT_APP_API_GRAPHQL_URL=http://187.127.113.124:3019/graphql
+      - NEXT_PUBLIC_API_URL=http://187.127.113.124:3019
+      - NEXT_PUBLIC_API_GRAPHQL_URL=http://187.127.113.124:3019/graphql
+      - NEXT_PUBLIC_API_WS=ws://187.127.113.124:3019/graphql
+      - REACT_APP_API_CHAT_WS=ws://187.127.113.124:3019/chat
     volumes:
       - ./:/usr/src/tripout-frontend
     working_dir: /usr/src/tripout-frontend
