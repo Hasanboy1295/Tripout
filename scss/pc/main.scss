@@ -878,7 +878,11 @@ body::-webkit-scrollbar {
 		overflow: hidden;
 		margin-bottom: 28px;
 		&.auth {
-			height: 300px;
+			height: 340px;
+			margin-bottom: 0;
+			.container {
+				margin-top: 136px;
+			}
 		}
 		&::before {
 			content: '';

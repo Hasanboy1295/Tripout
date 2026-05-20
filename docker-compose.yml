@@ -14,8 +14,8 @@ services:
       - NEXT_PUBLIC_API_GRAPHQL_URL=http://187.127.113.124:3019/graphql
       - NEXT_PUBLIC_ENABLE_GRAPHQL_WS=false
       - NEXT_PUBLIC_API_WS=ws://187.127.113.124:3019/graphql
-      - NEXT_PUBLIC_API_CHAT_WS=ws://187.127.113.124:3019/chat
-      - REACT_APP_API_CHAT_WS=ws://187.127.113.124:3019/chat
+      - NEXT_PUBLIC_API_CHAT_WS=ws://187.127.113.124:3019
+      - REACT_APP_API_CHAT_WS=ws://187.127.113.124:3019
     volumes:
       - ./:/usr/src/tripout-frontend
     working_dir: /usr/src/tripout-frontend

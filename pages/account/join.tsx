@@ -1,21 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import { NextPage } from 'next';
-import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack, Divider, Typography } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/material';
 import { useRouter } from 'next/router';
 import { logIn, signUp } from '../../libs/auth';
 import { sweetMixinErrorAlert } from '../../libs/sweetAlert';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
-import dynamic from 'next/dynamic';
-import { useMutation } from '@apollo/client';
-
-
-const TelegramLoginButton: any = dynamic(
-  () => import('react-telegram-auth').then((mod: any) => mod.default),
-  { ssr: false }
-);
 export const getStaticProps = async ({ locale }: any) => ({
 props: {
 ...(await serverSideTranslations(locale, ['common'])),
@@ -24,28 +15,13 @@ props: {
 
 const Join: NextPage = () => {
 const router = useRouter();
-const device = useDeviceDetect();
 const { t } = useTranslation('common');
 const [input, setInput] = useState({ nick: '', password: '', phone: '', type: 'USER' });
 const [loginView, setLoginView] = useState<boolean>(true);
 
-const [phoneLoginStep, setPhoneLoginStep] = useState<'phone' | 'code' | null>(null);
-const [phoneNumber, setPhoneNumber] = useState('');
-const [verificationCode, setVerificationCode] = useState('');
-
 /** HANDLERS **/
 const viewChangeHandler = (state: boolean) => {
 setLoginView(state);
-};
-
-const checkUserTypeHandler = (e: any) => {
-const checked = e.target.checked;
-if (checked) {
-const value = e.target.name;
-handleInput('type', value);
-} else {
-handleInput('type', 'USER');
-}
 };
 
 const handleInput = useCallback((name: any, value: any) => {
@@ -74,195 +50,68 @@ await sweetMixinErrorAlert(err.message);
 }
 }, [input]);
 
-	
-
-
-
-const handlePhoneLoginStart = async () => {
-	try {
-		if (!phoneNumber || phoneNumber.length < 10) {
-			sweetMixinErrorAlert(t('join_invalid_phone'));
-			return;
-		}
-		// Call backend to send SMS code
-		const response = await fetch('/api/auth/send-sms', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ phone: phoneNumber })
-		});
-
-		if (response.ok) {
-			const data = await response.json();
-			setPhoneLoginStep('code');
-			console.log('SMS code sent to:', phoneNumber);
-			
-			// Show the code in alert for development
-			if (data.devCode) {
-				alert(`🔐 Development Mode\n\nYour verification code is: ${data.devCode}\n\n(In production, this will be sent via SMS)`);
-			}
-		} else {
-			throw new Error('Failed to send SMS');
-		}
-	} catch (err: any) {
-		console.error('SMS send error:', err);
-		sweetMixinErrorAlert(t('join_sms_failed'));
-	}
-};
-
-const handlePhoneLoginVerify = async () => {
-	try {
-		if (!verificationCode || verificationCode.length < 4) {
-			sweetMixinErrorAlert(t('join_enter_code'));
-			return;
-		}
-		
-		const response = await fetch('/api/auth/verify-sms', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ phone: phoneNumber, code: verificationCode })
-		});
-
-		if (response.ok) {
-			const data = await response.json();
-			
-			// Store user data in localStorage
-			if (data.user) {
-				localStorage.setItem('user', JSON.stringify(data.user));
-			}
-			
-			// Redirect to home page
-			await router.push('/');
-			console.log('Phone login successful!', data);
-		} else {
-			throw new Error('Invalid verification code');
-		}
-	} catch (err: any) {
-		console.error('Verification error:', err);
-		sweetMixinErrorAlert(t('join_invalid_code'));
-	}
-};
-
 return (
 <Stack className={'join-page'}>
 <Stack className={'container'}>
 <Stack className={'main'}>
-<Stack className={'left'}>
-{/* @ts-ignore */}
-<Box className={'logo'}>
-<img src="/img/logo/logoText.svg" alt="" />
+<Stack className={'left brand-panel'}>
+<Box className={'brand-top'}>
+<img src="/img/logo/logo.svg" alt="Tripout" />
 <span>{t('join_brand')}</span>
 </Box>
-<Box className={'info'}>
-<span>{loginView ? t('join_login') : t('join_signup')}</span>
-<p>{loginView ? t('join_login') : t('join_signup')} {t('join_account_intro')}</p>
+
+<Box className={'brand-copy'}>
+<h2>
+Your next <span>adventure</span> starts here
+</h2>
+<p>Discover the world with trusted agents and a global community of travelers.</p>
+</Box>
+
+<Box className={'benefits'}>
+<div className={'benefit-item'}>
+<span className={'dot'} />
+<p>500+ destinations worldwide</p>
+</div>
+<div className={'benefit-item'}>
+<span className={'dot'} />
+<p>Verified travel agents</p>
+</div>
+<div className={'benefit-item'}>
+<span className={'dot'} />
+<p>Secure and trusted platform</p>
+</div>
+</Box>
+
+<Box className={'member-strip'}>
+<div className={'avatars'}>
+<span>JD</span>
+<span>SA</span>
+<span>MK</span>
+</div>
+<p>
+<b>12,000+</b> travelers joined
+</p>
+</Box>
+</Stack>
+
+<Stack className={'right form-panel'}>
+<Box className={'auth-switch'}>
+<button className={!loginView ? 'active' : ''} onClick={() => viewChangeHandler(false)}>
+{t('join_signup')}
+</button>
+<button className={loginView ? 'active' : ''} onClick={() => viewChangeHandler(true)}>
+{t('join_login')}
+</button>
+</Box>
+
+<Box className={'form-head'}>
+<h3>{loginView ? 'Welcome back' : 'Create account'}</h3>
+<p>{loginView ? 'Log in to continue your journey.' : 'Join for free and start exploring today.'}</p>
 </Box>
 
 {loginView ? (
 <>
-{/* PHONE LOGIN SECTION */}
-<Box className={'telegram-auth-box'}>
-<Typography className={'telegram-title'}>{t('join_phone_title')}</Typography>
-<div className={'telegram-button-wrapper'}>
-{phoneLoginStep === null && (
-<Box sx={{ width: '100%', maxWidth: '300px' }}>
-<input
-type="tel"
-placeholder={t('join_phone_placeholder')}
-value={phoneNumber}
-onChange={(e) => setPhoneNumber(e.target.value)}
-style={{
-width: '100%',
-padding: '12px',
-fontSize: '16px',
-border: '1px solid #DDD',
-borderRadius: '8px',
-marginBottom: '12px'
-}}
-/>
-<Button
-variant="contained"
-fullWidth
-sx={{
-backgroundColor: '#0088cc',
-color: 'white',
-padding: '12px',
-borderRadius: '8px',
-textTransform: 'none',
-fontWeight: 600,
-fontSize: '16px',
-'&:hover': {
-backgroundColor: '#0077b6',
-},
-}}
-onClick={handlePhoneLoginStart}
->
-{t('join_send_sms')}
-</Button>
-</Box>
-)}
-
-{phoneLoginStep === 'code' && (
-<Box sx={{ width: '100%', maxWidth: '300px' }}>
-<Typography sx={{ fontSize: '14px', color: '#666', mb: 2, textAlign: 'center' }}>
-{t('join_code_sent_prefix')} {phoneNumber}
-</Typography>
-<input
-type="text"
-placeholder={t('join_code_placeholder')}
-value={verificationCode}
-onChange={(e) => setVerificationCode(e.target.value)}
-maxLength={6}
-style={{
-width: '100%',
-padding: '12px',
-fontSize: '16px',
-border: '1px solid #DDD',
-borderRadius: '8px',
-marginBottom: '12px',
-textAlign: 'center',
-letterSpacing: '8px'
-}}
-/>
-<Button
-variant="contained"
-fullWidth
-sx={{
-backgroundColor: '#0088cc',
-color: 'white',
-padding: '12px',
-borderRadius: '8px',
-textTransform: 'none',
-fontWeight: 600,
-fontSize: '16px',
-'&:hover': {
-backgroundColor: '#0077b6',
-},
-}}
-onClick={handlePhoneLoginVerify}
->
-{t('join_verify_login')}
-</Button>
-<Button
-variant="text"
-fullWidth
-sx={{ mt: 1, textTransform: 'none' }}
-onClick={() => {
-setPhoneLoginStep(null);
-setVerificationCode('');
-}}
->
-{t('join_change_phone')}
-</Button>
-</Box>
-)}
-</div>
-				<Divider sx={{ my: 2.5, color: '#DDD' }}>
-					<Typography className={'divider-text'}>{t('join_or')}</Typography>
-				</Divider>
-			</Box>
-
-			{/* STANDARD LOGIN FORM */}
-			<Box className={'input-wrap'}>
+<Box className={'input-wrap'}>
 <div className={'input-box'}>
 <span>{t('join_nickname')}</span>
 <input
@@ -310,24 +159,13 @@ onClick={doLogin}
 ) : (
 <>
 <Box className={'input-wrap'}>
+<div className={'row'}>
 <div className={'input-box'}>
 <span>{t('join_nickname')}</span>
 <input
 type="text"
 placeholder={t('join_nickname_placeholder')}
 onChange={(e) => handleInput('nick', e.target.value)}
-required={true}
-onKeyDown={(event) => {
-if (event.key == 'Enter' && !loginView) doSignUp();
-}}
-/>
-</div>
-<div className={'input-box'}>
-<span>{t('join_password')}</span>
-<input
-type="password"
-placeholder={t('join_password_placeholder')}
-onChange={(e) => handleInput('password', e.target.value)}
 required={true}
 onKeyDown={(event) => {
 if (event.key == 'Enter' && !loginView) doSignUp();
@@ -346,38 +184,39 @@ if (event.key == 'Enter') doSignUp();
 }}
 />
 </div>
+</div>
+<div className={'input-box'}>
+<span>{t('join_password')}</span>
+<input
+type="password"
+placeholder={t('join_password_placeholder')}
+onChange={(e) => handleInput('password', e.target.value)}
+required={true}
+onKeyDown={(event) => {
+if (event.key == 'Enter' && !loginView) doSignUp();
+}}
+/>
+</div>
 </Box>
 
 <Box className={'register'}>
-<div className={'type-option'}>
+<div className={'type-option modern'}>
 <span className={'text'}>{t('join_register_as')}</span>
 <div>
-<FormGroup>
-<FormControlLabel
-control={
-<Checkbox
-size="small"
-name={'USER'}
-onChange={checkUserTypeHandler}
-checked={input?.type == 'USER'}
-/>
-}
-label={t('join_role_user')}
-/>
-</FormGroup>
-<FormGroup>
-<FormControlLabel
-control={
-<Checkbox
-size="small"
-name={'AGENT'}
-onChange={checkUserTypeHandler}
-checked={input?.type == 'AGENT'}
-/>
-}
-label={t('join_role_agent')}
-/>
-</FormGroup>
+<button
+type="button"
+className={input.type === 'USER' ? 'role-btn active' : 'role-btn'}
+onClick={() => handleInput('type', 'USER')}
+>
+{t('join_role_user')}
+</button>
+<button
+type="button"
+className={input.type === 'AGENT' ? 'role-btn active' : 'role-btn'}
+onClick={() => handleInput('type', 'AGENT')}
+>
+{t('join_role_agent')}
+</button>
 </div>
 </div>
 
@@ -413,7 +252,6 @@ viewChangeHandler(false);
 )}
 </Box>
 </Stack>
-<Stack className={'right'}></Stack>
 </Stack>
 </Stack>
 </Stack>

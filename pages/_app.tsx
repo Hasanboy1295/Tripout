@@ -21,6 +21,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 	const client = useApollo(pageProps.initialApolloState);
 	const themeMode = useReactiveVar(themeVar);
 	const [theme, setTheme] = useState(createTheme(light));
+	const [hasTriedFallbackWs, setHasTriedFallbackWs] = useState(false);
 
 
 	useEffect(() => {
@@ -50,6 +51,19 @@ const App = ({ Component, pageProps }: AppProps) => {
 			const existingSocket = socketVar();
 			if (!existingSocket || existingSocket.readyState > 1) {
 				const ws = new window.WebSocket(WS_URL);
+				ws.onerror = () => {
+					if (hasTriedFallbackWs) return;
+					try {
+						const fallbackWsUrl = new URL(WS_URL);
+						fallbackWsUrl.pathname = '';
+						fallbackWsUrl.search = '';
+						fallbackWsUrl.hash = '';
+						setHasTriedFallbackWs(true);
+						socketVar(new window.WebSocket(fallbackWsUrl.toString()));
+					} catch (error) {
+						console.log('Chat WS fallback failed:', error);
+					}
+				};
 				socketVar(ws);
 			}
 		}
@@ -60,7 +74,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 				socket.close();
 			}
 		};
-	}, []);
+	}, [hasTriedFallbackWs]);
 
 	return (
 		<ApolloProvider client={client}>

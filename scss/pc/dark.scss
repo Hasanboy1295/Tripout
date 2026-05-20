@@ -1620,64 +1620,109 @@ body.dark-mode {
 	 * ACCOUNT / JOIN (login + signup)
 	 * ====================================================================== */
 	#pc-wrap .join-page {
-		background: #141927;
+		background:
+			radial-gradient(circle at 15% 12%, rgba(255, 141, 82, 0.09), transparent 34%),
+			radial-gradient(circle at 88% 84%, rgba(255, 166, 92, 0.07), transparent 36%),
+			#101525;
 
 		.main {
-			background: #232838;
-			border: 1px solid #2f3547;
-			border-radius: 16px;
+			background: #171d2d;
+			border: 1px solid #2d354a;
 
-			.left {
-				.logo {
-					img { filter: brightness(1.2); }
-					span { color: #e8eaf2; }
-				}
-				.info {
-					span { color: #f5c585; }
-					p { color: #a7b0c2; }
+			.brand-panel {
+				background:
+					radial-gradient(circle at 0% 85%, rgba(255, 130, 68, 0.11), transparent 34%),
+					radial-gradient(circle at 90% -5%, rgba(255, 130, 68, 0.14), transparent 28%),
+					#151938;
+
+				.brand-top span { color: #eef2ff; }
+
+				.brand-copy {
+					h2 { color: #f5f7ff; }
+					p { color: #a6adc1; }
 				}
 
-				.telegram-auth-box {
-					.telegram-title { color: #e8eaf2; }
-					.telegram-button-wrapper {
-						input {
-							background: #141927 !important;
-							color: #e8eaf2 !important;
-							border-color: #2f3547 !important;
-							&::placeholder { color: #6d768f; }
+				.benefits .benefit-item {
+					background: rgba(28, 34, 54, 0.76);
+					border-color: #2f3750;
+					p { color: #d3d9e8; }
+				}
+
+				.member-strip p {
+					color: #a6adc1;
+					b { color: #f5f7ff; }
+				}
+			}
+
+			.form-panel {
+				background: linear-gradient(145deg, #212838 0%, #1b2232 100%);
+
+				.auth-switch {
+					background: #161c2b;
+					button {
+						color: #8a94ad;
+						&.active {
+							color: #0f1320;
+							background: linear-gradient(90deg, #ff8a4f 0%, #f5a24f 100%);
 						}
-						p { color: #a7b0c2 !important; }
 					}
-					.divider-text { color: #6d768f; }
+				}
+
+				.form-head {
+					h3 { color: #eef2ff; }
+					p { color: #93a0bc; }
 				}
 
 				.input-wrap .input-box {
-					span { color: #a7b0c2; }
+					span { color: #a6adc1; }
 					input {
-						background: #141927; color: #e8eaf2; border: 1px solid #2f3547;
-						&::placeholder { color: #6d768f; }
-						&:focus { border-color: #e8a54b; }
+						background: #111625;
+						border-color: #2b3347;
+						color: #eef2ff;
+						&::placeholder { color: #6d7895; }
+						&:focus {
+							border-color: #ff9559;
+							box-shadow: 0 0 0 3px rgba(255, 149, 89, 0.2);
+						}
 					}
 				}
 
 				.register {
 					.remember-info {
-						.MuiFormControlLabel-label { color: #cfd5e2; }
-						a { color: #a7b0c2; &:hover { color: #e8a54b; } }
+						.MuiFormControlLabel-label { color: #aeb7ce; }
+						a {
+							color: #8f9cb6;
+							&:hover { color: #ff9a5f; }
+						}
 					}
-					.type-option .text { color: #a7b0c2; }
-					.MuiButton-contained { background: #e8a54b; color: #141927; &:hover { background: #f1b562; } }
+
+					.type-option.modern {
+						.text { color: #c1c9db; }
+						.role-btn {
+							background: #111625;
+							border-color: #2b3347;
+							color: #97a2bc;
+							&.active {
+								border-color: #ff9559;
+								color: #ffab74;
+								background: rgba(255, 149, 89, 0.14);
+							}
+						}
+					}
+
+					.MuiButton-contained {
+						background: linear-gradient(90deg, #ff8a4f 0%, #f5a24f 100%);
+						color: #171c2b;
+						&:hover {
+							background: linear-gradient(90deg, #ff7f45 0%, #ef9647 100%);
+						}
+					}
 				}
 
 				.ask-info p {
-					color: #a7b0c2;
-					b { color: #e8a54b; cursor: pointer; &:hover { text-decoration: underline; } }
+					color: #93a0bc;
+					b { color: #ffab74; }
 				}
-			}
-
-			.right {
-				background: linear-gradient(135deg, #232838 0%, #0f1320 100%);
-				border-left: 1px solid #2f3547;
 			}
 		}
 	}
