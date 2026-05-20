@@ -15,7 +15,7 @@ import nextI18NextConfig from '../next-i18next.config';
 import '../scss/app.scss';
 import '../scss/pc/main.scss';
 import '../scss/mobile/main.scss';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const client = useApollo(pageProps.initialApolloState);
@@ -76,12 +76,16 @@ const App = ({ Component, pageProps }: AppProps) => {
 		};
 	}, [hasTriedFallbackWs]);
 
+	const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '754929267876-4gku8dl68gmarre0t7g2j94mb4446fgd.apps.googleusercontent.com';
+
 	return (
 		<ApolloProvider client={client}>
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
-				<Component {...pageProps} />
-			</ThemeProvider>
+			<GoogleOAuthProvider clientId={googleClientId}>
+				<ThemeProvider theme={theme}>
+					<CssBaseline />
+					<Component {...pageProps} />
+				</ThemeProvider>
+			</GoogleOAuthProvider>
 		</ApolloProvider>
 	);
 };
