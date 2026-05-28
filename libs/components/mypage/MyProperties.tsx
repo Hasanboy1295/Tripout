@@ -92,10 +92,10 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 
 
 		return (
-			<div id="my-property-page">
+			<div id="my-destination-page">
 				<Stack className="main-title-box">
 					<Stack className="right-box">
-						<Typography className="main-title">My Properties</Typography>
+						   <Typography className="main-title">My Destinations</Typography>
 						<Typography className="sub-title">We are glad to see you again!</Typography>
 					</Stack>
 				</Stack>
@@ -116,7 +116,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 					</Stack>
 					<Stack className="list-box">
 						<Stack className="listing-title-box">
-							<Typography className="title-text">Listing title</Typography>
+							   <Typography className="title-text">Destination</Typography>
 							<Typography className="title-text">Date Published</Typography>
 							<Typography className="title-text">Status</Typography>
 							<Typography className="title-text">View</Typography>
@@ -128,7 +128,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 						{agentProperties?.length === 0 ? (
 							<div className={'no-data'}>
 								<img src="/img/icons/icoAlert.svg" alt="" />
-								<p>No Property found!</p>
+								   <p>No Destination found!</p>
 							</div>
 						) : (
 							agentProperties.map((property: Property) => {
@@ -154,7 +154,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 									/>
 								</Stack>
 								<Stack className="total-result">
-									<Typography>{total} property available</Typography>
+									   <Typography>{total} destination available</Typography>
 								</Stack>
 							</Stack>
 						)}
